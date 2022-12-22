@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2022 at 02:22 PM
+-- Generation Time: Dec 22, 2022 at 02:26 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -48,7 +48,8 @@ CREATE TABLE `marks` (
   `maths` int(11) NOT NULL,
   `nepali` int(11) NOT NULL,
   `english` int(11) NOT NULL,
-  `SubName` varchar(100) NOT NULL
+  `SubName` varchar(100) NOT NULL,
+  `class` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
