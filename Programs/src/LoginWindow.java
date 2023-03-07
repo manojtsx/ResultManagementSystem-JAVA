@@ -8,9 +8,12 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 
 public class LoginWindow extends JPanel{
+    JButton signInBtn;
+    JTextField user;
+    JPasswordField pass;
     public LoginWindow() {
 
-        MyFrame frame = new MyFrame();
+
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int) screensize.getWidth();
         int height = (int) screensize.getHeight();
@@ -24,16 +27,16 @@ public class LoginWindow extends JPanel{
         JLabel username = new JLabel("Username");
         username.setBounds(60, 140, 500, 30);
 
-        JTextField user = new JTextField();
+        user = new JTextField();
         user.setBounds(60, 180, 500, 30);
 
         JLabel password = new JLabel("Password");
         password.setBounds(60, 220, 500, 30);
 
-        JPasswordField pass = new JPasswordField();
+        pass = new JPasswordField();
         pass.setBounds(60, 260, 500, 30);
 
-        JButton signInBtn = new JButton("Sign In");
+        signInBtn = new JButton("Sign In");
         signInBtn.setPreferredSize(new Dimension(300, 30));
         signInBtn.setBounds(60, 300, 500, 30);
         signInBtn.setBackground(Color.black);
@@ -63,40 +66,15 @@ public class LoginWindow extends JPanel{
         this.add(panel2, BorderLayout.LINE_END);
         this.setVisible(true);
 
-        signInBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Connection conn;
-                String db_url = "jdbc:mysql://localhost/result";
-                String db_user = "root";
-                String db_pass = "";
-                try {
-                    conn = DriverManager.getConnection(db_url, db_user, db_pass);
-                    System.out.println("connected");
-                    String sql = "SELECT username FROM user";
-                    Statement stmt = conn.createStatement();
-                    ResultSet result = stmt.executeQuery(sql);
-                    System.out.println(result);
-                    String col_value = null;
-                    while (result.next()) {
-                        col_value = result.getString("username");
-                        System.out.println(col_value);
-//                        if (user.getText() == col_value) {
-//                            System.out.println("Success");
-//                        } else {
-//                            AdminHomeRunner ah = new AdminHomeRunner();
-//
-//
-//                        }
-                    }
 
-
-                } catch (SQLException err) {
-                    System.out.println(err);
-                }
-            }
-        });
-
-
+    }
+    public JButton getButton(){
+        return signInBtn;
+    }
+    public JTextField getTextField(){
+        return user;
+    }
+    public JPasswordField getPasswordField(){
+        return pass;
     }
 }

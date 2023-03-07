@@ -5,15 +5,13 @@ import Reusable.AdminNavigationBar;
 
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
-public class AdminHomeRunner {
-    public static void main(String[] s) {
-        MyFrame frame = new MyFrame();
+public class AdminHomeRunner extends JPanel {
+    public AdminHomeRunner(){
         AdminNavigationBar menu = new AdminNavigationBar();
-        frame.add(menu, BorderLayout.NORTH);
-        frame.setVisible(true);
-
+        this.add(menu, BorderLayout.NORTH);
     }
 }
 

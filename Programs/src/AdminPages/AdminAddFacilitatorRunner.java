@@ -11,14 +11,11 @@ import java.awt.event.ActionListener;
 import java.sql.*;
 
 
-public class AdminAddFacilitatorRunner {
+public class AdminAddFacilitatorRunner extends JPanel {
 
-    public static void main(String[] s) {
-        MyFrame frame = new MyFrame();
+    public AdminAddFacilitatorRunner() {
         AdminNavigationBar menu = new AdminNavigationBar();
-        frame.add(menu, BorderLayout.NORTH);
-        frame.setVisible(true);
-
+        this.add(menu, BorderLayout.NORTH);
     }
 
 }
