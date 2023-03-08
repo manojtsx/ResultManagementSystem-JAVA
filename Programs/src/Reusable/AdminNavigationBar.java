@@ -3,25 +3,28 @@ package Reusable;
 
 import javax.swing.*;
 
-public class AdminNavigationBar extends JMenuBar{
+public class AdminNavigationBar extends JMenuBar {
+    JMenuItem addFacilitator, viewFacilitator, addStudent, viewStudent, addMarks, viewMarks;
+    JMenu home, logout;
+
     public AdminNavigationBar() {
 //        JMenuBar menu = new JMenuBar();
 
-        JMenu home = new JMenu("Home");
+        home = new JMenu("Home");
         JMenu facilitator = new JMenu("Facilitator");
         JMenu student = new JMenu("Student");
         JMenu marks = new JMenu("Marks");
-        JMenu logout = new JMenu("Log Out");
+        logout = new JMenu("Log Out");
 
 
-        JMenuItem addFacilitator = new JMenuItem("Add Facilitator");
-        JMenuItem viewFacilitator = new JMenuItem("View Facilitator");
+        addFacilitator = new JMenuItem("Add Facilitator");
+        viewFacilitator = new JMenuItem("View Facilitator");
 
-        JMenuItem addStudent = new JMenuItem("Add Student");
-        JMenuItem viewStudent = new JMenuItem("View Student");
+        addStudent = new JMenuItem("Add Student");
+        viewStudent = new JMenuItem("View Student");
 
-        JMenuItem addMarks = new JMenuItem("Add Marks");
-        JMenuItem viewMarks = new JMenuItem("View Marks");
+        addMarks = new JMenuItem("Add Marks");
+        viewMarks = new JMenuItem("View Marks");
 
         facilitator.add(addFacilitator);
         facilitator.add(viewFacilitator);
@@ -31,12 +34,42 @@ public class AdminNavigationBar extends JMenuBar{
 
         marks.add(addMarks);
         marks.add(viewMarks);
-
+        this.setBounds(0, 0, 700, 40);
         this.add(home);
         this.add(facilitator);
         this.add(student);
         this.add(marks);
         this.add(logout);
 
+    }
+
+    public JMenuItem getAddFacilitator() {
+        return addFacilitator;
+    }
+
+    public JMenuItem getViewFacilitator() {
+        return viewFacilitator;
+    }
+
+    public JMenuItem getAddStudent() {
+        return addStudent;
+    }
+
+    public JMenuItem getViewStudent() {
+        return viewStudent;
+    }
+
+    public JMenuItem getAddMarks() {
+        return addMarks;
+    }
+
+    public JMenuItem getViewMarks() {
+        return viewMarks;
+    }
+    public JMenu getHome(){
+        return home;
+    }
+    public JMenu getLogout(){
+        return logout;
     }
 }

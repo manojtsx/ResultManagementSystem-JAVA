@@ -5,13 +5,11 @@ import Reusable.AdminNavigationBar;
 
 
 import javax.swing.*;
-import java.awt.*;
 
-public class AdminViewMarksRunner {
-    public static void main(String[] s){
-        MyFrame frame = new MyFrame();
-        AdminNavigationBar menu = new AdminNavigationBar();
-        frame.add(menu, BorderLayout.NORTH);
-        frame.setVisible(true);
+public class AdminViewMarksRunner extends JPanel {
+    public AdminViewMarksRunner(){
+        JLabel hello = new JLabel("this is views marks");
+        this.add(hello);
     }
-}
+    }
+

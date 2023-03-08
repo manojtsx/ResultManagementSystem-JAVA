@@ -2,20 +2,23 @@ package Reusable;
 
 import javax.swing.*;
 
-public class FacilitatorNavigationBar extends JMenuBar{
-    public FacilitatorNavigationBar(){
-        JMenu home = new JMenu("Home");
+public class FacilitatorNavigationBar extends JMenuBar {
+    JMenu home, logout;
+    JMenuItem viewFacilitator, viewStudent, addMarks, viewMarks;
+
+    public FacilitatorNavigationBar() {
+        home = new JMenu("Home");
         JMenu facilitator = new JMenu("Facilitator");
         JMenu student = new JMenu("Student");
         JMenu marks = new JMenu("Marks");
-        JMenu logout = new JMenu("Log Out");
+        logout = new JMenu("Log Out");
 
-        JMenuItem viewFacilitator = new JMenuItem("View Facilitator");
+        viewFacilitator = new JMenuItem("View Facilitator");
 
-        JMenuItem viewStudent = new JMenuItem("View Student");
+        viewStudent = new JMenuItem("View Student");
 
-        JMenuItem addMarks = new JMenuItem("Add Marks");
-        JMenuItem viewMarks = new JMenuItem("View Marks");
+        addMarks = new JMenuItem("Add Marks");
+        viewMarks = new JMenuItem("View Marks");
 
         facilitator.add(viewFacilitator);
 
@@ -30,4 +33,31 @@ public class FacilitatorNavigationBar extends JMenuBar{
         this.add(marks);
         this.add(logout);
     }
+
+
+    public JMenuItem getViewFacilitator() {
+        return viewFacilitator;
+    }
+
+
+    public JMenuItem getViewStudent() {
+        return viewStudent;
+    }
+
+    public JMenuItem getAddMarks() {
+        return addMarks;
+    }
+
+    public JMenuItem getViewMarks() {
+        return viewMarks;
+    }
+
+    public JMenu getHome() {
+        return home;
+    }
+
+    public JMenu getLogout() {
+        return logout;
+    }
 }
+

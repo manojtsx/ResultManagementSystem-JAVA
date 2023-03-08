@@ -11,6 +11,7 @@ public class LoginWindow extends JPanel{
     JButton signInBtn;
     JTextField user;
     JPasswordField pass;
+
     public LoginWindow() {
 
 
@@ -42,6 +43,7 @@ public class LoginWindow extends JPanel{
         signInBtn.setBackground(Color.black);
         signInBtn.setForeground(Color.white);
         signInBtn.setFont(new Font("Time New Roman", 800, 20));
+
 
         panel1.add(username);
         panel1.add(user);

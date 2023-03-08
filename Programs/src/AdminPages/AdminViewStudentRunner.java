@@ -1,17 +1,10 @@
 package AdminPages;
-
-import Frames.MyFrame;
-import Reusable.AdminNavigationBar;
-
-
 import javax.swing.*;
-import java.awt.*;
 
-public class AdminViewStudentRunner {
-    public static void main(String[] s){
-        MyFrame frame = new MyFrame();
-        AdminNavigationBar menu = new AdminNavigationBar();
-        frame.add(menu, BorderLayout.NORTH);
-        frame.setVisible(true);
+public class AdminViewStudentRunner extends JPanel {
+    public AdminViewStudentRunner() {
+        JLabel hello = new JLabel("this is view student");
+        this.add(hello);
     }
 }
+
