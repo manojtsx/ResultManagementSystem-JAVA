@@ -9,8 +9,7 @@ import java.awt.*;
 public class StudentHomeRunner extends JPanel {
     JLabel nameDetail, userDetail, positionDetail, classDetail,phoneDetail, emailDetail;
     public StudentHomeRunner(){
-        StudentNavigationBar menu = new StudentNavigationBar();
-        this.add(menu, BorderLayout.NORTH);
+
         JPanel dashboardPanel = new JPanel();
 
         JPanel name = new JPanel();

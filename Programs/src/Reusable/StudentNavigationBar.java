@@ -3,29 +3,48 @@ package Reusable;
 import javax.swing.*;
 
 public class StudentNavigationBar extends JMenuBar {
-    public StudentNavigationBar(){
-        JMenu home = new JMenu("Home");
+    JMenu home, logout;
+    JMenuItem viewFacilitator, viewStudent, viewMarks;
+
+    public StudentNavigationBar() {
+        home = new JMenu("Home");
         JMenu facilitator = new JMenu("Facilitator");
         JMenu student = new JMenu("Student");
         JMenu marks = new JMenu("Marks");
-        JMenu logout = new JMenu("Log Out");
+        logout = new JMenu("Log Out");
 
-        JMenuItem viewFacilitator = new JMenuItem("View Facilitator");
+        viewFacilitator = new JMenuItem("View Facilitator");
 
-        JMenuItem viewStudent = new JMenuItem("View Student");
+        viewStudent = new JMenuItem("View Student");
 
-        JMenuItem viewMarks = new JMenuItem("View Marks");
+        viewMarks = new JMenuItem("View Marks");
 
         facilitator.add(viewFacilitator);
 
         student.add(viewStudent);
 
         marks.add(viewMarks);
-
+        this.setBounds(0, 0, 700, 40);
         this.add(home);
         this.add(facilitator);
         this.add(student);
         this.add(marks);
         this.add(logout);
+    }
+
+    public JMenu getHome() {
+        return home;
+    }
+    public JMenu getLogout(){
+        return logout;
+    }
+    public JMenuItem getViewFacilitator(){
+        return viewFacilitator;
+    }
+    public JMenuItem getViewStudent(){
+        return viewStudent;
+    }
+    public JMenuItem getViewMarks(){
+        return viewMarks;
     }
 }

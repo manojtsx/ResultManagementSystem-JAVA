@@ -26,7 +26,7 @@ public class FacilitatorNavigationBar extends JMenuBar {
 
         marks.add(addMarks);
         marks.add(viewMarks);
-
+        this.setBounds(0, 0, 700, 40);
         this.add(home);
         this.add(facilitator);
         this.add(student);

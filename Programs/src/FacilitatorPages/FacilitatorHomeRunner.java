@@ -8,8 +8,6 @@ import java.awt.*;
 public class FacilitatorHomeRunner extends JPanel {
     JLabel nameDetail, userDetail, positionDetail, classDetail,phoneDetail, emailDetail;
     public FacilitatorHomeRunner(){
-        FacilitatorNavigationBar menu  = new FacilitatorNavigationBar();
-        this.add(menu, BorderLayout.NORTH);
         JPanel dashboardPanel = new JPanel();
 
         JPanel name = new JPanel();

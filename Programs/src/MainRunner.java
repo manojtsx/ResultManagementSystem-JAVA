@@ -1,11 +1,18 @@
 import AdminPages.*;
 import FacilitatorPages.*;
 import Frames.MyFrame;
+import Modules.Student;
 import Reusable.AdminNavigationBar;
 import Reusable.FacilitatorNavigationBar;
+import Reusable.StudentNavigationBar;
 import StudentPages.StudentHomeRunner;
+import StudentPages.StudentViewFacilitator;
+import StudentPages.StudentViewMarks;
+import StudentPages.StudentViewStudent;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -18,9 +25,11 @@ public class MainRunner {
 
         //these are panel classes obtained from different packages
         MyFrame frame = new MyFrame();
+        frame.setLayout(new BorderLayout());
         LoginWindow login = new LoginWindow();
         AdminNavigationBar adminNavbar = new AdminNavigationBar();
         FacilitatorNavigationBar facilitatorNavbar = new FacilitatorNavigationBar();
+        StudentNavigationBar studentNavbar = new StudentNavigationBar();
 
         //these are the objects of the admin panel
         AdminHomeRunner adminHome = new AdminHomeRunner();
@@ -32,14 +41,20 @@ public class MainRunner {
         AdminAddMarks2Runner adminAddMarks2 = new AdminAddMarks2Runner();
         AdminViewMarksRunner adminViewMarks = new AdminViewMarksRunner();
 
-        //these are the objects of the facilitaor panel
+        //these are the objects of the facilitator panel
         FacilitatorHomeRunner facilitatorHome = new FacilitatorHomeRunner();
         FacilitatorViewFacilitator facilitatorViewFacilitator = new FacilitatorViewFacilitator();
         FacilitatorViewStudent facilitatorViewStudent = new FacilitatorViewStudent();
         FacilitatorAddMarks facilitatorAddMarks = new FacilitatorAddMarks();
         FacilitatorViewMarks facilitatorViewMarks = new FacilitatorViewMarks();
-        StudentHomeRunner studentHome = new StudentHomeRunner();
         frame.add(login);
+
+//these are the objects of the student panel
+        StudentHomeRunner studentHome = new StudentHomeRunner();
+        StudentViewFacilitator studentViewFacilitator = new StudentViewFacilitator();
+        StudentViewStudent studentViewStudent = new StudentViewStudent();
+        StudentViewMarks studentViewMarks = new StudentViewMarks();
+
 
 //these are the detail obtained from the adminhomerunner
         JButton signInBtn = login.getButton();
@@ -83,6 +98,13 @@ public class MainRunner {
         JMenuItem fviewStudent = facilitatorNavbar.getViewStudent();
         JMenuItem faddMarks = facilitatorNavbar.getAddMarks();
         JMenuItem fViewMarks = facilitatorNavbar.getViewMarks();
+
+        //these are the menu items obtained from the studentnavigation bar
+        JMenu shome = studentNavbar.getHome();
+        JMenu slogout = studentNavbar.getLogout();
+        JMenuItem sviewFacilitator = studentNavbar.getViewFacilitator();
+        JMenuItem sviewStudent = studentNavbar.getViewStudent();
+        JMenuItem sviewMarks = studentNavbar.getViewMarks();
 
 
 //these are obtained from the login window
@@ -135,8 +157,8 @@ public class MainRunner {
                             aphoneDetail.setText(phone_value);
                             aemailDetail.setText(email_value);
                             frame.getContentPane().removeAll();
-                            frame.getContentPane().add(adminNavbar);
-                            frame.getContentPane().add(adminHome);
+                            frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
+                            frame.getContentPane().add(adminHome,BorderLayout.CENTER);
                             frame.getContentPane().revalidate();
                             frame.getContentPane().repaint();
                             foundMatch = true;
@@ -148,8 +170,8 @@ public class MainRunner {
                             fphoneDetail.setText(phone_value);
                             femailDetail.setText(email_value);
                             frame.getContentPane().removeAll();
-//                            frame.getContentPane().add();
-                            frame.getContentPane().add(facilitatorHome);
+                            frame.getContentPane().add(facilitatorNavbar,BorderLayout.NORTH);
+                            frame.getContentPane().add(facilitatorHome,BorderLayout.CENTER);
                             frame.getContentPane().revalidate();
                             frame.getContentPane().repaint();
                             foundMatch = true;
@@ -162,7 +184,8 @@ public class MainRunner {
                             sphoneDetail.setText(phone_value);
                             semailDetail.setText(email_value);
                             frame.getContentPane().removeAll();
-                            frame.getContentPane().add(studentHome);
+                            frame.getContentPane().add(studentNavbar,BorderLayout.NORTH);
+                            frame.getContentPane().add(studentHome,BorderLayout.CENTER);
                             frame.getContentPane().revalidate();
                             frame.getContentPane().repaint();
                             foundMatch = true;
@@ -188,8 +211,8 @@ public class MainRunner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(adminNavbar);
-                frame.getContentPane().add(adminAddFacilitator);
+                frame.getContentPane().add(adminNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(adminAddFacilitator,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
@@ -199,8 +222,8 @@ public class MainRunner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(adminNavbar);
-                frame.getContentPane().add(adminViewFacilitator);
+                frame.getContentPane().add(adminNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(adminViewFacilitator,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
@@ -210,8 +233,8 @@ public class MainRunner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(adminNavbar);
-                frame.getContentPane().add(adminAddStudent);
+                frame.getContentPane().add(adminNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(adminAddStudent,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
@@ -221,8 +244,8 @@ public class MainRunner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(adminNavbar);
-                frame.getContentPane().add(adminViewStudent);
+                frame.getContentPane().add(adminNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(adminViewStudent,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
@@ -232,8 +255,8 @@ public class MainRunner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(adminNavbar);
-                frame.getContentPane().add(adminAddMarks1);
+                frame.getContentPane().add(adminNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(adminAddMarks1,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
@@ -243,8 +266,8 @@ public class MainRunner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(adminNavbar);
-                frame.getContentPane().add(adminViewMarks);
+                frame.getContentPane().add(adminNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(adminViewMarks,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
@@ -255,8 +278,8 @@ public class MainRunner {
             @Override
             public void mouseClicked(MouseEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(adminNavbar);
-                frame.getContentPane().add(adminHome);
+                frame.getContentPane().add(adminNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(adminHome,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
@@ -277,8 +300,8 @@ public class MainRunner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(facilitatorNavbar);
-                frame.getContentPane().add(facilitatorViewFacilitator);
+                frame.getContentPane().add(facilitatorNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(facilitatorViewFacilitator,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
@@ -289,47 +312,47 @@ public class MainRunner {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(facilitatorNavbar);
-                frame.getContentPane().add(facilitatorViewStudent);
+                frame.getContentPane().add(facilitatorNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(facilitatorViewStudent,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
         });
-        //event on clicking add marks in admin section
+        //event on clicking add marks in facilitator section
         faddMarks.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(facilitatorNavbar);
-                frame.getContentPane().add(facilitatorAddMarks);
+                frame.getContentPane().add(facilitatorNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(facilitatorAddMarks,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
         });
-        //event on clicking view marks in admin section
+        //event on clicking view marks in facilitator section
         fViewMarks.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(facilitatorNavbar);
-                frame.getContentPane().add(facilitatorViewMarks);
+                frame.getContentPane().add(facilitatorNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(facilitatorViewMarks,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
         });
 
-        //event on clicking home in the admin section
+        //event on clicking home in the facilitator section
         fhome.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(facilitatorNavbar);
-                frame.getContentPane().add(facilitatorHome);
+                frame.getContentPane().add(facilitatorNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(facilitatorHome,BorderLayout.CENTER);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
         });
-        //event on clicking the logout of adminSection
+        //event on clicking the logout of facilitatorSection
         flogout.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -339,6 +362,61 @@ public class MainRunner {
                 frame.getContentPane().repaint();
             }
         });
+        //event on clicking the home of student Section
+        shome.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(studentNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(studentHome,BorderLayout.CENTER);
+                frame.getContentPane().revalidate();
+                frame.getContentPane().repaint();
+            }
+        });
+        //event on clicking the logout of studentSection
+        slogout.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(login);
+                frame.getContentPane().revalidate();
+                frame.getContentPane().repaint();
+            }
+        });
+        //event on clicking view facilitator in student section
+        sviewFacilitator.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(studentNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(studentViewFacilitator,BorderLayout.CENTER);
+                frame.getContentPane().revalidate();
+                frame.getContentPane().repaint();
+            }
+        });
+        //event on clicking view student in student section
+        sviewStudent.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(studentNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(studentViewStudent,BorderLayout.CENTER);
+                frame.getContentPane().revalidate();
+                frame.getContentPane().repaint();
+            }
+        });
+        //event on clicking view marks in student section
+        sviewMarks.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(studentNavbar,BorderLayout.NORTH);
+                frame.getContentPane().add(studentViewMarks,BorderLayout.CENTER);
+                frame.getContentPane().revalidate();
+                frame.getContentPane().repaint();
+            }
+        });
+
 
         frame.setVisible(true);
     }

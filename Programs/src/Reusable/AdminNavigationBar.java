@@ -2,13 +2,15 @@ package Reusable;
 
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class AdminNavigationBar extends JMenuBar {
     JMenuItem addFacilitator, viewFacilitator, addStudent, viewStudent, addMarks, viewMarks;
     JMenu home, logout;
 
     public AdminNavigationBar() {
-//        JMenuBar menu = new JMenuBar();
 
         home = new JMenu("Home");
         JMenu facilitator = new JMenu("Facilitator");
@@ -34,7 +36,7 @@ public class AdminNavigationBar extends JMenuBar {
 
         marks.add(addMarks);
         marks.add(viewMarks);
-        this.setBounds(0, 0, 700, 40);
+
         this.add(home);
         this.add(facilitator);
         this.add(student);
