@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 
 
 public class AdminAddStudentRunner extends JPanel {
-    private JLabel nameLabel, usernameLabel, passwordLabel, phoneLabel, emailLabel, classLabel, subjectLabel;
-    private JTextField nameField, usernameField, passwordField, phoneField, emailField, classField, subjectField;
+    private JLabel nameLabel, usernameLabel, passwordLabel, phoneLabel, emailLabel,parentLabel;
+    private JTextField nameField, usernameField, passwordField, phoneField, emailField, parentField;
     private JButton submitButton;
     public AdminAddStudentRunner() {
             this.setLayout(new GridLayout(8, 2, 10, 10));
@@ -40,27 +40,35 @@ public class AdminAddStudentRunner extends JPanel {
             emailField = new JTextField(20);
             add(emailField);
 
-            classLabel = new JLabel("Class:");
-            add(classLabel);
-            classField = new JTextField(20);
-            add(classField);
-
-            subjectLabel = new JLabel("Subject:");
-            add(subjectLabel);
-            subjectField = new JTextField(20);
-            add(subjectField);
+            parentLabel = new JLabel("Parent:");
+            add(parentLabel);
+            parentField = new JTextField(20);
+            add(parentField);
 
             submitButton = new JButton("Submit");
             add(submitButton);
 
-
-
-            submitButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-
-                    }
-            });
+        }
+        public JTextField getNameField(){
+            return nameField;
+        }
+        public JTextField getUsernameField(){
+            return usernameField;
+        }
+        public JTextField getPasswordField(){
+            return passwordField;
+        }
+        public JTextField getPhoneField(){
+            return phoneField;
+        }
+        public JTextField getEmailField(){
+            return emailField;
+        }
+        public JTextField getParentField(){
+        return parentField;
+        }
+        public JButton getSubmitButton(){
+                return submitButton;
         }
     }
 

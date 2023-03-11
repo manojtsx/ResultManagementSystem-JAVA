@@ -1,33 +1,28 @@
 package FacilitatorPages;
 
-import Reusable.FacilitatorNavigationBar;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class FacilitatorHomeRunner extends JPanel {
-    JLabel nameDetail, userDetail, positionDetail, classDetail,phoneDetail, emailDetail;
+    JLabel nameDetail, userDetail, positionDetail,phoneDetail, emailDetail;
     public FacilitatorHomeRunner(){
         JPanel dashboardPanel = new JPanel();
 
         JPanel name = new JPanel();
         JPanel user = new JPanel();
         JPanel position = new JPanel();
-        JPanel classs = new JPanel();
         JPanel phone = new JPanel();
         JPanel email = new JPanel();
 
         JLabel nameDash = new JLabel("Name : ");
         JLabel userDash = new JLabel("Username : ");
         JLabel positionDash = new JLabel("Position : ");
-        JLabel classDash = new JLabel("Class : ");
         JLabel phoneDash = new JLabel("PhoneNo : ");
         JLabel emailDash = new JLabel("Email : ");
 
         nameDetail = new JLabel();
         userDetail = new JLabel();
         positionDetail = new JLabel();
-        classDetail = new JLabel();
         phoneDetail  =new JLabel();
         emailDetail = new JLabel();
 
@@ -40,9 +35,6 @@ public class FacilitatorHomeRunner extends JPanel {
         position.setLayout(new FlowLayout());
         position.add(positionDash);
         position.add(positionDetail);
-        classs.setLayout(new FlowLayout());
-        classs.add(classDash);
-        classs.add(classDetail);
         phone.setLayout(new FlowLayout());
         phone.add(phoneDash);
         phone.add(phoneDetail);
@@ -54,7 +46,6 @@ public class FacilitatorHomeRunner extends JPanel {
         dashboardPanel.add(name);
         dashboardPanel.add(user);
         dashboardPanel.add(position);
-        dashboardPanel.add(classs);
         dashboardPanel.add(phone);
         dashboardPanel.add(email);
 
@@ -68,9 +59,6 @@ public class FacilitatorHomeRunner extends JPanel {
     }
     public JLabel getPositionDetail(){
         return positionDetail;
-    }
-    public JLabel getClassDetail(){
-        return  classDetail;
     }
     public JLabel getPhoneDetail(){
         return phoneDetail;
