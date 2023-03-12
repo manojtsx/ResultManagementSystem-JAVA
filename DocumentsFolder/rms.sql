@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 12, 2023 at 02:08 AM
+-- Generation Time: Mar 12, 2023 at 03:39 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -41,7 +41,8 @@ CREATE TABLE `facilitator` (
 --
 
 INSERT INTO `facilitator` (`FID`, `username`, `Name`, `PhoneNo`, `Email`, `SubName`) VALUES
-(1, 'mohini', 'Mohini Gonzalez', '9806566572', 'mohini@gmail.com', 'math');
+(1, 'mohini', 'Mohini Gonzalez', '9806566572', 'mohini@gmail.com', 'math'),
+(2, 'mohandas', 'Mohandas Karamchand Gandhi', '981668313', 'mohand@gmail.com', 'NEPALI');
 
 -- --------------------------------------------------------
 
@@ -57,15 +58,19 @@ CREATE TABLE `marks` (
   `biology` int(11) NOT NULL DEFAULT 0,
   `maths` int(11) NOT NULL DEFAULT 0,
   `nepali` int(11) NOT NULL DEFAULT 0,
-  `english` int(11) NOT NULL DEFAULT 0
+  `english` int(11) NOT NULL DEFAULT 0,
+  `totalMarks` int(11) DEFAULT NULL,
+  `Percent` int(11) DEFAULT NULL,
+  `rank` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `marks`
 --
 
-INSERT INTO `marks` (`SID`, `username`, `physics`, `chemistry`, `biology`, `maths`, `nepali`, `english`) VALUES
-(1, 'manoj', 0, 0, 0, 0, 0, 0);
+INSERT INTO `marks` (`SID`, `username`, `physics`, `chemistry`, `biology`, `maths`, `nepali`, `english`, `totalMarks`, `Percent`, `rank`) VALUES
+(1, 'manoj', 10, 40, 0, 0, 0, 0, 0, 0, 1),
+(2, 'rahul', 0, 0, 0, 0, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -87,7 +92,8 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`SID`, `username`, `Name`, `ParentName`, `PhoneNo`, `Email`) VALUES
-(2, 'manoj', 'Manoj', 'Heber', '981688313', 'manojbicte#gmail.com');
+(2, 'manoj', 'Manoj', 'Heber', '981688313', 'manojbicte#gmail.com'),
+(3, 'rahul', 'Rahul Gandhi', 'Mohandas Gandhi', '91293213', 'rahul@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -114,7 +120,9 @@ INSERT INTO `user` (`id`, `username`, `password`, `usertype`, `Name`, `PhoneNo`,
 (3, 'teacher', 'teacher', 'facilitator', 'Teacher Saheb', '9182038212', 'remon@gmail.com'),
 (11, 'manoj', 'manoj', 'student', 'Manoj', '981688313', 'manojbicte#gmail.com'),
 (12, 'mohini', 'mohini', 'facilitator', 'Mohini Gonzalez', '9806566572', 'mohini@gmail.com'),
-(13, 'mohini', 'mohini', 'facilitator', 'Mohini Gonzalez', '9806566572', 'mohini@gmail.com');
+(13, 'mohini', 'mohini', 'facilitator', 'Mohini Gonzalez', '9806566572', 'mohini@gmail.com'),
+(14, 'mohandas', 'mohandas', 'facilitator', 'Mohandas Karamchand Gandhi', '981668313', 'mohand@gmail.com'),
+(15, 'rahul', 'rahul', 'student', 'Rahul Gandhi', '91293213', 'rahul@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -152,25 +160,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `facilitator`
 --
 ALTER TABLE `facilitator`
-  MODIFY `FID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `FID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `marks`
 --
 ALTER TABLE `marks`
-  MODIFY `SID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `SID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `SID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `SID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
