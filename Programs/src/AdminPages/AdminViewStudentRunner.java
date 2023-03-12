@@ -10,11 +10,10 @@ public class AdminViewStudentRunner extends JPanel {
 
     public AdminViewStudentRunner() {
         // Create a table model with column names and no data
-        String[] columnNames = {"SID", "Name", "Username", "PhoneNo", "Email"};
+        String[] columnNames = {"SID", "Name", "Username", "PhoneNo", "Email","Parent Name"};
 
         // Initialize the tablemodel here
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
-
+        tableModel = new DefaultTableModel(columnNames, 0);
         // Create a table and set the table model
         JTable table = new JTable(tableModel);
 
