@@ -12,7 +12,7 @@ public class StudentViewStudent extends JPanel {
         // Initialize the tablemodel here
         tableModel = new DefaultTableModel(columnNames, 0);
         // Create a table and set the table model
-        JTable table = new JTable(tableModel);
+        table = new JTable(tableModel);
 
         // Create a scroll pane and add the table to it
         scrollPane = new JScrollPane(table);

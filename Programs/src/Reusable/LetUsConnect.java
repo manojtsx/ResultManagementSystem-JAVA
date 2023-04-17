@@ -11,7 +11,7 @@ public class LetUsConnect {
         this.db_driver = "com.mysql.cj.jdbc.Driver";
         this.db_url = "jdbc:mysql://localhost:3306/rms";
         this.db_user = "root";
-        this.db_pass = "";
+        this.db_pass = "admin";
     }
     public Connection getConnection(){
         Connection conn = null;

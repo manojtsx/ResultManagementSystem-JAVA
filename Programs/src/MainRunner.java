@@ -2,6 +2,7 @@ import AdminPages.*;
 import FacilitatorPages.*;
 import Frames.MyFrame;
 import Modules.Facilitator;
+import Modules.Result;
 import Modules.Student;
 import Reusable.AdminNavigationBar;
 import Reusable.FacilitatorNavigationBar;
@@ -15,8 +16,6 @@ import StudentPages.StudentViewStudent;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
@@ -465,6 +464,7 @@ public class MainRunner {
         DefaultTableModel tableModelA = adminViewStudent.getTableModel();
         JTable tableA = adminViewStudent.getTable();
         Statement stmt = null;
+        Statement stmt2 = null;
         try {
 
             String sql = "SELECT * FROM student";
@@ -587,6 +587,36 @@ public class MainRunner {
                 }
             }
         });
+        //view marks in admin section
+        DefaultTableModel tableModelAM = adminViewMarks.getTableModel();
+        try {
+            String sql = "SELECT * FROM marks";
+            String sql1 = "SELECT * FROM student";
+            stmt = conn.createStatement();
+            stmt2 = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs2 = stmt2.executeQuery(sql1);
+            while (rs.next()) {
+                while (rs2.next()) {
+                    String name = rs2.getString("Name");
+                    System.out.println("hello1");
+                    String username = rs.getString("username");
+                    String physics = rs.getString("physics");
+                    String chemistry = rs.getString("chemistry");
+                    String biology = rs.getString("biology");
+                    String maths = rs.getString("maths");
+                    String nepali = rs.getString("nepali");
+                    String english = rs.getString("english");
+                    String totalMarks = rs.getString("totalMarks");
+                    String percent = rs.getString("percent");
+                    String rank = rs.getString("rank");
+                    String[] vals = {username, name, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
+                    tableModelAM.addRow(vals);
+                }
+            }
+        } catch (SQLException e1) {
+            throw new RuntimeException(e1);
+        }
 
         //view student in facilitator
         DefaultTableModel tableModelF = facilitatorViewStudent.getTableModel();
@@ -638,10 +668,41 @@ public class MainRunner {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        //view marks in facilitator section
+        DefaultTableModel tableModelFM = facilitatorViewMarks.getTableModel();
+        try {
+            String sql = "SELECT * FROM marks";
+            String sql1 = "SELECT * FROM student";
+            stmt = conn.createStatement();
+            stmt2 = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs2 = stmt2.executeQuery(sql1);
+            while (rs.next()) {
+                while (rs2.next()) {
+                    String name = rs2.getString("Name");
+                    System.out.println("hello1");
+                    String username = rs.getString("username");
+                    String physics = rs.getString("physics");
+                    String chemistry = rs.getString("chemistry");
+                    String biology = rs.getString("biology");
+                    String maths = rs.getString("maths");
+                    String nepali = rs.getString("nepali");
+                    String english = rs.getString("english");
+                    String totalMarks = rs.getString("totalMarks");
+                    String percent = rs.getString("percent");
+                    String rank = rs.getString("rank");
+                    String[] vals = {username, name, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
+                    tableModelFM.addRow(vals);
+                }
+            }
+        } catch (SQLException e1) {
+            throw new RuntimeException(e1);
+        }
+
 
 
         //view student in student section
-        DefaultTableModel tableModelS = studentViewStudent.getTableModel();
+        DefaultTableModel tableModelSS = studentViewStudent.getTableModel();
         try {
 
             String sql = "SELECT * FROM student";
@@ -657,7 +718,7 @@ public class MainRunner {
                 String email = rs.getString("Email");
                 String parentName = rs.getString("ParentName");
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
-                tableModelS.addRow(vals);
+                tableModelSS.addRow(vals);
             }
             rs.close();
             stmt.close();
@@ -689,6 +750,38 @@ public class MainRunner {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        //view marks in student section
+        DefaultTableModel tableModelSM = studentViewMarks.getTableModel();
+        try {
+            String sql = "SELECT * FROM marks";
+            String sql1 = "SELECT * FROM student";
+            stmt = conn.createStatement();
+            stmt2 = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs2 = stmt2.executeQuery(sql1);
+            while (rs.next()) {
+                while (rs2.next()) {
+                    String name = rs2.getString("Name");
+                    System.out.println("hello1");
+                    String username = rs.getString("username");
+                    String physics = rs.getString("physics");
+                    String chemistry = rs.getString("chemistry");
+                    String biology = rs.getString("biology");
+                    String maths = rs.getString("maths");
+                    String nepali = rs.getString("nepali");
+                    String english = rs.getString("english");
+                    String totalMarks = rs.getString("totalMarks");
+                    String percent = rs.getString("percent");
+                    String rank = rs.getString("rank");
+                    String[] vals = {username, name, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
+                    tableModelSM.addRow(vals);
+                }
+            }
+        } catch (SQLException e1) {
+            throw new RuntimeException(e1);
+        }
+
         frame.setVisible(true);
     }
 }
