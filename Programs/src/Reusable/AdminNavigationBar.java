@@ -2,6 +2,7 @@ package Reusable;
 
 
 import javax.swing.*;
+import java.awt.*;
 
 public class AdminNavigationBar extends JMenuBar {
     JMenuItem addFacilitator, viewFacilitator, addStudent, viewStudent, addMarks, viewMarks;
@@ -40,6 +41,14 @@ public class AdminNavigationBar extends JMenuBar {
         this.add(marks);
         this.add(logout);
 
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setBackground(Color.BLUE);
+        home.setForeground(Color.white);
+        student.setForeground(Color.white);
+        facilitator.setForeground(Color.white);
+        marks.setForeground(Color.white);
+        logout.setForeground(Color.white);
+        setPreferredSize(new Dimension(screenSize.width,60));
     }
 
     public JMenuItem getAddFacilitator() {

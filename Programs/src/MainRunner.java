@@ -588,7 +588,10 @@ public class MainRunner {
             }
         });
         //view marks in admin section
+        JTable tableAM = adminViewMarks.getTable();
         DefaultTableModel tableModelAM = adminViewMarks.getTableModel();
+        JButton editMarksAdmin = adminViewMarks.getEditBtn();
+        JButton deleteMarksAdmin = adminViewMarks.getDeleteBtn();
         try {
             String sql = "SELECT * FROM marks";
             String sql1 = "SELECT * FROM student";
@@ -598,6 +601,7 @@ public class MainRunner {
             ResultSet rs2 = stmt2.executeQuery(sql1);
             while (rs.next()) {
                 while (rs2.next()) {
+                    int selectedrowIndex = tableAM.getSelectedRow();
                     String name = rs2.getString("Name");
                     System.out.println("hello1");
                     String username = rs.getString("username");
@@ -610,8 +614,11 @@ public class MainRunner {
                     String totalMarks = rs.getString("totalMarks");
                     String percent = rs.getString("percent");
                     String rank = rs.getString("rank");
-                    String[] vals = {username, name, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
+                    String[] vals = {username, name, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank, editMarksAdmin.getText(), deleteMarksAdmin.getText()};
                     tableModelAM.addRow(vals);
+                    editMarksAdmin.addActionListener(e->{
+                        tableModelAM.removeRow(selectedrowIndex);
+                    });
                 }
             }
         } catch (SQLException e1) {

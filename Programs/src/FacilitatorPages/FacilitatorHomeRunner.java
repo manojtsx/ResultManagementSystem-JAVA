@@ -50,6 +50,7 @@ public class FacilitatorHomeRunner extends JPanel {
         dashboardPanel.add(email);
 
         this.add(dashboardPanel, BorderLayout.CENTER);
+        setBackground(Color.WHITE);
     }
     public JLabel getNameDetail() {
         return nameDetail;

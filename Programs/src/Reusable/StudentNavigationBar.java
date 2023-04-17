@@ -1,6 +1,7 @@
 package Reusable;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class StudentNavigationBar extends JMenuBar {
     JMenu home, logout;
@@ -30,6 +31,15 @@ public class StudentNavigationBar extends JMenuBar {
         this.add(student);
         this.add(marks);
         this.add(logout);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setBackground(Color.BLUE);
+        home.setForeground(Color.white);
+        student.setForeground(Color.white);
+        facilitator.setForeground(Color.white);
+        marks.setForeground(Color.white);
+        logout.setForeground(Color.white);
+        setPreferredSize(new Dimension(screenSize.width,60));
     }
 
     public JMenu getHome() {

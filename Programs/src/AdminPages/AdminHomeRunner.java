@@ -52,6 +52,8 @@ public class AdminHomeRunner extends JPanel {
 
         this.setBounds(0,60,700,700);
         this.add(dashboardPanel);
+
+        setBackground(Color.WHITE);
     }
 
     public JLabel getNameDetail() {
