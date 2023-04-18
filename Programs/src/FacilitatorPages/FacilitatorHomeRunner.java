@@ -1,11 +1,14 @@
 package FacilitatorPages;
 
+import Reusable.TotalNumber;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class FacilitatorHomeRunner extends JPanel {
     JLabel nameDetail, userDetail, positionDetail,phoneDetail, emailDetail;
     public FacilitatorHomeRunner(){
+        TotalNumber t = new TotalNumber();
         JPanel dashboardPanel = new JPanel();
 
         JPanel name = new JPanel();
@@ -48,6 +51,7 @@ public class FacilitatorHomeRunner extends JPanel {
         dashboardPanel.add(position);
         dashboardPanel.add(phone);
         dashboardPanel.add(email);
+        dashboardPanel.add(t);
 
         this.add(dashboardPanel, BorderLayout.CENTER);
         setBackground(Color.WHITE);

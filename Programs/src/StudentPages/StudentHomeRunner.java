@@ -1,13 +1,15 @@
 package StudentPages;
 
 
+import Reusable.TotalNumber;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class StudentHomeRunner extends JPanel {
     JLabel nameDetail, userDetail, positionDetail, phoneDetail, emailDetail;
     public StudentHomeRunner(){
-
+        TotalNumber t = new TotalNumber();
         JPanel dashboardPanel = new JPanel();
 
         JPanel name = new JPanel();
@@ -50,7 +52,7 @@ public class StudentHomeRunner extends JPanel {
         dashboardPanel.add(position);
         dashboardPanel.add(phone);
         dashboardPanel.add(email);
-
+        dashboardPanel.add(t);
         this.add(dashboardPanel, BorderLayout.CENTER);
         setBackground(Color.WHITE);
     }

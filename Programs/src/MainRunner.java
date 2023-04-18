@@ -2,7 +2,6 @@ import AdminPages.*;
 import FacilitatorPages.*;
 import Frames.MyFrame;
 import Modules.Facilitator;
-import Modules.Result;
 import Modules.Student;
 import Reusable.AdminNavigationBar;
 import Reusable.FacilitatorNavigationBar;
@@ -12,10 +11,11 @@ import StudentPages.StudentHomeRunner;
 import StudentPages.StudentViewFacilitator;
 import StudentPages.StudentViewMarks;
 import StudentPages.StudentViewStudent;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
@@ -53,14 +53,14 @@ public class MainRunner {
         FacilitatorViewMarks facilitatorViewMarks = new FacilitatorViewMarks();
         frame.add(login);
 
-//these are the objects of the student panel
+        //these are the objects of the student panel
         StudentHomeRunner studentHome = new StudentHomeRunner();
         StudentViewFacilitator studentViewFacilitator = new StudentViewFacilitator();
         StudentViewStudent studentViewStudent = new StudentViewStudent();
         StudentViewMarks studentViewMarks = new StudentViewMarks();
 
 
-//these are the detail obtained from the adminhomerunner
+        //these are the detail obtained from the adminhomerunner
         JButton signInBtn = login.getButton();
         JLabel anameDetail = adminHome.getNameDetail();
         JLabel auserDetail = adminHome.getUserDetail();
@@ -68,21 +68,22 @@ public class MainRunner {
         JLabel aphoneDetail = adminHome.getPhoneDetail();
         JLabel aemailDetail = adminHome.getEmailDetail();
 
-//these are the detail obtained from the facilitatorhomerunner
+
+        //these are the detail obtained from the facilitatorhomerunner
         JLabel fnameDetail = facilitatorHome.getNameDetail();
         JLabel fuserDetail = facilitatorHome.getUserDetail();
         JLabel fpositionDetail = facilitatorHome.getPositionDetail();
         JLabel fphoneDetail = facilitatorHome.getPhoneDetail();
         JLabel femailDetail = facilitatorHome.getEmailDetail();
 
-//these are the detail obtained from the studenthomerunner
+        //these are the detail obtained from the studenthomerunner
         JLabel snameDetail = studentHome.getNameDetail();
         JLabel suserDetail = studentHome.getUserDetail();
         JLabel spositionDetail = studentHome.getPositionDetail();
         JLabel sphoneDetail = studentHome.getPhoneDetail();
         JLabel semailDetail = studentHome.getEmailDetail();
 
-//these are the menu item obtained from the adminavigationbar
+        //these are the menu item obtained from the adminavigationbar
         JMenu ahome = adminNavbar.getHome();
         JMenu alogout = adminNavbar.getLogout();
         JMenuItem aaddfacilitator = adminNavbar.getAddFacilitator();
@@ -92,7 +93,7 @@ public class MainRunner {
         JMenuItem aaddMarks = adminNavbar.getAddMarks();
         JMenuItem aViewMarks = adminNavbar.getViewMarks();
 
-//these are the menu item obtained from the faciliatornavigation bar
+        //these are the menu item obtained from the faciliatornavigation bar
         JMenu fhome = facilitatorNavbar.getHome();
         JMenu flogout = facilitatorNavbar.getLogout();
         JMenuItem fviewFacilitator = facilitatorNavbar.getViewFacilitator();
@@ -108,11 +109,116 @@ public class MainRunner {
         JMenuItem sviewMarks = studentNavbar.getViewMarks();
 
 
-//these are obtained from the login window
+        //these are obtained from the login window
         JTextField user = login.getTextField();
         JPasswordField pass = login.getPasswordField();
         LetUsConnect connect = new LetUsConnect();
         Connection conn = connect.getConnection();
+
+        //event on entering the enter button in login window
+        user.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    pass.requestFocus();
+                }
+            }
+        });
+
+        pass.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    if(user.getText().trim().isEmpty()){
+                        user.requestFocus();
+                    }else{
+                        Student student;
+                        Facilitator facilitator;
+
+                        try {
+                            String sql = "SELECT * FROM user";
+                            Statement stmt = conn.createStatement();
+                            ResultSet result = stmt.executeQuery(sql);
+                            int id_value = 0;
+                            String name_value = null;
+                            String user_value = null;
+                            String pass_value = null;
+                            String usertype = null;
+                            String phone_value = null;
+                            String email_value = null;
+                            boolean foundMatch = false;
+                            while (result.next()) {
+                                id_value = Integer.parseInt(result.getString("Id"));
+                                name_value = result.getString("Name");
+                                user_value = result.getString("username");
+                                pass_value = result.getString("password");
+                                usertype = result.getString("usertype");
+                                phone_value = result.getString("PhoneNo");
+                                email_value = result.getString("Email");
+                                String password = new String(pass.getPassword());
+                                String username = user.getText();
+                                if (Objects.equals(user_value, username) && Objects.equals(pass_value, password) && Objects.equals(usertype, "admin")) {
+                                    user.setText("");
+                                    pass.setText("");
+                                    anameDetail.setText(name_value);
+                                    auserDetail.setText(user_value);
+                                    apositionDetail.setText(usertype);
+                                    aphoneDetail.setText(phone_value);
+                                    aemailDetail.setText(email_value);
+                                    frame.getContentPane().removeAll();
+                                    frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
+                                    frame.getContentPane().add(adminHome, BorderLayout.CENTER);
+                                    frame.getContentPane().revalidate();
+                                    frame.getContentPane().repaint();
+                                    foundMatch = true;
+                                } else if (Objects.equals(user_value, username) && Objects.equals(pass_value, password) && Objects.equals(usertype, "facilitator")) {
+                                    user.setText("");
+                                    pass.setText("");
+                                    facilitator = new Facilitator(id_value, name_value, user_value, pass_value, phone_value, email_value);
+                                    fnameDetail.setText(facilitator.getName());
+                                    fuserDetail.setText(facilitator.getUsername());
+                                    fpositionDetail.setText(usertype);
+                                    fphoneDetail.setText(facilitator.getPhoneNumber());
+                                    femailDetail.setText(facilitator.getEmail());
+                                    frame.getContentPane().removeAll();
+                                    frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
+                                    frame.getContentPane().add(facilitatorHome, BorderLayout.CENTER);
+                                    frame.getContentPane().revalidate();
+                                    frame.getContentPane().repaint();
+                                    foundMatch = true;
+
+                                } else if (Objects.equals(user_value, username) && Objects.equals(pass_value, password) && Objects.equals(usertype, "student")) {
+                                    user.setText("");
+                                    pass.setText("");
+                                    student = new Student(id_value, name_value, user_value, pass_value, phone_value, email_value);
+                                    snameDetail.setText(student.getName());
+                                    suserDetail.setText(student.getUsername());
+                                    spositionDetail.setText(usertype);
+                                    sphoneDetail.setText(student.getPhoneNumber());
+                                    semailDetail.setText(student.getEmail());
+                                    frame.getContentPane().removeAll();
+                                    frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
+                                    frame.getContentPane().add(studentHome, BorderLayout.CENTER);
+                                    frame.getContentPane().revalidate();
+                                    frame.getContentPane().repaint();
+                                    foundMatch = true;
+                                }
+
+                            }
+                            if (!foundMatch) {
+                                user.setText("");
+                                pass.setText("");
+                                JOptionPane.showMessageDialog(frame, "Username or password incorrect", "Error Message", JOptionPane.ERROR_MESSAGE);
+                            }
+
+                        } catch (SQLException err) {
+                            System.out.println(err);
+                        }
+                    }
+                }
+            }
+        });
 
         //actionlistener on clicking the login button
         signInBtn.addActionListener(e -> {
@@ -466,10 +572,10 @@ public class MainRunner {
         Statement stmt = null;
         Statement stmt2 = null;
         try {
-
             String sql = "SELECT * FROM student";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
+
 
             // Iterate over the result set and add the data to the table model
             while (rs.next()) {
@@ -510,6 +616,7 @@ public class MainRunner {
             }
             rs.close();
             stmt.close();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -603,7 +710,6 @@ public class MainRunner {
                 while (rs2.next()) {
                     int selectedrowIndex = tableAM.getSelectedRow();
                     String name = rs2.getString("Name");
-                    System.out.println("hello1");
                     String username = rs.getString("username");
                     String physics = rs.getString("physics");
                     String chemistry = rs.getString("chemistry");
@@ -616,7 +722,7 @@ public class MainRunner {
                     String rank = rs.getString("rank");
                     String[] vals = {username, name, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank, editMarksAdmin.getText(), deleteMarksAdmin.getText()};
                     tableModelAM.addRow(vals);
-                    editMarksAdmin.addActionListener(e->{
+                    editMarksAdmin.addActionListener(e -> {
                         tableModelAM.removeRow(selectedrowIndex);
                     });
                 }
@@ -707,7 +813,6 @@ public class MainRunner {
         }
 
 
-
         //view student in student section
         DefaultTableModel tableModelSS = studentViewStudent.getTableModel();
         try {
@@ -758,6 +863,7 @@ public class MainRunner {
             throw new RuntimeException(e);
         }
 
+
         //view marks in student section
         DefaultTableModel tableModelSM = studentViewMarks.getTableModel();
         try {
@@ -785,10 +891,12 @@ public class MainRunner {
                     tableModelSM.addRow(vals);
                 }
             }
+
         } catch (SQLException e1) {
             throw new RuntimeException(e1);
         }
 
         frame.setVisible(true);
+
     }
 }

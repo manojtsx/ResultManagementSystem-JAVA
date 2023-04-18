@@ -1,4 +1,6 @@
 package AdminPages;
+import Reusable.TotalNumber;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +9,7 @@ public class AdminHomeRunner extends JPanel {
 
     public AdminHomeRunner() {
 
+        TotalNumber t= new TotalNumber();
         JPanel dashboardPanel = new JPanel();
 
         JPanel name = new JPanel();
@@ -49,11 +52,42 @@ public class AdminHomeRunner extends JPanel {
         dashboardPanel.add(position);
         dashboardPanel.add(phone);
         dashboardPanel.add(email);
+        dashboardPanel.add(t);
 
-        this.setBounds(0,60,700,700);
+// Set preferred size for the dashboardPanel
+        dashboardPanel.setPreferredSize(new Dimension(300, 400));
+
+// Set background color for panels
+        name.setBackground(Color.WHITE);
+        user.setBackground(Color.WHITE);
+        position.setBackground(Color.WHITE);
+        phone.setBackground(Color.WHITE);
+        email.setBackground(Color.WHITE);
+        dashboardPanel.setBackground(Color.WHITE);
+
+// Set font styles for labels
+        Font labelFont = new Font("Arial", Font.BOLD, 16);
+        nameDash.setFont(labelFont);
+        userDash.setFont(labelFont);
+        positionDash.setFont(labelFont);
+        phoneDash.setFont(labelFont);
+        emailDash.setFont(labelFont);
+
+// Set font styles for detail labels
+        Font detailFont = new Font("Arial", Font.PLAIN, 16);
+        nameDetail.setFont(detailFont);
+        userDetail.setFont(detailFont);
+        positionDetail.setFont(detailFont);
+        phoneDetail.setFont(detailFont);
+        emailDetail.setFont(detailFont);
+
+// Add the dashboardPanel to the container
+        this.setBounds(0, 60, 700, 700);
         this.add(dashboardPanel);
 
+// Set background color of the container to white
         setBackground(Color.WHITE);
+
     }
 
     public JLabel getNameDetail() {
