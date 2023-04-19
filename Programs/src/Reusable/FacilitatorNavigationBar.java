@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class FacilitatorNavigationBar extends JMenuBar {
     JMenu home, logout;
-    JMenuItem viewFacilitator, viewStudent, addMarks, viewMarks;
+    JMenuItem viewFacilitator, viewStudent, viewMarks;
 
     public FacilitatorNavigationBar() {
         home = new JMenu("Home");
@@ -18,14 +18,12 @@ public class FacilitatorNavigationBar extends JMenuBar {
 
         viewStudent = new JMenuItem("View Student");
 
-        addMarks = new JMenuItem("Add Marks");
-        viewMarks = new JMenuItem("View Marks");
+        viewMarks = new JMenuItem("Update Marks");
 
         facilitator.add(viewFacilitator);
 
         student.add(viewStudent);
 
-        marks.add(addMarks);
         marks.add(viewMarks);
         this.setBounds(0, 0, 700, 40);
         this.add(home);
@@ -52,10 +50,6 @@ public class FacilitatorNavigationBar extends JMenuBar {
 
     public JMenuItem getViewStudent() {
         return viewStudent;
-    }
-
-    public JMenuItem getAddMarks() {
-        return addMarks;
     }
 
     public JMenuItem getViewMarks() {

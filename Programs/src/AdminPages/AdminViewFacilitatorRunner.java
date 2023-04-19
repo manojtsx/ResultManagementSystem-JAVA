@@ -7,9 +7,11 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 
 public class AdminViewFacilitatorRunner extends JPanel {
-    private JTable table;
     DefaultTableModel tableModel;
-    private JScrollPane scrollPane;
+    private final JTable table;
+    private final JScrollPane scrollPane;
+    private final JButton removeBtn;
+    private final JButton updateBtn;
 
     public AdminViewFacilitatorRunner() {
         String[] columnNames = {"FID", "Name", "Username", "PhoneNo", "Email", "Subject"};
@@ -22,8 +24,15 @@ public class AdminViewFacilitatorRunner extends JPanel {
         // Create a scroll pane and add the table to it
         scrollPane = new JScrollPane(table);
 
+        //create  a remove Button to the panel
+        removeBtn = new JButton("Remove Selected");
+        updateBtn = new JButton("Update Selected");
+
         // Add the scroll pane to the frame
+        setLayout(new FlowLayout(FlowLayout.LEADING));
         add(scrollPane);
+        add(removeBtn);
+        add(updateBtn);
 
         setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -46,6 +55,13 @@ public class AdminViewFacilitatorRunner extends JPanel {
 
     public JTable getTable() {
         return table;
+    }
+
+    public JButton getRemoveBtn() {
+        return removeBtn;
+    }
+    public JButton getUpdateBtn(){
+        return updateBtn;
     }
 }
 

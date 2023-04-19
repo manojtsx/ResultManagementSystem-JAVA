@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AdminNavigationBar extends JMenuBar {
-    JMenuItem addFacilitator, viewFacilitator, addStudent, viewStudent, addMarks, viewMarks;
+    JMenuItem addFacilitator, viewFacilitator, addStudent, viewStudent,  viewMarks;
     JMenu home, logout;
 
     public AdminNavigationBar() {
@@ -23,8 +23,7 @@ public class AdminNavigationBar extends JMenuBar {
         addStudent = new JMenuItem("Add Student");
         viewStudent = new JMenuItem("View Student");
 
-        addMarks = new JMenuItem("Add Marks");
-        viewMarks = new JMenuItem("View Marks");
+        viewMarks = new JMenuItem("Update Marks");
 
         facilitator.add(addFacilitator);
         facilitator.add(viewFacilitator);
@@ -32,7 +31,6 @@ public class AdminNavigationBar extends JMenuBar {
         student.add(addStudent);
         student.add(viewStudent);
 
-        marks.add(addMarks);
         marks.add(viewMarks);
 
         this.add(home);
@@ -65,10 +63,6 @@ public class AdminNavigationBar extends JMenuBar {
 
     public JMenuItem getViewStudent() {
         return viewStudent;
-    }
-
-    public JMenuItem getAddMarks() {
-        return addMarks;
     }
 
     public JMenuItem getViewMarks() {

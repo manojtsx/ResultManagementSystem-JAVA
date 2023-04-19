@@ -12,6 +12,7 @@ import StudentPages.StudentViewFacilitator;
 import StudentPages.StudentViewMarks;
 import StudentPages.StudentViewStudent;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -30,6 +31,7 @@ public class MainRunner {
         MyFrame frame = new MyFrame();
         frame.setLayout(new BorderLayout());
         LoginWindow login = new LoginWindow();
+        frame.add(login);
         AdminNavigationBar adminNavbar = new AdminNavigationBar();
         FacilitatorNavigationBar facilitatorNavbar = new FacilitatorNavigationBar();
         StudentNavigationBar studentNavbar = new StudentNavigationBar();
@@ -41,15 +43,15 @@ public class MainRunner {
         AdminViewFacilitatorRunner adminViewFacilitator = new AdminViewFacilitatorRunner();
         AdminAddStudentRunner adminAddStudent = new AdminAddStudentRunner();
         AdminViewStudentRunner adminViewStudent = new AdminViewStudentRunner();
-        AdminAddMarks1Runner adminAddMarks1 = new AdminAddMarks1Runner();
-        AdminAddMarks2Runner adminAddMarks2 = new AdminAddMarks2Runner();
         AdminViewMarksRunner adminViewMarks = new AdminViewMarksRunner();
+        AdminUpdateFacilitatorRunner adminUpdateFacilitator = new AdminUpdateFacilitatorRunner();
+        AdminUpdateStudentRunner adminUpdateStudent = new AdminUpdateStudentRunner();
+        AdminUpdateMarksRunner adminUpdateMarks = new AdminUpdateMarksRunner();
 
         //these are the objects of the facilitator panel
         FacilitatorHomeRunner facilitatorHome = new FacilitatorHomeRunner();
         FacilitatorViewFacilitator facilitatorViewFacilitator = new FacilitatorViewFacilitator();
         FacilitatorViewStudent facilitatorViewStudent = new FacilitatorViewStudent();
-        FacilitatorAddMarks facilitatorAddMarks = new FacilitatorAddMarks();
         FacilitatorViewMarks facilitatorViewMarks = new FacilitatorViewMarks();
         frame.add(login);
 
@@ -90,7 +92,6 @@ public class MainRunner {
         JMenuItem aviewFacilitator = adminNavbar.getViewFacilitator();
         JMenuItem aaddStudent = adminNavbar.getAddStudent();
         JMenuItem aviewStudent = adminNavbar.getViewStudent();
-        JMenuItem aaddMarks = adminNavbar.getAddMarks();
         JMenuItem aViewMarks = adminNavbar.getViewMarks();
 
         //these are the menu item obtained from the faciliatornavigation bar
@@ -98,7 +99,6 @@ public class MainRunner {
         JMenu flogout = facilitatorNavbar.getLogout();
         JMenuItem fviewFacilitator = facilitatorNavbar.getViewFacilitator();
         JMenuItem fviewStudent = facilitatorNavbar.getViewStudent();
-        JMenuItem faddMarks = facilitatorNavbar.getAddMarks();
         JMenuItem fViewMarks = facilitatorNavbar.getViewMarks();
 
         //these are the menu items obtained from the studentnavigation bar
@@ -320,6 +320,7 @@ public class MainRunner {
             frame.getContentPane().removeAll();
             frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
             frame.getContentPane().add(adminViewFacilitator, BorderLayout.CENTER);
+            frame.getContentPane().add(adminUpdateFacilitator, BorderLayout.EAST);
             frame.getContentPane().revalidate();
             frame.getContentPane().repaint();
         });
@@ -336,22 +337,17 @@ public class MainRunner {
             frame.getContentPane().removeAll();
             frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
             frame.getContentPane().add(adminViewStudent, BorderLayout.CENTER);
+            frame.getContentPane().add(adminUpdateStudent,BorderLayout.EAST);
             frame.getContentPane().revalidate();
             frame.getContentPane().repaint();
         });
-        //event on clicking add marks in admin section
-        aaddMarks.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
-            frame.getContentPane().add(adminAddMarks1, BorderLayout.CENTER);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
-        });
+
         //event on clicking view marks in admin section
         aViewMarks.addActionListener(e -> {
             frame.getContentPane().removeAll();
             frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
             frame.getContentPane().add(adminViewMarks, BorderLayout.CENTER);
+            frame.getContentPane().add(adminUpdateMarks,BorderLayout.EAST);
             frame.getContentPane().revalidate();
             frame.getContentPane().repaint();
         });
@@ -400,14 +396,6 @@ public class MainRunner {
             frame.getContentPane().removeAll();
             frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
             frame.getContentPane().add(facilitatorViewStudent, BorderLayout.CENTER);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
-        });
-        //event on clicking add marks in facilitator section
-        faddMarks.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
-            frame.getContentPane().add(facilitatorAddMarks, BorderLayout.CENTER);
             frame.getContentPane().revalidate();
             frame.getContentPane().repaint();
         });
@@ -569,6 +557,8 @@ public class MainRunner {
         //admin view student
         DefaultTableModel tableModelA = adminViewStudent.getTableModel();
         JTable tableA = adminViewStudent.getTable();
+        JButton removeBtnS = adminViewStudent.getRemoveBtn();
+        JButton updateBtnS = adminViewStudent.getUpdateBtn();
         Statement stmt = null;
         Statement stmt2 = null;
         try {
@@ -594,9 +584,51 @@ public class MainRunner {
             throw new RuntimeException(e);
         }
 
+        removeBtnS.addActionListener(e->{
+            int selectedRow = tableA.getSelectedRow();
+            if (selectedRow!=-1){
+                String name = (String) tableA.getValueAt(selectedRow,1);
+                String username = (String) tableA.getValueAt(selectedRow,2);
+                String phoneNumber = (String) tableA.getValueAt(selectedRow,3);
+                String email = (String) tableA.getValueAt(selectedRow,4);
+                String parentName = (String) tableA.getValueAt(selectedRow,5);
+                try{
+                    String SQLDeleteUserTable = "DELETE FROM user WHERE username =? ";
+                    String SQLDeleteStudentTable = "DELETE FROM student WHERE username=?";
+                    String SQLDeleteMarksTable = "DELETE FROM marks WHERE username=?";
+                    PreparedStatement preparedStatementUserTable = conn.prepareStatement(SQLDeleteUserTable);
+                    PreparedStatement preparedStatementStudentTable = conn.prepareStatement(SQLDeleteStudentTable);
+                    PreparedStatement preparedStatementMarksTable = conn.prepareStatement(SQLDeleteMarksTable);
+                    preparedStatementUserTable.setString(1,username);
+                    preparedStatementStudentTable.setString(1,username);
+                    preparedStatementMarksTable.setString(1,username);
+                    int rowsAffected1 = preparedStatementUserTable.executeUpdate();
+                    int rowsAffected2 = preparedStatementStudentTable.executeUpdate();
+                    int rowsAffected3 = preparedStatementMarksTable.executeUpdate();
+
+                    if(rowsAffected1>0 || rowsAffected2>0 || rowsAffected3>0 ){
+                        JOptionPane.showMessageDialog(frame, "Content deleted successfully.");
+                        tableModelA.removeRow(selectedRow);
+                    }else{
+                        JOptionPane.showMessageDialog(frame, "Content not found for the given ID.");
+                    }
+
+                }catch(SQLException error){
+                    throw new RuntimeException(error);
+                }
+            }else{
+                JOptionPane.showMessageDialog(frame, "No content selected");
+            }
+        });
+
+        updateBtnS.addActionListener(e->{
+
+        });
         //admin view facilitator
         DefaultTableModel tableModelAF = adminViewFacilitator.getTableModel();
         JTable tableAF = adminViewFacilitator.getTable();
+        JButton removeBtnF = adminViewFacilitator.getRemoveBtn();
+        JButton updateBtnF = adminViewFacilitator.getUpdateBtn();
         try {
 
             String sql = "SELECT * FROM facilitator";
@@ -621,6 +653,38 @@ public class MainRunner {
             throw new RuntimeException(e);
         }
 
+        removeBtnF.addActionListener(e->{
+            int selectedRow = tableAF.getSelectedRow();
+            if (selectedRow!=-1){
+                String name = (String) tableAF.getValueAt(selectedRow,1);
+                String username = (String) tableAF.getValueAt(selectedRow,2);
+                String phoneNumber = (String) tableAF.getValueAt(selectedRow,3);
+                String email = (String) tableAF.getValueAt(selectedRow,4);
+                String subName = (String) tableAF.getValueAt(selectedRow,5);
+                try{
+                    String SQLDeleteUserTable = "DELETE FROM user WHERE username =? ";
+                    String SQLDeleteFacilitatorTable = "DELETE FROM facilitator WHERE username=?";
+                    PreparedStatement preparedStatementUserTable = conn.prepareStatement(SQLDeleteUserTable);
+                    PreparedStatement preparedStatementFacilitatorTable = conn.prepareStatement(SQLDeleteFacilitatorTable);
+                    preparedStatementUserTable.setString(1,username);
+                    preparedStatementFacilitatorTable.setString(1,username);
+                    int rowsAffected1 = preparedStatementUserTable.executeUpdate();
+                    int rowsAffected2 = preparedStatementFacilitatorTable.executeUpdate();
+
+                    if(rowsAffected1>0 || rowsAffected2>0 ){
+                        JOptionPane.showMessageDialog(frame, "Content deleted successfully.");
+                        tableModelAF.removeRow(selectedRow);
+                    }else{
+                        JOptionPane.showMessageDialog(frame, "Content not found for the given ID.");
+                    }
+
+                }catch(SQLException error){
+                    throw new RuntimeException(error);
+                }
+            }else{
+                JOptionPane.showMessageDialog(frame, "No content selected");
+            }
+        });
 
         //admin add facilitator
         JButton afsubmitbutton = adminAddFacilitator.getSubmitButton();
@@ -670,12 +734,12 @@ public class MainRunner {
                         stmt1.setString(5, subName);
                         stmt1.executeUpdate();
 
-                        asnameField.setText("");
-                        asusernameField.setText("");
-                        aspasswordField.setText("");
-                        asPhoneField.setText("");
-                        asemailField.setText("");
-                        asparentField.setText("");
+                        afnameField.setText("");
+                        afusernameField.setText("");
+                        afpasswordField.setText("");
+                        afPhoneField.setText("");
+                        afemailField.setText("");
+                        afparentField.setText("");
                         JOptionPane.showMessageDialog(frame, "Facilitator inserted into the database", "Insertion Successful.", JOptionPane.INFORMATION_MESSAGE);
 
                     } catch (SQLException ex) {
@@ -698,7 +762,6 @@ public class MainRunner {
         JTable tableAM = adminViewMarks.getTable();
         DefaultTableModel tableModelAM = adminViewMarks.getTableModel();
         JButton editMarksAdmin = adminViewMarks.getEditBtn();
-        JButton deleteMarksAdmin = adminViewMarks.getDeleteBtn();
         try {
             String sql = "SELECT * FROM marks";
             String sql1 = "SELECT * FROM student";
@@ -720,7 +783,7 @@ public class MainRunner {
                     String totalMarks = rs.getString("totalMarks");
                     String percent = rs.getString("percent");
                     String rank = rs.getString("rank");
-                    String[] vals = {username, name, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank, editMarksAdmin.getText(), deleteMarksAdmin.getText()};
+                    String[] vals = {username, name, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank, editMarksAdmin.getText()};
                     tableModelAM.addRow(vals);
                     editMarksAdmin.addActionListener(e -> {
                         tableModelAM.removeRow(selectedrowIndex);
