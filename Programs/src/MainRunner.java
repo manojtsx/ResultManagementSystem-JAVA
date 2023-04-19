@@ -61,7 +61,6 @@ public class MainRunner {
         StudentViewStudent studentViewStudent = new StudentViewStudent();
         StudentViewMarks studentViewMarks = new StudentViewMarks();
 
-
         //these are the detail obtained from the adminhomerunner
         JButton signInBtn = login.getButton();
         JLabel anameDetail = adminHome.getNameDetail();
@@ -559,6 +558,7 @@ public class MainRunner {
         JTable tableA = adminViewStudent.getTable();
         JButton removeBtnS = adminViewStudent.getRemoveBtn();
         JButton updateBtnS = adminViewStudent.getUpdateBtn();
+        JButton updateBtnAS = adminUpdateStudent.getSubmitBtn();
         Statement stmt = null;
         Statement stmt2 = null;
         try {
@@ -584,6 +584,7 @@ public class MainRunner {
             throw new RuntimeException(e);
         }
 
+        //remove button to delete the data
         removeBtnS.addActionListener(e->{
             int selectedRow = tableA.getSelectedRow();
             if (selectedRow!=-1){
@@ -620,10 +621,58 @@ public class MainRunner {
                 JOptionPane.showMessageDialog(frame, "No content selected");
             }
         });
+        JTextField nameTextField = adminUpdateStudent.getNameTextField();
+        JTextField emailTextField = adminUpdateStudent.getEmailTextField();
+        JTextField numberTextField = adminUpdateStudent.getPhoneNumberTextField();
+        JTextField parentNameTextField = adminUpdateStudent.getParentNameTextField();
+        JLabel usernameLabel = adminUpdateStudent.getUsernameLabel();
 
+        //update button to transfer the data
         updateBtnS.addActionListener(e->{
-
+            int selectedRow = tableA.getSelectedRow();
+            if (selectedRow!=-1) {
+                String name = (String) tableA.getValueAt(selectedRow, 1);
+                String username = (String) tableA.getValueAt(selectedRow, 2);
+                String phoneNumber = (String) tableA.getValueAt(selectedRow, 3);
+                String email = (String) tableA.getValueAt(selectedRow, 4);
+                String parentName = (String) tableA.getValueAt(selectedRow, 5);
+                nameTextField.setText(name);
+                usernameLabel.setText(username);
+                emailTextField.setText(email);
+                numberTextField.setText(phoneNumber);
+                parentNameTextField.setText(parentName);
+            }else{
+                JOptionPane.showMessageDialog(frame, "No content selected");
+            }
         });
+        //submit button for updating
+        updateBtnAS.addActionListener(e->{
+            try {
+                String SQLUpdateUserTable = "UPDATE user SET Name=?,PhoneNo=?,Email=? WHERE username=?";
+                String SQLUpdateStudentTable = "UPDATE student SET Name=?,ParentName=?,PhoneNo=?,Email=? WHERE username=?";
+                PreparedStatement preparedStatementUpdateUserTable = conn.prepareStatement(SQLUpdateUserTable);
+                preparedStatementUpdateUserTable.setString(1,nameTextField.getText());
+                preparedStatementUpdateUserTable.setString(2,numberTextField.getText());
+                preparedStatementUpdateUserTable.setString(3,emailTextField.getText());
+                preparedStatementUpdateUserTable.setString(4, usernameLabel.getText());
+                PreparedStatement preparedStatementUpdateStudentTable = conn.prepareStatement(SQLUpdateStudentTable);
+                preparedStatementUpdateStudentTable.setString(1, nameTextField.getText());
+                preparedStatementUpdateStudentTable.setString(2,parentNameTextField.getText());
+                preparedStatementUpdateStudentTable.setString(3, numberTextField.getText());
+                preparedStatementUpdateStudentTable.setString(4, emailTextField.getText());
+                preparedStatementUpdateStudentTable.setString(5,usernameLabel.getText());
+                int rowsAffected1 = preparedStatementUpdateUserTable.executeUpdate();
+                int rowsAffected2 = preparedStatementUpdateStudentTable.executeUpdate();
+                if(rowsAffected1 >0 || rowsAffected2 > 0){
+                    JOptionPane.showMessageDialog(frame, "Updated successfully");
+                    tableA.repaint();
+                }
+            }catch(SQLException error){
+                JOptionPane.showMessageDialog(frame, "Updation error");
+            }
+        });
+
+
         //admin view facilitator
         DefaultTableModel tableModelAF = adminViewFacilitator.getTableModel();
         JTable tableAF = adminViewFacilitator.getTable();
@@ -653,6 +702,7 @@ public class MainRunner {
             throw new RuntimeException(e);
         }
 
+        //delete data from facilitator
         removeBtnF.addActionListener(e->{
             int selectedRow = tableAF.getSelectedRow();
             if (selectedRow!=-1){
@@ -683,6 +733,57 @@ public class MainRunner {
                 }
             }else{
                 JOptionPane.showMessageDialog(frame, "No content selected");
+            }
+        });
+
+        //transfer data to the facilitator update
+        JTextField nameTextFieldF = adminUpdateFacilitator.getNameTextField();
+        JTextField emailTextFieldF = adminUpdateFacilitator.getEmailTextField();
+        JTextField numberTextFieldF = adminUpdateFacilitator.getPhoneNumberTextField();
+        JTextField subNameTextFieldF = adminUpdateFacilitator.getSubNameTextField();
+        JLabel usernameLabelF = adminUpdateFacilitator.getUsernameLabel();
+        updateBtnF.addActionListener(e->{
+            int selectedRow = tableAF.getSelectedRow();
+            if (selectedRow!=-1) {
+                String name = (String) tableAF.getValueAt(selectedRow, 1);
+                String username = (String) tableAF.getValueAt(selectedRow, 2);
+                String phoneNumber = (String) tableAF.getValueAt(selectedRow, 3);
+                String email = (String) tableAF.getValueAt(selectedRow, 4);
+                String parentName = (String) tableAF.getValueAt(selectedRow, 5);
+                nameTextFieldF.setText(name);
+                usernameLabelF.setText(username);
+                emailTextFieldF.setText(email);
+                numberTextFieldF.setText(phoneNumber);
+                subNameTextFieldF.setText(parentName);
+            }else{
+                JOptionPane.showMessageDialog(frame, "No content selected");
+            }
+        });
+
+        //submit button for updating in facilitator
+        updateBtnF.addActionListener(e->{
+            try {
+                String SQLUpdateUserTable = "UPDATE user SET Name=?,PhoneNo=?,Email=? WHERE username=?";
+                String SQLUpdateFacilitatorTable = "UPDATE facilitator SET Name=?,SubName=?,PhoneNo=?,Email=? WHERE username=?";
+                PreparedStatement preparedStatementUpdateUserTable = conn.prepareStatement(SQLUpdateUserTable);
+                preparedStatementUpdateUserTable.setString(1,nameTextFieldF.getText());
+                preparedStatementUpdateUserTable.setString(2,numberTextFieldF.getText());
+                preparedStatementUpdateUserTable.setString(3,emailTextFieldF.getText());
+                preparedStatementUpdateUserTable.setString(4, usernameLabelF.getText());
+                PreparedStatement preparedStatementUpdateStudentTable = conn.prepareStatement(SQLUpdateFacilitatorTable);
+                preparedStatementUpdateStudentTable.setString(1, nameTextFieldF.getText());
+                preparedStatementUpdateStudentTable.setString(2,subNameTextFieldF.getText());
+                preparedStatementUpdateStudentTable.setString(3, numberTextFieldF.getText());
+                preparedStatementUpdateStudentTable.setString(4, emailTextFieldF.getText());
+                preparedStatementUpdateStudentTable.setString(5,usernameLabelF.getText());
+                int rowsAffected1 = preparedStatementUpdateUserTable.executeUpdate();
+                int rowsAffected2 = preparedStatementUpdateStudentTable.executeUpdate();
+                if(rowsAffected1 >0 || rowsAffected2 > 0){
+                    JOptionPane.showMessageDialog(frame, "Updated successfully");
+                    tableAF.repaint();
+                }
+            }catch(SQLException error){
+                JOptionPane.showMessageDialog(frame, "Updation error");
             }
         });
 
@@ -739,7 +840,7 @@ public class MainRunner {
                         afpasswordField.setText("");
                         afPhoneField.setText("");
                         afemailField.setText("");
-                        afparentField.setText("");
+                        afsubField.setText("");
                         JOptionPane.showMessageDialog(frame, "Facilitator inserted into the database", "Insertion Successful.", JOptionPane.INFORMATION_MESSAGE);
 
                     } catch (SQLException ex) {
@@ -856,7 +957,6 @@ public class MainRunner {
             while (rs.next()) {
                 while (rs2.next()) {
                     String name = rs2.getString("Name");
-                    System.out.println("hello1");
                     String username = rs.getString("username");
                     String physics = rs.getString("physics");
                     String chemistry = rs.getString("chemistry");
@@ -939,7 +1039,6 @@ public class MainRunner {
             while (rs.next()) {
                 while (rs2.next()) {
                     String name = rs2.getString("Name");
-                    System.out.println("hello1");
                     String username = rs.getString("username");
                     String physics = rs.getString("physics");
                     String chemistry = rs.getString("chemistry");
