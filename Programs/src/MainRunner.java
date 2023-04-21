@@ -21,6 +21,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -117,6 +119,96 @@ public class MainRunner {
         LetUsConnect connect = new LetUsConnect();
 
 
+
+
+        //actionlistener on clicking the login button
+        AtomicInteger id_value = new AtomicInteger();
+        AtomicReference<String> name_value = new AtomicReference<>();
+        AtomicReference<String> user_value = new AtomicReference<>();
+        AtomicReference<String> pass_value = new AtomicReference<>();
+        AtomicReference<String> usertype = new AtomicReference<>();
+        AtomicReference<String> phone_value = new AtomicReference<>();
+        AtomicReference<String> email_value = new AtomicReference<>();
+        signInBtn.addActionListener(e -> {
+            Student student;
+            Facilitator facilitator;
+            try {
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM user";
+                Statement stmt = conn.createStatement();
+                ResultSet result = stmt.executeQuery(sql);
+                boolean foundMatch = false;
+                while (result.next()) {
+                    id_value.set(Integer.parseInt(result.getString("Id")));
+                    name_value.set(result.getString("Name"));
+                    user_value.set(result.getString("username"));
+                    pass_value.set(result.getString("password"));
+                    usertype.set(result.getString("usertype"));
+                    phone_value.set(result.getString("PhoneNo"));
+                    email_value.set(result.getString("Email"));
+                    String password = new String(pass.getPassword());
+                    String username = user.getText();
+                    if (Objects.equals(user_value.get(), username) && Objects.equals(pass_value.get(), password) && Objects.equals(usertype.get(), "admin")) {
+                        user.setText("");
+                        pass.setText("");
+                        anameDetail.setText(name_value.get());
+                        auserDetail.setText(user_value.get());
+                        apositionDetail.setText(usertype.get());
+                        aphoneDetail.setText(phone_value.get());
+                        aemailDetail.setText(email_value.get());
+                        frame.getContentPane().removeAll();
+                        frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
+                        frame.getContentPane().add(adminHome, BorderLayout.CENTER);
+                        frame.getContentPane().revalidate();
+                        frame.getContentPane().repaint();
+                        foundMatch = true;
+                    } else if (Objects.equals(user_value.get(), username) && Objects.equals(pass_value.get(), password) && Objects.equals(usertype.get(), "facilitator")) {
+                        user.setText("");
+                        pass.setText("");
+                        facilitator = new Facilitator(id_value.get(), name_value.get(), user_value.get(), pass_value.get(), phone_value.get(), email_value.get());
+                        fnameDetail.setText(facilitator.getName());
+                        fuserDetail.setText(facilitator.getUsername());
+                        fpositionDetail.setText(usertype.get());
+                        fphoneDetail.setText(facilitator.getPhoneNumber());
+                        femailDetail.setText(facilitator.getEmail());
+                        frame.getContentPane().removeAll();
+                        frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
+                        frame.getContentPane().add(facilitatorHome, BorderLayout.CENTER);
+                        frame.getContentPane().revalidate();
+                        frame.getContentPane().repaint();
+                        foundMatch = true;
+
+                    } else if (Objects.equals(user_value.get(), username) && Objects.equals(pass_value.get(), password) && Objects.equals(usertype.get(), "student")) {
+                        user.setText("");
+                        pass.setText("");
+                        student = new Student(id_value.get(), name_value.get(), user_value.get(), pass_value.get(), phone_value.get(), email_value.get());
+                        snameDetail.setText(student.getName());
+                        suserDetail.setText(student.getUsername());
+                        spositionDetail.setText(usertype.get());
+                        sphoneDetail.setText(student.getPhoneNumber());
+                        semailDetail.setText(student.getEmail());
+                        frame.getContentPane().removeAll();
+                        frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
+                        frame.getContentPane().add(studentHome, BorderLayout.CENTER);
+                        frame.getContentPane().add(studentViewMarks,BorderLayout.SOUTH);
+                        frame.getContentPane().revalidate();
+                        frame.getContentPane().repaint();
+                        foundMatch = true;
+                    }
+
+                }
+                if (!foundMatch) {
+                    user.setText("");
+                    pass.setText("");
+                    JOptionPane.showMessageDialog(frame, "Username or password incorrect", "Error Message", JOptionPane.ERROR_MESSAGE);
+                }
+                conn.close();
+            } catch (SQLException err) {
+                System.out.println(err);
+            }
+        });
+
+
         //event on entering the enter button in login window
         user.addKeyListener(new KeyAdapter() {
             @Override
@@ -143,45 +235,38 @@ public class MainRunner {
                             String sql = "SELECT * FROM user";
                             Statement stmt = conn.createStatement();
                             ResultSet result = stmt.executeQuery(sql);
-                            int id_value = 0;
-                            String name_value = null;
-                            String user_value = null;
-                            String pass_value = null;
-                            String usertype = null;
-                            String phone_value = null;
-                            String email_value = null;
                             boolean foundMatch = false;
                             while (result.next()) {
-                                id_value = Integer.parseInt(result.getString("Id"));
-                                name_value = result.getString("Name");
-                                user_value = result.getString("username");
-                                pass_value = result.getString("password");
-                                usertype = result.getString("usertype");
-                                phone_value = result.getString("PhoneNo");
-                                email_value = result.getString("Email");
+                                id_value.set(Integer.parseInt(result.getString("Id")));
+                                name_value.set(result.getString("Name"));
+                                user_value.set(result.getString("username"));
+                                pass_value.set(result.getString("password"));
+                                usertype.set(result.getString("usertype"));
+                                phone_value.set(result.getString("PhoneNo"));
+                                email_value.set(result.getString("Email"));
                                 String password = new String(pass.getPassword());
                                 String username = user.getText();
-                                if (Objects.equals(user_value, username) && Objects.equals(pass_value, password) && Objects.equals(usertype, "admin")) {
+                                if (Objects.equals(user_value.get(), username) && Objects.equals(pass_value.get(), password) && Objects.equals(usertype.get(), "admin")) {
                                     user.setText("");
                                     pass.setText("");
-                                    anameDetail.setText(name_value);
-                                    auserDetail.setText(user_value);
-                                    apositionDetail.setText(usertype);
-                                    aphoneDetail.setText(phone_value);
-                                    aemailDetail.setText(email_value);
+                                    anameDetail.setText(name_value.get());
+                                    auserDetail.setText(user_value.get());
+                                    apositionDetail.setText(usertype.get());
+                                    aphoneDetail.setText(phone_value.get());
+                                    aemailDetail.setText(email_value.get());
                                     frame.getContentPane().removeAll();
                                     frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
                                     frame.getContentPane().add(adminHome, BorderLayout.CENTER);
                                     frame.getContentPane().revalidate();
                                     frame.getContentPane().repaint();
                                     foundMatch = true;
-                                } else if (Objects.equals(user_value, username) && Objects.equals(pass_value, password) && Objects.equals(usertype, "facilitator")) {
+                                } else if (Objects.equals(user_value.get(), username) && Objects.equals(pass_value.get(), password) && Objects.equals(usertype.get(), "facilitator")) {
                                     user.setText("");
                                     pass.setText("");
-                                    facilitator = new Facilitator(id_value, name_value, user_value, pass_value, phone_value, email_value);
+                                    facilitator = new Facilitator(id_value.get(), name_value.get(), user_value.get(), pass_value.get(), phone_value.get(), email_value.get());
                                     fnameDetail.setText(facilitator.getName());
                                     fuserDetail.setText(facilitator.getUsername());
-                                    fpositionDetail.setText(usertype);
+                                    fpositionDetail.setText(usertype.get());
                                     fphoneDetail.setText(facilitator.getPhoneNumber());
                                     femailDetail.setText(facilitator.getEmail());
                                     frame.getContentPane().removeAll();
@@ -191,18 +276,19 @@ public class MainRunner {
                                     frame.getContentPane().repaint();
                                     foundMatch = true;
 
-                                } else if (Objects.equals(user_value, username) && Objects.equals(pass_value, password) && Objects.equals(usertype, "student")) {
+                                } else if (Objects.equals(user_value.get(), username) && Objects.equals(pass_value.get(), password) && Objects.equals(usertype.get(), "student")) {
                                     user.setText("");
                                     pass.setText("");
-                                    student = new Student(id_value, name_value, user_value, pass_value, phone_value, email_value);
+                                    student = new Student(id_value.get(), name_value.get(), user_value.get(), pass_value.get(), phone_value.get(), email_value.get());
                                     snameDetail.setText(student.getName());
                                     suserDetail.setText(student.getUsername());
-                                    spositionDetail.setText(usertype);
+                                    spositionDetail.setText(usertype.get());
                                     sphoneDetail.setText(student.getPhoneNumber());
                                     semailDetail.setText(student.getEmail());
                                     frame.getContentPane().removeAll();
                                     frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
                                     frame.getContentPane().add(studentHome, BorderLayout.CENTER);
+                                    frame.getContentPane().add(studentViewMarks,BorderLayout.SOUTH);
                                     frame.getContentPane().revalidate();
                                     frame.getContentPane().repaint();
                                     foundMatch = true;
@@ -215,99 +301,11 @@ public class MainRunner {
                                 JOptionPane.showMessageDialog(frame, "Username or password incorrect", "Error Message", JOptionPane.ERROR_MESSAGE);
                             }
                             conn.close();
-
                         } catch (SQLException err) {
                             System.out.println(err);
                         }
                     }
                 }
-            }
-        });
-
-        //actionlistener on clicking the login button
-        signInBtn.addActionListener(e -> {
-            Student student;
-            Facilitator facilitator;
-
-            try {
-                conn = connect.getConnection();
-                String sql = "SELECT * FROM user";
-                Statement stmt = conn.createStatement();
-                ResultSet result = stmt.executeQuery(sql);
-                int id_value = 0;
-                String name_value = null;
-                String user_value = null;
-                String pass_value = null;
-                String usertype = null;
-                String phone_value = null;
-                String email_value = null;
-                boolean foundMatch = false;
-                while (result.next()) {
-                    id_value = Integer.parseInt(result.getString("Id"));
-                    name_value = result.getString("Name");
-                    user_value = result.getString("username");
-                    pass_value = result.getString("password");
-                    usertype = result.getString("usertype");
-                    phone_value = result.getString("PhoneNo");
-                    email_value = result.getString("Email");
-                    String password = new String(pass.getPassword());
-                    String username = user.getText();
-                    if (Objects.equals(user_value, username) && Objects.equals(pass_value, password) && Objects.equals(usertype, "admin")) {
-                        user.setText("");
-                        pass.setText("");
-                        anameDetail.setText(name_value);
-                        auserDetail.setText(user_value);
-                        apositionDetail.setText(usertype);
-                        aphoneDetail.setText(phone_value);
-                        aemailDetail.setText(email_value);
-                        frame.getContentPane().removeAll();
-                        frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
-                        frame.getContentPane().add(adminHome, BorderLayout.CENTER);
-                        frame.getContentPane().revalidate();
-                        frame.getContentPane().repaint();
-                        foundMatch = true;
-                    } else if (Objects.equals(user_value, username) && Objects.equals(pass_value, password) && Objects.equals(usertype, "facilitator")) {
-                        user.setText("");
-                        pass.setText("");
-                        facilitator = new Facilitator(id_value, name_value, user_value, pass_value, phone_value, email_value);
-                        fnameDetail.setText(facilitator.getName());
-                        fuserDetail.setText(facilitator.getUsername());
-                        fpositionDetail.setText(usertype);
-                        fphoneDetail.setText(facilitator.getPhoneNumber());
-                        femailDetail.setText(facilitator.getEmail());
-                        frame.getContentPane().removeAll();
-                        frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
-                        frame.getContentPane().add(facilitatorHome, BorderLayout.CENTER);
-                        frame.getContentPane().revalidate();
-                        frame.getContentPane().repaint();
-                        foundMatch = true;
-
-                    } else if (Objects.equals(user_value, username) && Objects.equals(pass_value, password) && Objects.equals(usertype, "student")) {
-                        user.setText("");
-                        pass.setText("");
-                        student = new Student(id_value, name_value, user_value, pass_value, phone_value, email_value);
-                        snameDetail.setText(student.getName());
-                        suserDetail.setText(student.getUsername());
-                        spositionDetail.setText(usertype);
-                        sphoneDetail.setText(student.getPhoneNumber());
-                        semailDetail.setText(student.getEmail());
-                        frame.getContentPane().removeAll();
-                        frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
-                        frame.getContentPane().add(studentHome, BorderLayout.CENTER);
-                        frame.getContentPane().revalidate();
-                        frame.getContentPane().repaint();
-                        foundMatch = true;
-                    }
-
-                }
-                if (!foundMatch) {
-                    user.setText("");
-                    pass.setText("");
-                    JOptionPane.showMessageDialog(frame, "Username or password incorrect", "Error Message", JOptionPane.ERROR_MESSAGE);
-                }
-                conn.close();
-            } catch (SQLException err) {
-                System.out.println(err);
             }
         });
 
@@ -364,6 +362,7 @@ public class MainRunner {
                 frame.getContentPane().removeAll();
                 frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
                 frame.getContentPane().add(adminHome, BorderLayout.CENTER);
+                frame.getContentPane().add(adminViewMarks,BorderLayout.SOUTH);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
@@ -898,9 +897,11 @@ public class MainRunner {
         JButton updateBtnAM = adminUpdateMarks.getSubmitButton();
         try {
             conn = connect.getConnection();
-            String sql = "SELECT * FROM marks";
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "SELECT * FROM marks WHERE username=?";
+            PreparedStatement preparedStatementValidateUserLookMark= conn.prepareStatement(sql);
+//            stmt = conn.createStatement();
+            preparedStatementValidateUserLookMark.setString(1,user_value.get());
+            ResultSet rs = preparedStatementValidateUserLookMark.executeQuery();
             while (rs.next()) {
                 String username = rs.getString("username");
                 String physics = rs.getString("physics");

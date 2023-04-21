@@ -16,6 +16,8 @@ public class StudentViewMarks extends JPanel {
         scrollPane = new JScrollPane(table);
         add(scrollPane);
         setBorder(new EmptyBorder(10, 10, 10, 10));
+        setPreferredSize(new Dimension(getWidth(), 200));
+
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
