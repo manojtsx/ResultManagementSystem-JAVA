@@ -11,12 +11,15 @@ public class FacilitatorViewMarks extends JPanel {
     private DefaultTableModel tableModel;
     private JScrollPane scrollPane;
 
+    private JButton editBtn;
     public FacilitatorViewMarks() {
-        String[] columns = {"Username", "Name", "Physics", "Chemistry", "Biology", "Math", "Nepali", "English", "Total Marks", "Percent", "Rank"};
+        String[] columns = {"Username", "Physics", "Chemistry", "Biology", "Math", "Nepali", "English", "Total Marks", "Percent", "Rank"};
         tableModel = new DefaultTableModel(columns, 0);
         table = new JTable(tableModel);
         scrollPane = new JScrollPane(table);
+        editBtn = new JButton("Update Selected.");
         add(scrollPane);
+        add(editBtn);
         setBorder(new EmptyBorder(10, 10, 10, 10));
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -39,5 +42,6 @@ public class FacilitatorViewMarks extends JPanel {
     public JTable getTable() {
         return table;
     }
+    public JButton getEditBtn(){return editBtn;}
 }
 

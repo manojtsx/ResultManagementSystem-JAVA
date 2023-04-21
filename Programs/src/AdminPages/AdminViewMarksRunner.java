@@ -14,7 +14,7 @@ public class AdminViewMarksRunner extends JPanel {
     private JTable table;
     private DefaultTableModel tableModel;
     private JScrollPane scrollPane;
-    JButton editBtn;
+    private JButton editBtn;
     public AdminViewMarksRunner() {
         String[] columns = {"Username", "Physics", "Chemistry", "Biology", "Math", "Nepali", "English", "Total Marks", "Percent", "Rank","Func"};
         tableModel = new DefaultTableModel(columns, 0);
