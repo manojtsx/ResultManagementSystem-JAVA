@@ -6,7 +6,8 @@ import java.awt.*;
 
 public class AdminAddFacilitatorRunner extends JPanel {
     private JLabel nameLabel, usernameLabel, passwordLabel, phoneLabel, emailLabel, subLabel;
-    private JTextField nameField, usernameField, passwordField, phoneField, emailField, subField;
+    private JTextField nameField, usernameField, passwordField, phoneField, emailField;
+    private  JComboBox<String> subField;
     private JButton submitButton;
 
 
@@ -41,7 +42,10 @@ public class AdminAddFacilitatorRunner extends JPanel {
 
         subLabel = new JLabel("SubName:");
         add(subLabel);
-        subField = new JTextField(20);
+        String[] subjects = {"Physics", "Chemistry", "Biology", "Math", "Nepali", "English"};
+
+// Create a JComboBox with the values from the subjects array
+        subField = new JComboBox<>(subjects);
         add(subField);
 
         submitButton = new JButton("Submit");
@@ -130,7 +134,7 @@ public class AdminAddFacilitatorRunner extends JPanel {
         return emailField;
     }
 
-    public JTextField getSubField() {
+    public JComboBox<String> getSubField() {
         return subField;
     }
 

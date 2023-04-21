@@ -1,5 +1,8 @@
 import AdminPages.*;
-import FacilitatorPages.*;
+import FacilitatorPages.FacilitatorHomeRunner;
+import FacilitatorPages.FacilitatorViewFacilitator;
+import FacilitatorPages.FacilitatorViewMarks;
+import FacilitatorPages.FacilitatorViewStudent;
 import Frames.MyFrame;
 import Modules.Facilitator;
 import Modules.Student;
@@ -11,8 +14,8 @@ import StudentPages.StudentHomeRunner;
 import StudentPages.StudentViewFacilitator;
 import StudentPages.StudentViewMarks;
 import StudentPages.StudentViewStudent;
+
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -25,6 +28,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainRunner {
+    static Connection conn;
+
     public static void main(String[] s) {
 
         //these are panel classes obtained from different packages
@@ -112,7 +117,7 @@ public class MainRunner {
         JTextField user = login.getTextField();
         JPasswordField pass = login.getPasswordField();
         LetUsConnect connect = new LetUsConnect();
-        Connection conn = connect.getConnection();
+
 
         //event on entering the enter button in login window
         user.addKeyListener(new KeyAdapter() {
@@ -128,14 +133,15 @@ public class MainRunner {
         pass.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                    if(user.getText().trim().isEmpty()){
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (user.getText().trim().isEmpty()) {
                         user.requestFocus();
-                    }else{
+                    } else {
                         Student student;
                         Facilitator facilitator;
 
                         try {
+                            conn = connect.getConnection();
                             String sql = "SELECT * FROM user";
                             Statement stmt = conn.createStatement();
                             ResultSet result = stmt.executeQuery(sql);
@@ -210,6 +216,7 @@ public class MainRunner {
                                 pass.setText("");
                                 JOptionPane.showMessageDialog(frame, "Username or password incorrect", "Error Message", JOptionPane.ERROR_MESSAGE);
                             }
+                            conn.close();
 
                         } catch (SQLException err) {
                             System.out.println(err);
@@ -225,6 +232,7 @@ public class MainRunner {
             Facilitator facilitator;
 
             try {
+                conn = connect.getConnection();
                 String sql = "SELECT * FROM user";
                 Statement stmt = conn.createStatement();
                 ResultSet result = stmt.executeQuery(sql);
@@ -299,7 +307,7 @@ public class MainRunner {
                     pass.setText("");
                     JOptionPane.showMessageDialog(frame, "Username or password incorrect", "Error Message", JOptionPane.ERROR_MESSAGE);
                 }
-
+                conn.close();
             } catch (SQLException err) {
                 System.out.println(err);
             }
@@ -336,7 +344,7 @@ public class MainRunner {
             frame.getContentPane().removeAll();
             frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
             frame.getContentPane().add(adminViewStudent, BorderLayout.CENTER);
-            frame.getContentPane().add(adminUpdateStudent,BorderLayout.EAST);
+            frame.getContentPane().add(adminUpdateStudent, BorderLayout.EAST);
             frame.getContentPane().revalidate();
             frame.getContentPane().repaint();
         });
@@ -346,7 +354,7 @@ public class MainRunner {
             frame.getContentPane().removeAll();
             frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
             frame.getContentPane().add(adminViewMarks, BorderLayout.CENTER);
-            frame.getContentPane().add(adminUpdateMarks,BorderLayout.EAST);
+            frame.getContentPane().add(adminUpdateMarks, BorderLayout.EAST);
             frame.getContentPane().revalidate();
             frame.getContentPane().repaint();
         });
@@ -507,6 +515,7 @@ public class MainRunner {
             } else {
                 if (matcher.matches()) {
                     try {
+                        conn = connect.getConnection();
                         stmt = conn.prepareStatement("INSERT INTO user(username,password,usertype,Name,PhoneNo,Email) VALUES(?,?,?,?,?,?) ", Statement.RETURN_GENERATED_KEYS);
                         stmt.setString(1, username);
                         stmt.setString(2, password);
@@ -535,7 +544,7 @@ public class MainRunner {
                         asemailField.setText("");
                         asparentField.setText("");
                         JOptionPane.showMessageDialog(frame, "Student inserted into the database", "Insertion Successful.", JOptionPane.INFORMATION_MESSAGE);
-
+                        conn.close();
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     } finally {
@@ -562,6 +571,7 @@ public class MainRunner {
         Statement stmt = null;
         Statement stmt2 = null;
         try {
+            conn = connect.getConnection();
             String sql = "SELECT * FROM student";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -578,6 +588,7 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
                 tableModelA.addRow(vals);
             }
+            conn.close();
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -585,39 +596,37 @@ public class MainRunner {
         }
 
         //remove button to delete the data
-        removeBtnS.addActionListener(e->{
+        removeBtnS.addActionListener(e -> {
             int selectedRow = tableA.getSelectedRow();
-            if (selectedRow!=-1){
-                String name = (String) tableA.getValueAt(selectedRow,1);
-                String username = (String) tableA.getValueAt(selectedRow,2);
-                String phoneNumber = (String) tableA.getValueAt(selectedRow,3);
-                String email = (String) tableA.getValueAt(selectedRow,4);
-                String parentName = (String) tableA.getValueAt(selectedRow,5);
-                try{
+            if (selectedRow != -1) {
+                String username = (String) tableA.getValueAt(selectedRow, 2);
+                try {
+                    conn = connect.getConnection();
                     String SQLDeleteUserTable = "DELETE FROM user WHERE username =? ";
                     String SQLDeleteStudentTable = "DELETE FROM student WHERE username=?";
                     String SQLDeleteMarksTable = "DELETE FROM marks WHERE username=?";
                     PreparedStatement preparedStatementUserTable = conn.prepareStatement(SQLDeleteUserTable);
                     PreparedStatement preparedStatementStudentTable = conn.prepareStatement(SQLDeleteStudentTable);
                     PreparedStatement preparedStatementMarksTable = conn.prepareStatement(SQLDeleteMarksTable);
-                    preparedStatementUserTable.setString(1,username);
-                    preparedStatementStudentTable.setString(1,username);
-                    preparedStatementMarksTable.setString(1,username);
+                    preparedStatementUserTable.setString(1, username);
+                    preparedStatementStudentTable.setString(1, username);
+                    preparedStatementMarksTable.setString(1, username);
                     int rowsAffected1 = preparedStatementUserTable.executeUpdate();
                     int rowsAffected2 = preparedStatementStudentTable.executeUpdate();
                     int rowsAffected3 = preparedStatementMarksTable.executeUpdate();
 
-                    if(rowsAffected1>0 || rowsAffected2>0 || rowsAffected3>0 ){
+                    if (rowsAffected1 > 0 || rowsAffected2 > 0 || rowsAffected3 > 0) {
                         JOptionPane.showMessageDialog(frame, "Content deleted successfully.");
                         tableModelA.removeRow(selectedRow);
-                    }else{
+                        conn.close();
+                    } else {
                         JOptionPane.showMessageDialog(frame, "Content not found for the given ID.");
                     }
 
-                }catch(SQLException error){
+                } catch (SQLException error) {
                     throw new RuntimeException(error);
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(frame, "No content selected");
             }
         });
@@ -628,9 +637,9 @@ public class MainRunner {
         JLabel usernameLabel = adminUpdateStudent.getUsernameLabel();
 
         //update button to transfer the data
-        updateBtnS.addActionListener(e->{
+        updateBtnS.addActionListener(e -> {
             int selectedRow = tableA.getSelectedRow();
-            if (selectedRow!=-1) {
+            if (selectedRow != -1) {
                 String name = (String) tableA.getValueAt(selectedRow, 1);
                 String username = (String) tableA.getValueAt(selectedRow, 2);
                 String phoneNumber = (String) tableA.getValueAt(selectedRow, 3);
@@ -641,33 +650,42 @@ public class MainRunner {
                 emailTextField.setText(email);
                 numberTextField.setText(phoneNumber);
                 parentNameTextField.setText(parentName);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(frame, "No content selected");
             }
         });
         //submit button for updating
-        updateBtnAS.addActionListener(e->{
+        updateBtnAS.addActionListener(e -> {
             try {
+                conn = connect.getConnection();
                 String SQLUpdateUserTable = "UPDATE user SET Name=?,PhoneNo=?,Email=? WHERE username=?";
                 String SQLUpdateStudentTable = "UPDATE student SET Name=?,ParentName=?,PhoneNo=?,Email=? WHERE username=?";
                 PreparedStatement preparedStatementUpdateUserTable = conn.prepareStatement(SQLUpdateUserTable);
-                preparedStatementUpdateUserTable.setString(1,nameTextField.getText());
-                preparedStatementUpdateUserTable.setString(2,numberTextField.getText());
-                preparedStatementUpdateUserTable.setString(3,emailTextField.getText());
+                preparedStatementUpdateUserTable.setString(1, nameTextField.getText());
+                preparedStatementUpdateUserTable.setString(2, numberTextField.getText());
+                preparedStatementUpdateUserTable.setString(3, emailTextField.getText());
                 preparedStatementUpdateUserTable.setString(4, usernameLabel.getText());
+                System.out.println("hello");
                 PreparedStatement preparedStatementUpdateStudentTable = conn.prepareStatement(SQLUpdateStudentTable);
                 preparedStatementUpdateStudentTable.setString(1, nameTextField.getText());
-                preparedStatementUpdateStudentTable.setString(2,parentNameTextField.getText());
+                preparedStatementUpdateStudentTable.setString(2, parentNameTextField.getText());
                 preparedStatementUpdateStudentTable.setString(3, numberTextField.getText());
                 preparedStatementUpdateStudentTable.setString(4, emailTextField.getText());
-                preparedStatementUpdateStudentTable.setString(5,usernameLabel.getText());
+                preparedStatementUpdateStudentTable.setString(5, usernameLabel.getText());
                 int rowsAffected1 = preparedStatementUpdateUserTable.executeUpdate();
                 int rowsAffected2 = preparedStatementUpdateStudentTable.executeUpdate();
-                if(rowsAffected1 >0 || rowsAffected2 > 0){
+                if (rowsAffected1 > 0 || rowsAffected2 > 0) {
                     JOptionPane.showMessageDialog(frame, "Updated successfully");
                     tableA.repaint();
                 }
-            }catch(SQLException error){
+                nameTextField.setText("");
+                numberTextField.setText("");
+                emailTextField.setText("");
+                usernameLabel.setText("");
+                parentNameTextField.setText("");
+
+                conn.close();
+            } catch (SQLException error) {
                 JOptionPane.showMessageDialog(frame, "Updation error");
             }
         });
@@ -678,8 +696,10 @@ public class MainRunner {
         JTable tableAF = adminViewFacilitator.getTable();
         JButton removeBtnF = adminViewFacilitator.getRemoveBtn();
         JButton updateBtnF = adminViewFacilitator.getUpdateBtn();
-        try {
+        JButton updateBtnAF = adminUpdateFacilitator.getSubmitBtn();
 
+        try {
+            conn = connect.getConnection();
             String sql = "SELECT * FROM facilitator";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -695,6 +715,7 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
                 tableModelAF.addRow(vals);
             }
+            conn.close();
             rs.close();
             stmt.close();
 
@@ -703,35 +724,36 @@ public class MainRunner {
         }
 
         //delete data from facilitator
-        removeBtnF.addActionListener(e->{
+        removeBtnF.addActionListener(e -> {
             int selectedRow = tableAF.getSelectedRow();
-            if (selectedRow!=-1){
-                String name = (String) tableAF.getValueAt(selectedRow,1);
-                String username = (String) tableAF.getValueAt(selectedRow,2);
-                String phoneNumber = (String) tableAF.getValueAt(selectedRow,3);
-                String email = (String) tableAF.getValueAt(selectedRow,4);
-                String subName = (String) tableAF.getValueAt(selectedRow,5);
-                try{
+            if (selectedRow != -1) {
+                String name = (String) tableAF.getValueAt(selectedRow, 1);
+                String username = (String) tableAF.getValueAt(selectedRow, 2);
+                String phoneNumber = (String) tableAF.getValueAt(selectedRow, 3);
+                String email = (String) tableAF.getValueAt(selectedRow, 4);
+                String subName = (String) tableAF.getValueAt(selectedRow, 5);
+                try {
+                    conn = connect.getConnection();
                     String SQLDeleteUserTable = "DELETE FROM user WHERE username =? ";
                     String SQLDeleteFacilitatorTable = "DELETE FROM facilitator WHERE username=?";
                     PreparedStatement preparedStatementUserTable = conn.prepareStatement(SQLDeleteUserTable);
                     PreparedStatement preparedStatementFacilitatorTable = conn.prepareStatement(SQLDeleteFacilitatorTable);
-                    preparedStatementUserTable.setString(1,username);
-                    preparedStatementFacilitatorTable.setString(1,username);
+                    preparedStatementUserTable.setString(1, username);
+                    preparedStatementFacilitatorTable.setString(1, username);
                     int rowsAffected1 = preparedStatementUserTable.executeUpdate();
                     int rowsAffected2 = preparedStatementFacilitatorTable.executeUpdate();
 
-                    if(rowsAffected1>0 || rowsAffected2>0 ){
+                    if (rowsAffected1 > 0 || rowsAffected2 > 0) {
                         JOptionPane.showMessageDialog(frame, "Content deleted successfully.");
                         tableModelAF.removeRow(selectedRow);
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(frame, "Content not found for the given ID.");
                     }
-
-                }catch(SQLException error){
+                    conn.close();
+                } catch (SQLException error) {
                     throw new RuntimeException(error);
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(frame, "No content selected");
             }
         });
@@ -740,49 +762,57 @@ public class MainRunner {
         JTextField nameTextFieldF = adminUpdateFacilitator.getNameTextField();
         JTextField emailTextFieldF = adminUpdateFacilitator.getEmailTextField();
         JTextField numberTextFieldF = adminUpdateFacilitator.getPhoneNumberTextField();
-        JTextField subNameTextFieldF = adminUpdateFacilitator.getSubNameTextField();
+        JComboBox<String> subNameTextFieldF = adminUpdateFacilitator.getSubNameTextField();
         JLabel usernameLabelF = adminUpdateFacilitator.getUsernameLabel();
-        updateBtnF.addActionListener(e->{
+        updateBtnF.addActionListener(e -> {
             int selectedRow = tableAF.getSelectedRow();
-            if (selectedRow!=-1) {
+            if (selectedRow != -1) {
                 String name = (String) tableAF.getValueAt(selectedRow, 1);
                 String username = (String) tableAF.getValueAt(selectedRow, 2);
                 String phoneNumber = (String) tableAF.getValueAt(selectedRow, 3);
                 String email = (String) tableAF.getValueAt(selectedRow, 4);
-                String parentName = (String) tableAF.getValueAt(selectedRow, 5);
+                String subName = (String) tableAF.getValueAt(selectedRow, 5);
                 nameTextFieldF.setText(name);
                 usernameLabelF.setText(username);
                 emailTextFieldF.setText(email);
                 numberTextFieldF.setText(phoneNumber);
-                subNameTextFieldF.setText(parentName);
-            }else{
+                subNameTextFieldF.setSelectedItem(subName);
+            } else {
                 JOptionPane.showMessageDialog(frame, "No content selected");
             }
         });
 
         //submit button for updating in facilitator
-        updateBtnF.addActionListener(e->{
+        updateBtnAF.addActionListener(e -> {
             try {
+                conn = connect.getConnection();
                 String SQLUpdateUserTable = "UPDATE user SET Name=?,PhoneNo=?,Email=? WHERE username=?";
                 String SQLUpdateFacilitatorTable = "UPDATE facilitator SET Name=?,SubName=?,PhoneNo=?,Email=? WHERE username=?";
                 PreparedStatement preparedStatementUpdateUserTable = conn.prepareStatement(SQLUpdateUserTable);
-                preparedStatementUpdateUserTable.setString(1,nameTextFieldF.getText());
-                preparedStatementUpdateUserTable.setString(2,numberTextFieldF.getText());
-                preparedStatementUpdateUserTable.setString(3,emailTextFieldF.getText());
+                preparedStatementUpdateUserTable.setString(1, nameTextFieldF.getText());
+                preparedStatementUpdateUserTable.setString(2, numberTextFieldF.getText());
+                preparedStatementUpdateUserTable.setString(3, emailTextFieldF.getText());
                 preparedStatementUpdateUserTable.setString(4, usernameLabelF.getText());
-                PreparedStatement preparedStatementUpdateStudentTable = conn.prepareStatement(SQLUpdateFacilitatorTable);
-                preparedStatementUpdateStudentTable.setString(1, nameTextFieldF.getText());
-                preparedStatementUpdateStudentTable.setString(2,subNameTextFieldF.getText());
-                preparedStatementUpdateStudentTable.setString(3, numberTextFieldF.getText());
-                preparedStatementUpdateStudentTable.setString(4, emailTextFieldF.getText());
-                preparedStatementUpdateStudentTable.setString(5,usernameLabelF.getText());
+                PreparedStatement preparedStatementUpdateFacilitatorTable = conn.prepareStatement(SQLUpdateFacilitatorTable);
+                preparedStatementUpdateFacilitatorTable.setString(1, nameTextFieldF.getText());
+                preparedStatementUpdateFacilitatorTable.setString(2, subNameTextFieldF.getSelectedItem().toString());
+                preparedStatementUpdateFacilitatorTable.setString(3, numberTextFieldF.getText());
+                preparedStatementUpdateFacilitatorTable.setString(4, emailTextFieldF.getText());
+                preparedStatementUpdateFacilitatorTable.setString(5, usernameLabelF.getText());
+
                 int rowsAffected1 = preparedStatementUpdateUserTable.executeUpdate();
-                int rowsAffected2 = preparedStatementUpdateStudentTable.executeUpdate();
-                if(rowsAffected1 >0 || rowsAffected2 > 0){
+                int rowsAffected2 = preparedStatementUpdateFacilitatorTable.executeUpdate();
+                if (rowsAffected1 > 0 || rowsAffected2 > 0) {
                     JOptionPane.showMessageDialog(frame, "Updated successfully");
                     tableAF.repaint();
                 }
-            }catch(SQLException error){
+                nameTextFieldF.setText("");
+                numberTextFieldF.setText("");
+                emailTextFieldF.setText("");
+                usernameLabelF.setText("");
+                subNameTextFieldF.setSelectedItem("Physics");
+                conn.close();
+            } catch (SQLException error) {
                 JOptionPane.showMessageDialog(frame, "Updation error");
             }
         });
@@ -794,14 +824,16 @@ public class MainRunner {
         JTextField afpasswordField = adminAddFacilitator.getPasswordField();
         JTextField afPhoneField = adminAddFacilitator.getPhoneField();
         JTextField afemailField = adminAddFacilitator.getEmailField();
-        JTextField afsubField = adminAddFacilitator.getSubField();
+        JComboBox<String> afsubField = adminAddFacilitator.getSubField();
         afsubmitbutton.addActionListener(e -> {
             String name = afnameField.getText();
             String username = afusernameField.getText();
             String password = afpasswordField.getText();
             String phoneNo = afPhoneField.getText();
             String email = afemailField.getText();
-            String subName = afsubField.getText();
+            Object subName = afsubField.getSelectedItem();
+            System.out.println(subName);
+            System.out.println();
             PreparedStatement stmt12 = null;
             PreparedStatement stmt1 = null;
             // Regular expression pattern for email validation
@@ -818,6 +850,7 @@ public class MainRunner {
             } else {
                 if (matcher.matches()) {
                     try {
+                        conn = connect.getConnection();
                         stmt12 = conn.prepareStatement("INSERT INTO user(username,password,usertype,Name,PhoneNo,Email) VALUES(?,?,?,?,?,?) ");
                         stmt12.setString(1, username);
                         stmt12.setString(2, password);
@@ -832,7 +865,7 @@ public class MainRunner {
                         stmt1.setString(2, name);
                         stmt1.setString(3, phoneNo);
                         stmt1.setString(4, email);
-                        stmt1.setString(5, subName);
+                        stmt1.setString(5, subName.toString());
                         stmt1.executeUpdate();
 
                         afnameField.setText("");
@@ -840,9 +873,9 @@ public class MainRunner {
                         afpasswordField.setText("");
                         afPhoneField.setText("");
                         afemailField.setText("");
-                        afsubField.setText("");
+                        afsubField.setSelectedItem("Physics");
                         JOptionPane.showMessageDialog(frame, "Facilitator inserted into the database", "Insertion Successful.", JOptionPane.INFORMATION_MESSAGE);
-
+                        conn.close();
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     } finally {
@@ -864,6 +897,7 @@ public class MainRunner {
         DefaultTableModel tableModelAM = adminViewMarks.getTableModel();
         JButton editMarksAdmin = adminViewMarks.getEditBtn();
         try {
+            conn = connect.getConnection();
             String sql = "SELECT * FROM marks";
             String sql1 = "SELECT * FROM student";
             stmt = conn.createStatement();
@@ -891,6 +925,7 @@ public class MainRunner {
                     });
                 }
             }
+            conn.close();
         } catch (SQLException e1) {
             throw new RuntimeException(e1);
         }
@@ -899,7 +934,7 @@ public class MainRunner {
         DefaultTableModel tableModelF = facilitatorViewStudent.getTableModel();
 
         try {
-
+            conn = connect.getConnection();
             String sql = "SELECT * FROM student";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -915,6 +950,7 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
                 tableModelF.addRow(vals);
             }
+            conn.close();
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -924,7 +960,7 @@ public class MainRunner {
         //view facilitator in facilitator
         DefaultTableModel tableModelFF = facilitatorViewFacilitator.getTableModel();
         try {
-
+            conn = connect.getConnection();
             String sql = "SELECT * FROM facilitator";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -940,6 +976,7 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
                 tableModelFF.addRow(vals);
             }
+            conn.close();
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -948,6 +985,7 @@ public class MainRunner {
         //view marks in facilitator section
         DefaultTableModel tableModelFM = facilitatorViewMarks.getTableModel();
         try {
+            conn = connect.getConnection();
             String sql = "SELECT * FROM marks";
             String sql1 = "SELECT * FROM student";
             stmt = conn.createStatement();
@@ -971,6 +1009,7 @@ public class MainRunner {
                     tableModelFM.addRow(vals);
                 }
             }
+            conn.close();
         } catch (SQLException e1) {
             throw new RuntimeException(e1);
         }
@@ -979,7 +1018,7 @@ public class MainRunner {
         //view student in student section
         DefaultTableModel tableModelSS = studentViewStudent.getTableModel();
         try {
-
+            conn = connect.getConnection();
             String sql = "SELECT * FROM student";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -995,6 +1034,7 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
                 tableModelSS.addRow(vals);
             }
+            conn.close();
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -1004,7 +1044,7 @@ public class MainRunner {
         //view facilitator in student section
         DefaultTableModel tableModelSF = studentViewFacilitator.getTableModel();
         try {
-
+            conn = connect.getConnection();
             String sql = "SELECT * FROM facilitator";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -1020,6 +1060,7 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
                 tableModelSF.addRow(vals);
             }
+            conn.close();
             rs.close();
             stmt.close();
         } catch (SQLException e) {
@@ -1030,6 +1071,7 @@ public class MainRunner {
         //view marks in student section
         DefaultTableModel tableModelSM = studentViewMarks.getTableModel();
         try {
+            conn = connect.getConnection();
             String sql = "SELECT * FROM marks";
             String sql1 = "SELECT * FROM student";
             stmt = conn.createStatement();
@@ -1053,6 +1095,7 @@ public class MainRunner {
                     tableModelSM.addRow(vals);
                 }
             }
+            conn.close();
 
         } catch (SQLException e1) {
             throw new RuntimeException(e1);

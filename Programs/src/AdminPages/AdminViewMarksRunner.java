@@ -14,7 +14,7 @@ public class AdminViewMarksRunner extends JPanel {
     private JTable table;
     private DefaultTableModel tableModel;
     private JScrollPane scrollPane;
-    JButton deleteBtn,editBtn;
+    JButton editBtn;
     public AdminViewMarksRunner() {
         String[] columns = {"Username", "Name", "Physics", "Chemistry", "Biology", "Math", "Nepali", "English", "Total Marks", "Percent", "Rank","Func"};
         tableModel = new DefaultTableModel(columns, 0);
@@ -22,6 +22,7 @@ public class AdminViewMarksRunner extends JPanel {
         scrollPane = new JScrollPane(table);
         editBtn = new JButton("Edit");
         add(scrollPane);
+        add(editBtn);
 
 
         setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -44,9 +45,6 @@ public class AdminViewMarksRunner extends JPanel {
 
     public JTable getTable() {
         return table;
-    }
-    public JButton getDeleteBtn(){
-        return deleteBtn;
     }
     public JButton getEditBtn(){
         return  editBtn;

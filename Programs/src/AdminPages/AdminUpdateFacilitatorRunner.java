@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AdminUpdateFacilitatorRunner extends JPanel {
-    private JTextField nameTextField,phoneNumberTextField,emailTextField,subNameTextField;
+    private JTextField nameTextField,phoneNumberTextField,emailTextField;
+    JComboBox<String> subNameTextField;
     private JLabel usernameLabel;
     private JButton submitBtn;
     public AdminUpdateFacilitatorRunner(){
@@ -30,10 +31,12 @@ public class AdminUpdateFacilitatorRunner extends JPanel {
         emailTextField = new JTextField();
         add(emailTextField);
 
-        // Sub-name field
-        add(new JLabel("Sub-name: "));
-        subNameTextField = new JTextField();
+        String[] subjects = {"Physics", "Chemistry", "Biology", "Math", "Nepali", "English"};
+
+// Create a JComboBox with the values from the subjects array
+        subNameTextField = new JComboBox<>(subjects);
         add(subNameTextField);
+
 
         //submit button
         submitBtn = new JButton("Submit");
@@ -50,7 +53,7 @@ public class AdminUpdateFacilitatorRunner extends JPanel {
     public JTextField getPhoneNumberTextField(){
         return phoneNumberTextField;
     }
-    public JTextField getSubNameTextField(){
+    public JComboBox<String> getSubNameTextField(){
         return subNameTextField;
     }
     public JLabel getUsernameLabel(){
