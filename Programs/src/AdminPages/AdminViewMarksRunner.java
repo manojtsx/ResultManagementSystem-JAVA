@@ -16,11 +16,11 @@ public class AdminViewMarksRunner extends JPanel {
     private JScrollPane scrollPane;
     JButton editBtn;
     public AdminViewMarksRunner() {
-        String[] columns = {"Username", "Name", "Physics", "Chemistry", "Biology", "Math", "Nepali", "English", "Total Marks", "Percent", "Rank","Func"};
+        String[] columns = {"Username", "Physics", "Chemistry", "Biology", "Math", "Nepali", "English", "Total Marks", "Percent", "Rank","Func"};
         tableModel = new DefaultTableModel(columns, 0);
         table = new JTable(tableModel);
         scrollPane = new JScrollPane(table);
-        editBtn = new JButton("Edit");
+        editBtn = new JButton("Update Selected.");
         add(scrollPane);
         add(editBtn);
 

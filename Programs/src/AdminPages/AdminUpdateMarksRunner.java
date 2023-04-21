@@ -4,12 +4,25 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AdminUpdateMarksRunner extends JPanel {
-    private JLabel usernameLabel,usernameField, physicsLabel, chemistryLabel, biologyLabel, mathLabel, nepaliLabel, englishLabel;
-    private JTextField  physicsField, chemistryField, biologyField, mathField, nepaliField, englishField;
-    private JButton submitButton;
-    public AdminUpdateMarksRunner(){
+    private final JLabel usernameLabel;
+    private final JLabel usernameField;
+    private final JLabel physicsLabel;
+    private final JLabel chemistryLabel;
+    private final JLabel biologyLabel;
+    private final JLabel mathLabel;
+    private final JLabel nepaliLabel;
+    private final JLabel englishLabel;
+    private final JTextField physicsField;
+    private final JTextField chemistryField;
+    private final JTextField biologyField;
+    private final JTextField mathField;
+    private final JTextField nepaliField;
+    private final JTextField englishField;
+    private final JButton submitButton;
 
-        setLayout(new GridLayout(9,2));
+    public AdminUpdateMarksRunner() {
+
+        setLayout(new GridLayout(9, 2));
 
         usernameLabel = new JLabel("Username:");
         usernameField = new JLabel();
@@ -51,10 +64,36 @@ public class AdminUpdateMarksRunner extends JPanel {
         submitButton = new JButton("Submit");
         add(submitButton);
     }
-    public JLabel getUsernameField(){
+
+    public JLabel getUsernameField() {
         return usernameField;
     }
-    public JTextField getPhysicsField(){
+
+    public JTextField getPhysicsField() {
         return physicsField;
+    }
+
+    public JTextField getChemistryField() {
+        return chemistryField;
+    }
+
+    public JTextField getBiologyField() {
+        return biologyField;
+    }
+
+    public JTextField getMathField() {
+        return mathField;
+    }
+
+    public JTextField getNepaliField() {
+        return nepaliField;
+    }
+
+    public JTextField getEnglishField() {
+        return englishField;
+    }
+
+    public JButton getSubmitButton() {
+        return submitButton;
     }
 }

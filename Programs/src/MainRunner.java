@@ -895,40 +895,94 @@ public class MainRunner {
         //view marks in admin section
         JTable tableAM = adminViewMarks.getTable();
         DefaultTableModel tableModelAM = adminViewMarks.getTableModel();
-        JButton editMarksAdmin = adminViewMarks.getEditBtn();
+        JButton updateBtnM = adminViewMarks.getEditBtn();
+        JButton updateBtnAM = adminUpdateMarks.getSubmitButton();
         try {
             conn = connect.getConnection();
             String sql = "SELECT * FROM marks";
-            String sql1 = "SELECT * FROM student";
             stmt = conn.createStatement();
-            stmt2 = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            ResultSet rs2 = stmt2.executeQuery(sql1);
             while (rs.next()) {
-                while (rs2.next()) {
-                    int selectedrowIndex = tableAM.getSelectedRow();
-                    String name = rs2.getString("Name");
-                    String username = rs.getString("username");
-                    String physics = rs.getString("physics");
-                    String chemistry = rs.getString("chemistry");
-                    String biology = rs.getString("biology");
-                    String maths = rs.getString("maths");
-                    String nepali = rs.getString("nepali");
-                    String english = rs.getString("english");
-                    String totalMarks = rs.getString("totalMarks");
-                    String percent = rs.getString("percent");
-                    String rank = rs.getString("rank");
-                    String[] vals = {username, name, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank, editMarksAdmin.getText()};
-                    tableModelAM.addRow(vals);
-                    editMarksAdmin.addActionListener(e -> {
-                        tableModelAM.removeRow(selectedrowIndex);
-                    });
-                }
+                String username = rs.getString("username");
+                String physics = rs.getString("physics");
+                String chemistry = rs.getString("chemistry");
+                String biology = rs.getString("biology");
+                String maths = rs.getString("maths");
+                String nepali = rs.getString("nepali");
+                String english = rs.getString("english");
+                String totalMarks = rs.getString("totalMarks");
+                String percent = rs.getString("percent");
+                String rank = rs.getString("rank");
+                String[] vals = {username, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
+                tableModelAM.addRow(vals);
             }
+
             conn.close();
         } catch (SQLException e1) {
             throw new RuntimeException(e1);
         }
+
+        //transfer data in the marks section of admin
+        JLabel usernameFieldM = adminUpdateMarks.getUsernameField();
+        JTextField physicsFieldM = adminUpdateMarks.getPhysicsField();
+        JTextField chemistryFieldM = adminUpdateMarks.getChemistryField();
+        JTextField biologyFieldM = adminUpdateMarks.getBiologyField();
+        JTextField mathsFieldM = adminUpdateMarks.getMathField();
+        JTextField nepaliFieldM = adminUpdateMarks.getNepaliField();
+        JTextField englishFieldM = adminUpdateMarks.getEnglishField();
+
+        updateBtnM.addActionListener(e -> {
+            int selectedRow = tableAM.getSelectedRow();
+            if (selectedRow != -1) {
+                String username = (String) tableAM.getValueAt(selectedRow, 0);
+                String physicsNumber = (String) tableAM.getValueAt(selectedRow, 1);
+                String chemistryNumber = (String) tableAM.getValueAt(selectedRow, 2);
+                String biologyNumber = (String) tableAM.getValueAt(selectedRow, 3);
+                String mathsNumber = (String) tableAM.getValueAt(selectedRow, 4);
+                String nepaliNumber = (String) tableAM.getValueAt(selectedRow, 5);
+                String englishNumber = (String) tableAM.getValueAt(selectedRow, 6);
+                usernameFieldM.setText(username);
+                physicsFieldM.setText(physicsNumber);
+                chemistryFieldM.setText(chemistryNumber);
+                biologyFieldM.setText(biologyNumber);
+                mathsFieldM.setText(mathsNumber);
+                nepaliFieldM.setText(nepaliNumber);
+                englishFieldM.setText(englishNumber);
+            } else {
+                JOptionPane.showMessageDialog(frame, "No Content Selected.");
+            }
+        });
+
+        //submit button for updating marks in admin
+        updateBtnAM.addActionListener(e -> {
+            try {
+                conn = connect.getConnection();
+                String SQLMarksUpdateTable = "UPDATE marks SET physics=?,chemistry=?,biology=?,maths=?,nepali=?,english=? WHERE username =?";
+                PreparedStatement preparedStatementUpdateMarksTable = conn.prepareStatement(SQLMarksUpdateTable);
+                preparedStatementUpdateMarksTable.setString(1, physicsFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(2, chemistryFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(3, biologyFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(4, mathsFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(5, nepaliFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(6, englishFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(7,usernameFieldM.getText());
+                int rowsAffected = preparedStatementUpdateMarksTable.executeUpdate();
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(frame, "Update Successfully");
+                    tableAM.repaint();
+                }
+                usernameFieldM.setText("");
+                physicsFieldM.setText("");
+                chemistryFieldM.setText("");
+                biologyFieldM.setText("");
+                mathsFieldM.setText("");
+                nepaliFieldM.setText("");
+                englishFieldM.setText("");
+            } catch (SQLException error) {
+                JOptionPane.showMessageDialog(frame, "Updation error");
+            }
+        });
+
 
         //view student in facilitator
         DefaultTableModel tableModelF = facilitatorViewStudent.getTableModel();
