@@ -3,10 +3,7 @@ import FacilitatorPages.*;
 import Frames.MyFrame;
 import Modules.Facilitator;
 import Modules.Student;
-import Reusable.AdminNavigationBar;
-import Reusable.FacilitatorNavigationBar;
-import Reusable.LetUsConnect;
-import Reusable.StudentNavigationBar;
+import Reusable.*;
 import StudentPages.StudentHomeRunner;
 import StudentPages.StudentViewFacilitator;
 import StudentPages.StudentViewMarks;
@@ -15,10 +12,7 @@ import StudentPages.StudentViewStudent;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.sql.*;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -28,6 +22,7 @@ import java.util.regex.Pattern;
 
 public class MainRunner {
     static Connection conn;
+    static RefreshButton refreshButton;
 
     public static void main(String[] s) {
 
@@ -39,6 +34,10 @@ public class MainRunner {
         AdminNavigationBar adminNavbar = new AdminNavigationBar();
         FacilitatorNavigationBar facilitatorNavbar = new FacilitatorNavigationBar();
         StudentNavigationBar studentNavbar = new StudentNavigationBar();
+//        studentNavbar.add(refreshButton);
+//        adminNavbar.add(refreshButton);
+//        facilitatorNavbar.add(refreshButton);
+//        studentNavbar.add(refreshButton);
 
 
         //these are the objects of the admin panel
@@ -986,6 +985,7 @@ public class MainRunner {
 
         //view student in facilitator
         DefaultTableModel tableModelF = facilitatorViewStudent.getTableModel();
+        JTable tableF = facilitatorViewStudent.getTable();
 
         try {
             conn = connect.getConnection();
@@ -1013,6 +1013,7 @@ public class MainRunner {
 
         //view facilitator in facilitator
         DefaultTableModel tableModelFF = facilitatorViewFacilitator.getTableModel();
+        JTable tableFF = facilitatorViewFacilitator.getTable();
         try {
             conn = connect.getConnection();
             String sql = "SELECT * FROM facilitator";
@@ -1128,6 +1129,7 @@ public class MainRunner {
 
         //view student in student section
         DefaultTableModel tableModelSS = studentViewStudent.getTableModel();
+        JTable tableSS = studentViewStudent.getTable();
         try {
             conn = connect.getConnection();
             String sql = "SELECT * FROM student";
@@ -1154,6 +1156,7 @@ public class MainRunner {
 
         //view facilitator in student section
         DefaultTableModel tableModelSF = studentViewFacilitator.getTableModel();
+        JTable tableSF = adminViewFacilitator.getTable();
         try {
             conn = connect.getConnection();
             String sql = "SELECT * FROM facilitator";
@@ -1181,17 +1184,14 @@ public class MainRunner {
 
         //view marks in student section
         DefaultTableModel tableModelSM = studentViewMarks.getTableModel();
+        JTable tableSM = adminViewMarks.getTable();
         try {
             conn = connect.getConnection();
             String sql = "SELECT * FROM marks";
-            String sql1 = "SELECT * FROM student";
-            stmt = conn.createStatement();
-            stmt2 = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            ResultSet rs2 = stmt2.executeQuery(sql1);
+            PreparedStatement preparedStatementViewMarksValidated = conn.prepareStatement(sql);
+            ResultSet rs = preparedStatementViewMarksValidated.executeQuery();
+
             while (rs.next()) {
-                while (rs2.next()) {
-                    String name = rs2.getString("Name");
                     String username = rs.getString("username");
                     String physics = rs.getString("physics");
                     String chemistry = rs.getString("chemistry");
@@ -1202,9 +1202,8 @@ public class MainRunner {
                     String totalMarks = rs.getString("totalMarks");
                     String percent = rs.getString("percent");
                     String rank = rs.getString("rank");
-                    String[] vals = {username, name, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
+                    String[] vals = {username, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
                     tableModelSM.addRow(vals);
-                }
             }
             conn.close();
 
@@ -1212,7 +1211,23 @@ public class MainRunner {
             throw new RuntimeException(e1);
         }
 
+        //refresh button clicking to refresh all table
+
+//        JButton refreshBtn = refreshButton.getRefreshBtn();
+//        refreshBtn.addActionListener(e->{
+//            tableAM.repaint();
+//            tableAF.repaint();
+//            tableA.repaint();
+//            tableFM.repaint();
+//            tableFF.repaint();
+//            tableSF.repaint();
+//            tableSF.repaint();
+//            tableSM.repaint();
+//            tableSS.repaint();
+//        });
+
         frame.setVisible(true);
 
     }
+
 }

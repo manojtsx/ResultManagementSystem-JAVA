@@ -6,7 +6,6 @@ import java.awt.*;
 public class StudentNavigationBar extends JMenuBar {
     JMenu home, logout;
     JMenuItem viewFacilitator, viewStudent, viewMarks;
-
     public StudentNavigationBar() {
         home = new JMenu("Home");
         JMenu facilitator = new JMenu("Facilitator");
