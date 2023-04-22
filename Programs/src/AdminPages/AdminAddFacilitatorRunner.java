@@ -111,6 +111,8 @@ public class AdminAddFacilitatorRunner extends JPanel {
         submitButton.setForeground(Color.WHITE);
         submitButton.setBackground(Color.BLUE);
 
+        // Set background color of the container to white
+        setBackground(new Color(229, 190, 236));
     }
 
 

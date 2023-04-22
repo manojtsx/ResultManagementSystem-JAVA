@@ -54,7 +54,16 @@ public class StudentHomeRunner extends JPanel {
         dashboardPanel.add(email);
         dashboardPanel.add(t);
         this.add(dashboardPanel, BorderLayout.CENTER);
-        setBackground(Color.WHITE);
+        // Set background color of the container to white
+        setBackground(new Color(229, 190, 236));
+
+        //make the background transparent
+        name.setOpaque(false);
+        user.setOpaque(false);
+        position.setOpaque(false);
+        phone.setOpaque(false);
+        email.setOpaque(false);
+        dashboardPanel.setOpaque(false);
     }
     public JLabel getNameDetail() {
         return nameDetail;

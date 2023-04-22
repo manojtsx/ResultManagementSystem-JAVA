@@ -45,6 +45,8 @@ public class AdminUpdateStudentRunner extends JPanel {
         add(submitBtn);
 
         setPreferredSize(new Dimension(600, this.getPreferredSize().height));
+        // Set background color of the container to white
+        setBackground(new Color(229, 190, 236));
     }
 
     public JTextField getNameTextField() {

@@ -47,6 +47,9 @@ public class AdminViewFacilitatorRunner extends JPanel {
         header.setBackground(Color.WHITE);
         header.setForeground(Color.BLACK);
         header.setFont(new Font("SansSerif", Font.BOLD, 16));
+
+        // Set background color of the container to white
+        setBackground(new Color(229, 190, 236));
     }
 
     public DefaultTableModel getTableModel() {

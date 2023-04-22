@@ -63,6 +63,8 @@ public class AdminUpdateMarksRunner extends JPanel {
         // Create submit button
         submitButton = new JButton("Submit");
         add(submitButton);
+        // Set background color of the container to white
+        setBackground(new Color(229, 190, 236));
     }
 
     public JLabel getUsernameField() {

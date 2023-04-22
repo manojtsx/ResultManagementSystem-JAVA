@@ -32,13 +32,15 @@ public class StudentNavigationBar extends JMenuBar {
         this.add(logout);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setBackground(Color.BLUE);
+        setBackground(new Color(42, 47, 79));
         home.setForeground(Color.white);
         student.setForeground(Color.white);
         facilitator.setForeground(Color.white);
         marks.setForeground(Color.white);
         logout.setForeground(Color.white);
         setPreferredSize(new Dimension(screenSize.width,60));
+        // Set custom UIManager for JMenuItem to change background color
+        UIManager.put("MenuItem.background", new Color(145, 127, 179));
     }
 
     public JMenu getHome() {

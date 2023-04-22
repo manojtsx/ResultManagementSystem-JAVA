@@ -108,7 +108,8 @@ public class AdminAddStudentRunner extends JPanel {
 // Set foreground and background colors for the submit button
         submitButton.setForeground(Color.WHITE);
         submitButton.setBackground(Color.BLUE);
-
+// Set background color of the container to white
+        setBackground(new Color(229, 190, 236));
 
     }
         public JTextField getNameField(){

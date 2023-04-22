@@ -1,11 +1,5 @@
-import AdminPages.AdminHomeRunner;
-import Frames.MyFrame;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.*;
 
 public class LoginWindow extends JPanel{
     JButton signInBtn;
@@ -20,7 +14,7 @@ public class LoginWindow extends JPanel{
         int height = (int) screensize.getHeight();
         this.setLayout(new BorderLayout());
         JPanel panel1 = new JPanel();
-        panel1.setBackground(Color.white);
+        panel1.setBackground(new Color(253, 226, 243));
         panel1.setPreferredSize(new Dimension((int) (width * 0.5), height));
 
         panel1.setLayout(null);
@@ -39,8 +33,8 @@ public class LoginWindow extends JPanel{
 
         signInBtn = new JButton("Sign In");
         signInBtn.setPreferredSize(new Dimension(300, 30));
-        signInBtn.setBounds(60, 300, 500, 30);
-        signInBtn.setBackground(Color.black);
+        signInBtn.setBounds(60, 340, 500, 30);
+        signInBtn.setBackground(new Color(42, 47, 79));
         signInBtn.setForeground(Color.white);
         signInBtn.setFont(new Font("Time New Roman", 800, 20));
 
@@ -54,7 +48,7 @@ public class LoginWindow extends JPanel{
 
         JPanel panel2 = new JPanel();
         panel2.setPreferredSize(new Dimension((int) (width * 0.5), height));
-        panel2.setBackground(Color.blue);
+        panel2.setBackground(new Color(42, 47, 79));
 
         panel2.setLayout(new BorderLayout());
         JLabel signIn = new JLabel("Sign In");

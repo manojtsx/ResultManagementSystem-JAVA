@@ -58,12 +58,12 @@ public class AdminHomeRunner extends JPanel {
         dashboardPanel.setPreferredSize(new Dimension(300, 400));
 
 // Set background color for panels
-        name.setBackground(Color.WHITE);
-        user.setBackground(Color.WHITE);
-        position.setBackground(Color.WHITE);
-        phone.setBackground(Color.WHITE);
-        email.setBackground(Color.WHITE);
-        dashboardPanel.setBackground(Color.WHITE);
+        name.setOpaque(false);
+        user.setOpaque(false);
+        position.setOpaque(false);
+        phone.setOpaque(false);
+        email.setOpaque(false);
+        dashboardPanel.setOpaque(false);
 
 // Set font styles for labels
         Font labelFont = new Font("Arial", Font.BOLD, 16);
@@ -86,7 +86,7 @@ public class AdminHomeRunner extends JPanel {
         this.add(dashboardPanel);
 
 // Set background color of the container to white
-        setBackground(Color.WHITE);
+        setBackground(new Color(229, 190, 236));
 
     }
 

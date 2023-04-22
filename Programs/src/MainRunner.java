@@ -201,6 +201,8 @@ public class MainRunner {
                     pass.setText("");
                     JOptionPane.showMessageDialog(frame, "Username or password incorrect", "Error Message", JOptionPane.ERROR_MESSAGE);
                 }
+                stmt.close();
+                result.close();
                 conn.close();
             } catch (SQLException err) {
                 System.out.println(err);
@@ -212,7 +214,6 @@ public class MainRunner {
         user.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     pass.requestFocus();
                 }
@@ -299,6 +300,8 @@ public class MainRunner {
                                 pass.setText("");
                                 JOptionPane.showMessageDialog(frame, "Username or password incorrect", "Error Message", JOptionPane.ERROR_MESSAGE);
                             }
+                            stmt.close();
+                            result.close();
                             conn.close();
                         } catch (SQLException err) {
                             System.out.println(err);
@@ -542,6 +545,9 @@ public class MainRunner {
                         asparentField.setText("");
                         JOptionPane.showMessageDialog(frame, "Student inserted into the database", "Insertion Successful.", JOptionPane.INFORMATION_MESSAGE);
                         conn.close();
+                        stmt1.close();
+                        stmt.close();
+                        stmt2.close();
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     } finally {
@@ -566,7 +572,6 @@ public class MainRunner {
         JButton updateBtnS = adminViewStudent.getUpdateBtn();
         JButton updateBtnAS = adminUpdateStudent.getSubmitBtn();
         Statement stmt = null;
-        Statement stmt2 = null;
         try {
             conn = connect.getConnection();
             String sql = "SELECT * FROM student";
@@ -619,7 +624,10 @@ public class MainRunner {
                     } else {
                         JOptionPane.showMessageDialog(frame, "Content not found for the given ID.");
                     }
-
+                    preparedStatementUserTable.close();
+                    preparedStatementStudentTable.close();
+                    preparedStatementMarksTable.close();
+                    conn.close();
                 } catch (SQLException error) {
                     throw new RuntimeException(error);
                 }
@@ -681,7 +689,10 @@ public class MainRunner {
                 usernameLabel.setText("");
                 parentNameTextField.setText("");
 
+                preparedStatementUpdateStudentTable.close();
+                preparedStatementUpdateUserTable.close();
                 conn.close();
+
             } catch (SQLException error) {
                 JOptionPane.showMessageDialog(frame, "Updation error");
             }
@@ -712,9 +723,9 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
                 tableModelAF.addRow(vals);
             }
-            conn.close();
             rs.close();
             stmt.close();
+            conn.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -746,6 +757,8 @@ public class MainRunner {
                     } else {
                         JOptionPane.showMessageDialog(frame, "Content not found for the given ID.");
                     }
+                    preparedStatementFacilitatorTable.close();
+                    preparedStatementUserTable.close();
                     conn.close();
                 } catch (SQLException error) {
                     throw new RuntimeException(error);
@@ -808,6 +821,8 @@ public class MainRunner {
                 emailTextFieldF.setText("");
                 usernameLabelF.setText("");
                 subNameTextFieldF.setSelectedItem("Physics");
+                preparedStatementUpdateUserTable.close();
+                preparedStatementUpdateFacilitatorTable.close();
                 conn.close();
             } catch (SQLException error) {
                 JOptionPane.showMessageDialog(frame, "Updation error");
@@ -872,6 +887,8 @@ public class MainRunner {
                         afemailField.setText("");
                         afsubField.setSelectedItem("Physics");
                         JOptionPane.showMessageDialog(frame, "Facilitator inserted into the database", "Insertion Successful.", JOptionPane.INFORMATION_MESSAGE);
+                        stmt12.close();
+                        stmt1.close();
                         conn.close();
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
@@ -896,10 +913,8 @@ public class MainRunner {
         JButton updateBtnAM = adminUpdateMarks.getSubmitButton();
         try {
             conn = connect.getConnection();
-            String sql = "SELECT * FROM marks WHERE username=?";
-            PreparedStatement preparedStatementValidateUserLookMark= conn.prepareStatement(sql);
-//            stmt = conn.createStatement();
-            preparedStatementValidateUserLookMark.setString(1,user_value.get());
+            String sql = "SELECT * FROM marks";
+            PreparedStatement preparedStatementValidateUserLookMark = conn.prepareStatement(sql);
             ResultSet rs = preparedStatementValidateUserLookMark.executeQuery();
             while (rs.next()) {
                 String username = rs.getString("username");
@@ -915,7 +930,8 @@ public class MainRunner {
                 String[] vals = {username, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
                 tableModelAM.addRow(vals);
             }
-
+            rs.next();
+            preparedStatementValidateUserLookMark.close();
             conn.close();
         } catch (SQLException e1) {
             throw new RuntimeException(e1);
@@ -977,6 +993,8 @@ public class MainRunner {
                 mathsFieldM.setText("");
                 nepaliFieldM.setText("");
                 englishFieldM.setText("");
+                preparedStatementUpdateMarksTable.close();
+                conn.close();
             } catch (SQLException error) {
                 JOptionPane.showMessageDialog(frame, "Updation error");
             }
@@ -1004,9 +1022,9 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
                 tableModelF.addRow(vals);
             }
-            conn.close();
             rs.close();
             stmt.close();
+            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -1031,9 +1049,9 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
                 tableModelFF.addRow(vals);
             }
-            conn.close();
             rs.close();
             stmt.close();
+            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -1061,10 +1079,13 @@ public class MainRunner {
                     String[] vals = {username, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
                     tableModelFM.addRow(vals);
             }
+            rs.close();
+            stmt.close();
             conn.close();
         } catch (SQLException e1) {
             throw new RuntimeException(e1);
         }
+
         //transfer data in the marks section in facilitator section
         JLabel usernameFieldFM = facilitatorUpdateMarks.getUsernameField();
         JTextField physicsFieldFM = facilitatorUpdateMarks.getPhysicsField();
@@ -1121,6 +1142,8 @@ public class MainRunner {
                 mathsFieldFM.setText("");
                 nepaliFieldFM.setText("");
                 englishFieldFM.setText("");
+                preparedStatementUpdateMarksTable.close();
+                conn.close();
             } catch (SQLException error) {
                 JOptionPane.showMessageDialog(frame, "Updation error");
             }
@@ -1147,9 +1170,9 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
                 tableModelSS.addRow(vals);
             }
-            conn.close();
             rs.close();
             stmt.close();
+            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -1174,9 +1197,9 @@ public class MainRunner {
                 String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
                 tableModelSF.addRow(vals);
             }
-            conn.close();
             rs.close();
             stmt.close();
+            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -1205,6 +1228,8 @@ public class MainRunner {
                     String[] vals = {username, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
                     tableModelSM.addRow(vals);
             }
+            rs.close();
+            preparedStatementViewMarksValidated.close();
             conn.close();
 
         } catch (SQLException e1) {

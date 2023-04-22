@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.tools.Tool;
 import java.awt.*;
 
 public class AdminViewStudentRunner extends JPanel {
@@ -40,12 +43,27 @@ public class AdminViewStudentRunner extends JPanel {
         table.setFillsViewportHeight(true);
         table.setRowHeight(30);
 
+        // Create a JScrollPane for the table header
+        JScrollPane headerScrollPane = new JScrollPane(table.getTableHeader());
+        headerScrollPane.setPreferredSize(new Dimension(0, table.getTableHeader().getPreferredSize().height));
+        // Set the table header as the row header view of the main scroll pane
+        scrollPane.setRowHeaderView(headerScrollPane);
 
         // customize the table header
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.WHITE);
         header.setForeground(Color.BLACK);
         header.setFont(new Font("SansSerif", Font.BOLD, 16));
+
+        // Set background color of the container to white
+        setBackground(new Color(229, 190, 236));
+
+        // Set auto-resize mode to off
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension preferredSize = new Dimension((int) ((screenSize.width)*0.5), getHeight()); // set your desired width and height
+        table.setPreferredSize(preferredSize);
+
     }
 
     public DefaultTableModel getTableModel() {
