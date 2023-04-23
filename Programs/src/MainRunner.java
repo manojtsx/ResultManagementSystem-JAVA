@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,11 +21,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainRunner {
+public class MainRunner extends JFrame{
     static Connection conn;
     static RefreshButton refreshButton;
 
-    public static void main(String[] s) {
+   public MainRunner() {
 
         //these are panel classes obtained from different packages
         MyFrame frame = new MyFrame();
@@ -373,10 +374,13 @@ public class MainRunner {
         alogout.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(login);
-                frame.getContentPane().revalidate();
-                frame.getContentPane().repaint();
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to log out?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    frame.getContentPane().removeAll();
+                    frame.getContentPane().add(login);
+                    frame.getContentPane().revalidate();
+                    frame.getContentPane().repaint();
+                }
             }
         });
 
@@ -430,10 +434,13 @@ public class MainRunner {
         flogout.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(login);
-                frame.getContentPane().revalidate();
-                frame.getContentPane().repaint();
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to log out?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    frame.getContentPane().removeAll();
+                    frame.getContentPane().add(login);
+                    frame.getContentPane().revalidate();
+                    frame.getContentPane().repaint();
+                }
             }
         });
         //event on clicking the home of student Section
@@ -451,10 +458,13 @@ public class MainRunner {
         slogout.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(login);
-                frame.getContentPane().revalidate();
-                frame.getContentPane().repaint();
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to log out?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    frame.getContentPane().removeAll();
+                    frame.getContentPane().add(login);
+                    frame.getContentPane().revalidate();
+                    frame.getContentPane().repaint();
+                }
             }
         });
         //event on clicking view facilitator in student section
@@ -1228,22 +1238,43 @@ public class MainRunner {
         }
 
         //refresh button clicking to refresh all table
-
-//        JButton refreshBtn = refreshButton.getRefreshBtn();
-//        refreshBtn.addActionListener(e->{
-//            tableAM.repaint();
-//            tableAF.repaint();
-//            tableA.repaint();
-//            tableFM.repaint();
-//            tableFF.repaint();
-//            tableSF.repaint();
-//            tableSF.repaint();
-//            tableSM.repaint();
-//            tableSS.repaint();
-//        });
+addKeyListener(new KeyAdapter(){
+    public void keyPressed(KeyEvent e) {
+        // Check if Control key and R key are pressed simultaneously
+        if (e.isControlDown() && e.getKeyChar() == 'r') {
+            // Call the main method again to restart the application
+            restartApplication();
+            // Add your code here to handle the Ctrl + R key combination
+        }
+    }
+});
 
         frame.setVisible(true);
-
     }
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            MainRunner example = new MainRunner();
+            example.requestFocus();
+        });
+    }
+
+
+    private static void restartApplication() {
+        // Get the Java Virtual Machine command to restart the application
+        String javaCmd = System.getProperty("java.home") + "/bin/java";
+        String className = MainRunner.class.getName();
+        String classpath = System.getProperty("java.class.path");
+        String cmd = javaCmd + " -cp " + classpath + " " + className;
+
+        try {
+            // Start a new JVM process to run the main method again
+            Runtime.getRuntime().exec(cmd);
+
+            // Close the current instance of the application
+            System.exit(0);
+        } catch ( IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
