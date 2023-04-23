@@ -10,7 +10,7 @@ public class StudentViewMarks extends JPanel {
     DefaultTableModel tableModel;
     private JScrollPane scrollPane;
     public StudentViewMarks(){
-        String[] columns = {"Username", "Name", "Physics", "Chemistry", "Biology", "Math", "Nepali", "English", "Total Marks", "Percent", "Rank"};
+        String[] columns = {"Username", "Name", "Physics", "Chemistry", "Biology", "Math", "Nepali", "English"};
         tableModel = new DefaultTableModel(columns, 0);
         table = new JTable(tableModel);
         scrollPane = new JScrollPane(table);

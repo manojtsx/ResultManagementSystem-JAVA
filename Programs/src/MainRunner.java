@@ -924,10 +924,7 @@ public class MainRunner {
                 String maths = rs.getString("maths");
                 String nepali = rs.getString("nepali");
                 String english = rs.getString("english");
-                String totalMarks = rs.getString("totalMarks");
-                String percent = rs.getString("percent");
-                String rank = rs.getString("rank");
-                String[] vals = {username, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
+                String[] vals = {username, physics, chemistry, biology, maths, nepali, english};
                 tableModelAM.addRow(vals);
             }
             rs.next();
@@ -1073,10 +1070,7 @@ public class MainRunner {
                     String maths = rs.getString("maths");
                     String nepali = rs.getString("nepali");
                     String english = rs.getString("english");
-                    String totalMarks = rs.getString("totalMarks");
-                    String percent = rs.getString("percent");
-                    String rank = rs.getString("rank");
-                    String[] vals = {username, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
+                    String[] vals = {username, physics, chemistry, biology, maths, nepali, english};
                     tableModelFM.addRow(vals);
             }
             rs.close();
@@ -1222,10 +1216,7 @@ public class MainRunner {
                     String maths = rs.getString("maths");
                     String nepali = rs.getString("nepali");
                     String english = rs.getString("english");
-                    String totalMarks = rs.getString("totalMarks");
-                    String percent = rs.getString("percent");
-                    String rank = rs.getString("rank");
-                    String[] vals = {username, physics, chemistry, biology, maths, nepali, english, totalMarks, percent, rank};
+                    String[] vals = {username, physics, chemistry, biology, maths, nepali, english};
                     tableModelSM.addRow(vals);
             }
             rs.close();

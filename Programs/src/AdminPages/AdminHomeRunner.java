@@ -1,6 +1,4 @@
 package AdminPages;
-import Reusable.TotalNumber;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,8 +6,6 @@ public class AdminHomeRunner extends JPanel {
     JLabel nameDetail, userDetail, positionDetail,phoneDetail, emailDetail;
 
     public AdminHomeRunner() {
-
-        TotalNumber t= new TotalNumber();
         JPanel dashboardPanel = new JPanel();
 
         JPanel name = new JPanel();
@@ -52,7 +48,6 @@ public class AdminHomeRunner extends JPanel {
         dashboardPanel.add(position);
         dashboardPanel.add(phone);
         dashboardPanel.add(email);
-        dashboardPanel.add(t);
 
 // Set preferred size for the dashboardPanel
         dashboardPanel.setPreferredSize(new Dimension(300, 400));
