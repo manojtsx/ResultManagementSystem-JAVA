@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2023 at 05:12 PM
+-- Generation Time: Apr 24, 2023 at 03:35 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -36,15 +36,6 @@ CREATE TABLE `facilitator` (
   `SubName` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `facilitator`
---
-
-INSERT INTO `facilitator` (`FID`, `username`, `Name`, `PhoneNo`, `Email`, `SubName`) VALUES
-(9, 'remon', 'Romon Shrestha', '981668313', 'remon@gmail.com', 'nepali'),
-(10, 'jjgjgjhghj', 'hgjhghj', '68767887', 'remon@gmail.com', 'Math'),
-(11, 'adsfa', 'hasdhf', '234243', 'gmaasdffasdf@dfas.com', 'Nepali');
-
 -- --------------------------------------------------------
 
 --
@@ -62,14 +53,6 @@ CREATE TABLE `marks` (
   `english` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `marks`
---
-
-INSERT INTO `marks` (`SID`, `username`, `physics`, `chemistry`, `biology`, `maths`, `nepali`, `english`) VALUES
-(4, 'monika', 10, 200, 0, 0, 0, 0),
-(5, 'seezu', 100, 0, 0, 0, 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -84,14 +67,6 @@ CREATE TABLE `student` (
   `PhoneNo` varchar(100) NOT NULL,
   `Email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `student`
---
-
-INSERT INTO `student` (`SID`, `username`, `Name`, `ParentName`, `PhoneNo`, `Email`) VALUES
-(5, 'monika', 'Motika Shrestha', 'Hari Kumar Shrestha', '9829182166', 'monika@gmail.com'),
-(6, 'seezu', 'seezu', 'seezu kumari', '981673123', 'seezu@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -114,13 +89,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `usertype`, `Name`, `PhoneNo`, `Email`) VALUES
-(2, 'admin', 'admin', 'admin', 'Admin Saheb', '91283091283', 'manojbicte@gmail.com'),
-(21, 'monika', 'monika', 'student', 'Motika Shrestha', '9829182166', 'monika@gmail.com'),
-(23, 'manoj', 'hello', 'facilitator', 'Manoj Shrsetha', '1223123', 'shresr@gmail.com'),
-(24, 'remon', 'remon', 'facilitator', 'Romon Shrestha', '981668313', 'remon@gmail.com'),
-(25, 'jjgjgjhghj', 'hjghjgj', 'facilitator', 'hgjhghj', '68767887', 'remon@gmail.com'),
-(26, 'seezu', 'seezu', 'student', 'seezu', '981673123', 'seezu@gmail.com'),
-(27, 'adsfa', 'asdf', 'facilitator', 'hasdhf', '234243', 'gmaasdffasdf@dfas.com');
+(2, 'admin', 'admin', 'admin', 'Admin Saheb', '91283091283', 'manojbicte@gmail.com');
 
 --
 -- Indexes for dumped tables
