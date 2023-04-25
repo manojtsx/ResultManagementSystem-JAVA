@@ -20,11 +20,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainRunner extends JFrame{
+public class MainRunner extends JFrame {
     static Connection conn;
     static RefreshButton refreshButton;
 
-   public MainRunner() {
+    public MainRunner() {
 
         //these are panel classes obtained from different packages
         MyFrame frame = new MyFrame();
@@ -34,10 +34,6 @@ public class MainRunner extends JFrame{
         AdminNavigationBar adminNavbar = new AdminNavigationBar();
         FacilitatorNavigationBar facilitatorNavbar = new FacilitatorNavigationBar();
         StudentNavigationBar studentNavbar = new StudentNavigationBar();
-//        studentNavbar.add(refreshButton);
-//        adminNavbar.add(refreshButton);
-//        facilitatorNavbar.add(refreshButton);
-//        studentNavbar.add(refreshButton);
 
 
         //these are the objects of the admin panel
@@ -65,6 +61,7 @@ public class MainRunner extends JFrame{
         StudentViewStudent studentViewStudent = new StudentViewStudent();
         StudentViewMarks studentViewMarks = new StudentViewMarks();
 
+        /*-------------------------Admin Pages-----------------------------*/
         //these are the detail obtained from the adminhomerunner
         JButton signInBtn = login.getButton();
         JLabel anameDetail = adminHome.getNameDetail();
@@ -74,12 +71,6 @@ public class MainRunner extends JFrame{
         JLabel aemailDetail = adminHome.getEmailDetail();
 
 
-        //these are the detail obtained from the facilitatorhomerunner
-        JLabel fnameDetail = facilitatorHome.getNameDetail();
-        JLabel fuserDetail = facilitatorHome.getUserDetail();
-        JLabel fpositionDetail = facilitatorHome.getPositionDetail();
-        JLabel fphoneDetail = facilitatorHome.getPhoneDetail();
-        JLabel femailDetail = facilitatorHome.getEmailDetail();
 
         //these are the detail obtained from the studenthomerunner
         JLabel snameDetail = studentHome.getNameDetail();
@@ -97,6 +88,76 @@ public class MainRunner extends JFrame{
         JMenuItem aviewStudent = adminNavbar.getViewStudent();
         JMenuItem aViewMarks = adminNavbar.getViewMarks();
 
+        //these are obtained from the adminAddStudent
+        JButton assubmitbutton = adminAddStudent.getSubmitButton();
+        JTextField asnameField = adminAddStudent.getNameField();
+        JTextField asusernameField = adminAddStudent.getUsernameField();
+        JTextField aspasswordField = adminAddStudent.getPasswordField();
+        JTextField asPhoneField = adminAddStudent.getPhoneField();
+        JTextField asemailField = adminAddStudent.getEmailField();
+        JTextField asparentField = adminAddStudent.getParentField();
+
+        //these are obtained from the adminViewStudent
+        DefaultTableModel tableModelA = adminViewStudent.getTableModel();
+        JTable tableA = adminViewStudent.getTable();
+        JButton removeBtnS = adminViewStudent.getRemoveBtn();
+        JButton updateBtnS = adminViewStudent.getUpdateBtn();
+        JButton updateBtnAS = adminUpdateStudent.getSubmitBtn();
+
+        //these are obtained from the admin update student
+        JTextField nameTextField = adminUpdateStudent.getNameTextField();
+        JTextField emailTextField = adminUpdateStudent.getEmailTextField();
+        JTextField numberTextField = adminUpdateStudent.getPhoneNumberTextField();
+        JTextField parentNameTextField = adminUpdateStudent.getParentNameTextField();
+        JLabel usernameLabel = adminUpdateStudent.getUsernameLabel();
+
+        //these are from admin add facilitator
+        JButton afsubmitbutton = adminAddFacilitator.getSubmitButton();
+        JTextField afnameField = adminAddFacilitator.getNameField();
+        JTextField afusernameField = adminAddFacilitator.getUsernameField();
+        JTextField afpasswordField = adminAddFacilitator.getPasswordField();
+        JTextField afPhoneField = adminAddFacilitator.getPhoneField();
+        JTextField afemailField = adminAddFacilitator.getEmailField();
+        JComboBox<String> afsubField = adminAddFacilitator.getSubField();
+
+        //these are from the admin view facilitator
+        DefaultTableModel tableModelAF = adminViewFacilitator.getTableModel();
+        JTable tableAF = adminViewFacilitator.getTable();
+        JButton removeBtnF = adminViewFacilitator.getRemoveBtn();
+        JButton updateBtnF = adminViewFacilitator.getUpdateBtn();
+        JButton updateBtnAF = adminUpdateFacilitator.getSubmitBtn();
+
+        //view marks in admin section
+        JTable tableAM = adminViewMarks.getTable();
+        DefaultTableModel tableModelAM = adminViewMarks.getTableModel();
+        JButton updateBtnM = adminViewMarks.getEditBtn();
+        JButton updateBtnAM = adminUpdateMarks.getSubmitButton();
+
+        //these are from the student view facilitator
+        DefaultTableModel tableModelSF = studentViewFacilitator.getTableModel();
+        JTable tableSF = adminViewFacilitator.getTable();
+
+        //these are from the student view marks
+        DefaultTableModel tableModelSM = studentViewMarks.getTableModel();
+        JTable tableSM = adminViewMarks.getTable();
+
+        //these are from the transfer field
+        JLabel usernameFieldM = adminUpdateMarks.getUsernameField();
+        JTextField physicsFieldM = adminUpdateMarks.getPhysicsField();
+        JTextField chemistryFieldM = adminUpdateMarks.getChemistryField();
+        JTextField biologyFieldM = adminUpdateMarks.getBiologyField();
+        JTextField mathsFieldM = adminUpdateMarks.getMathField();
+        JTextField nepaliFieldM = adminUpdateMarks.getNepaliField();
+        JTextField englishFieldM = adminUpdateMarks.getEnglishField();
+
+        //this is from admin update facilitator
+        JTextField nameTextFieldF = adminUpdateFacilitator.getNameTextField();
+        JTextField emailTextFieldF = adminUpdateFacilitator.getEmailTextField();
+        JTextField numberTextFieldF = adminUpdateFacilitator.getPhoneNumberTextField();
+        JComboBox<String> subNameTextFieldF = adminUpdateFacilitator.getSubNameTextField();
+        JLabel usernameLabelF = adminUpdateFacilitator.getUsernameLabel();
+
+        /*---------------------------Facilitator Page----------------*/
         //these are the menu item obtained from the faciliatornavigation bar
         JMenu fhome = facilitatorNavbar.getHome();
         JMenu flogout = facilitatorNavbar.getLogout();
@@ -104,20 +165,52 @@ public class MainRunner extends JFrame{
         JMenuItem fviewStudent = facilitatorNavbar.getViewStudent();
         JMenuItem fViewMarks = facilitatorNavbar.getViewMarks();
 
-        //these are the menu items obtained from the studentnavigation bar
+        //these are the detail obtained from the facilitatorhomerunner
+        JLabel fnameDetail = facilitatorHome.getNameDetail();
+        JLabel fuserDetail = facilitatorHome.getUserDetail();
+        JLabel fpositionDetail = facilitatorHome.getPositionDetail();
+        JLabel fphoneDetail = facilitatorHome.getPhoneDetail();
+        JLabel femailDetail = facilitatorHome.getEmailDetail();
+
+        //view marks in facilitator section
+        JTable tableFM = facilitatorViewMarks.getTable();
+        DefaultTableModel tableModelFM = facilitatorViewMarks.getTableModel();
+        JButton updateBtnEM = facilitatorViewMarks.getEditBtn();
+        JButton updateBtnFM = facilitatorUpdateMarks.getSubmitButton();
+
+        //these are from view faciliator
+        DefaultTableModel tableModelFF = facilitatorViewFacilitator.getTableModel();
+        JTable tableFF = facilitatorViewFacilitator.getTable();
+
+        //these are from facilitator update marks
+        JLabel usernameFieldFM = facilitatorUpdateMarks.getUsernameField();
+        JTextField physicsFieldFM = facilitatorUpdateMarks.getPhysicsField();
+        JTextField chemistryFieldFM = facilitatorUpdateMarks.getChemistryField();
+        JTextField biologyFieldFM = facilitatorUpdateMarks.getBiologyField();
+        JTextField mathsFieldFM = facilitatorUpdateMarks.getMathField();
+        JTextField nepaliFieldFM = facilitatorUpdateMarks.getNepaliField();
+        JTextField englishFieldFM = facilitatorUpdateMarks.getEnglishField();
+
+        DefaultTableModel tableModelF = facilitatorViewStudent.getTableModel();
+        JTable tableF = facilitatorViewStudent.getTable();
+
+        /*------------------------Student Pages--------------------------*/
+        //these are the menu items obtained from the student Navigation bar
         JMenu shome = studentNavbar.getHome();
         JMenu slogout = studentNavbar.getLogout();
         JMenuItem sviewFacilitator = studentNavbar.getViewFacilitator();
         JMenuItem sviewStudent = studentNavbar.getViewStudent();
         JMenuItem sviewMarks = studentNavbar.getViewMarks();
 
+        //theser are from student view student
+        DefaultTableModel tableModelSS = studentViewStudent.getTableModel();
+        JTable tableSS = studentViewStudent.getTable();
 
+        /*------------------Login Windoe--------------------*/
         //these are obtained from the login window
         JTextField user = login.getTextField();
         JPasswordField pass = login.getPasswordField();
         LetUsConnect connect = new LetUsConnect();
-
-
 
 
         //actionlistener on clicking the login button
@@ -189,7 +282,7 @@ public class MainRunner extends JFrame{
                         frame.getContentPane().removeAll();
                         frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
                         frame.getContentPane().add(studentHome, BorderLayout.CENTER);
-                        frame.getContentPane().add(studentViewMarks,BorderLayout.SOUTH);
+                        frame.getContentPane().add(studentViewMarks, BorderLayout.SOUTH);
                         frame.getContentPane().revalidate();
                         frame.getContentPane().repaint();
                         foundMatch = true;
@@ -288,7 +381,7 @@ public class MainRunner extends JFrame{
                                     frame.getContentPane().removeAll();
                                     frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
                                     frame.getContentPane().add(studentHome, BorderLayout.CENTER);
-                                    frame.getContentPane().add(studentViewMarks,BorderLayout.SOUTH);
+                                    frame.getContentPane().add(studentViewMarks, BorderLayout.SOUTH);
                                     frame.getContentPane().revalidate();
                                     frame.getContentPane().repaint();
                                     foundMatch = true;
@@ -311,6 +404,7 @@ public class MainRunner extends JFrame{
             }
         });
 
+        /*-----------------------Admin Section Works-------------------------------*/
         //event on clicking add facilitator in admin section
 
         aaddfacilitator.addActionListener(e -> {
@@ -320,8 +414,37 @@ public class MainRunner extends JFrame{
             frame.getContentPane().revalidate();
             frame.getContentPane().repaint();
         });
+
         //event on clicking view facilitator in admin section
         aviewFacilitator.addActionListener(e -> {
+            //admin view facilitator
+            try {
+                while(tableModelAF.getRowCount()>0){
+                    tableModelAF.removeRow(0);
+                }
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM facilitator";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+
+                // Iterate over the result set and add the data to the table model
+                while (rs.next()) {
+                    int sid = rs.getInt("FID");
+                    String name = rs.getString("Name");
+                    String username = rs.getString("username");
+                    String phoneNo = rs.getString("PhoneNo");
+                    String email = rs.getString("Email");
+                    String subName = rs.getString("SubName");
+                    String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
+                    tableModelAF.addRow(vals);
+                }
+                rs.close();
+                stmt.close();
+                conn.close();
+
+            } catch (SQLException error) {
+                throw new RuntimeException(error);
+            }
             frame.getContentPane().removeAll();
             frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
             frame.getContentPane().add(adminViewFacilitator, BorderLayout.CENTER);
@@ -337,8 +460,37 @@ public class MainRunner extends JFrame{
             frame.getContentPane().revalidate();
             frame.getContentPane().repaint();
         });
+
         //event on clicking view student in admin section
         aviewStudent.addActionListener(e -> {
+            //admin view student
+            try {
+                while(tableModelA.getRowCount()>0) {
+                    tableModelA.removeRow(0);
+                }
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM student";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+
+
+                // Iterate over the result set and add the data to the table model
+                while (rs.next()) {
+                    int sid = rs.getInt("SID");
+                    String name = rs.getString("Name");
+                    String username = rs.getString("Username");
+                    String phoneNo = rs.getString("PhoneNo");
+                    String email = rs.getString("Email");
+                    String parentName = rs.getString("ParentName");
+                    String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
+                    tableModelA.addRow(vals);
+                }
+                conn.close();
+                rs.close();
+                stmt.close();
+            } catch (SQLException error) {
+                throw new RuntimeException(error);
+            }
             frame.getContentPane().removeAll();
             frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
             frame.getContentPane().add(adminViewStudent, BorderLayout.CENTER);
@@ -349,6 +501,32 @@ public class MainRunner extends JFrame{
 
         //event on clicking view marks in admin section
         aViewMarks.addActionListener(e -> {
+            //view marks in student section
+            try {
+                while(tableModelAM.getRowCount()>0){
+                    tableModelAM.removeRow(0);
+                }
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM marks";
+                PreparedStatement preparedStatementValidateUserLookMark = conn.prepareStatement(sql);
+                ResultSet rs = preparedStatementValidateUserLookMark.executeQuery();
+                while (rs.next()) {
+                    String username = rs.getString("username");
+                    String physics = rs.getString("physics");
+                    String chemistry = rs.getString("chemistry");
+                    String biology = rs.getString("biology");
+                    String maths = rs.getString("maths");
+                    String nepali = rs.getString("nepali");
+                    String english = rs.getString("english");
+                    String[] vals = {username, physics, chemistry, biology, maths, nepali, english};
+                    tableModelAM.addRow(vals);
+                }
+                rs.next();
+                preparedStatementValidateUserLookMark.close();
+                conn.close();
+            } catch (SQLException e1) {
+                throw new RuntimeException(e1);
+            }
             frame.getContentPane().removeAll();
             frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
             frame.getContentPane().add(adminViewMarks, BorderLayout.CENTER);
@@ -364,7 +542,7 @@ public class MainRunner extends JFrame{
                 frame.getContentPane().removeAll();
                 frame.getContentPane().add(adminNavbar, BorderLayout.NORTH);
                 frame.getContentPane().add(adminHome, BorderLayout.CENTER);
-                frame.getContentPane().add(adminViewMarks,BorderLayout.SOUTH);
+                frame.getContentPane().add(adminViewMarks, BorderLayout.SOUTH);
                 frame.getContentPane().revalidate();
                 frame.getContentPane().repaint();
             }
@@ -383,122 +561,90 @@ public class MainRunner extends JFrame{
             }
         });
 
-        //event on clicking view facilitator in facilitator section
-        fviewFacilitator.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
-            frame.getContentPane().add(facilitatorViewFacilitator, BorderLayout.CENTER);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
-        });
-        //event on clicking view student in facilitator section
-        fviewStudent.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
-            frame.getContentPane().add(facilitatorViewStudent, BorderLayout.CENTER);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
-        });
 
-        //event on clicking view student in admin section
-        aviewStudent.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
-            frame.getContentPane().add(facilitatorViewStudent, BorderLayout.CENTER);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
-        });
-        //event on clicking view marks in facilitator section
-        fViewMarks.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
-            frame.getContentPane().add(facilitatorViewMarks, BorderLayout.CENTER);
-            frame.getContentPane().add(facilitatorUpdateMarks,BorderLayout.EAST);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
-        });
-
-        //event on clicking home in the facilitator section
-        fhome.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
-                frame.getContentPane().add(facilitatorHome, BorderLayout.CENTER);
-                frame.getContentPane().revalidate();
-                frame.getContentPane().repaint();
+        /*----------------------------update marks in admin over here-------------------*/
+        //transfer data in the marks section of admin
+        updateBtnM.addActionListener(e -> {
+            int selectedRow = tableAM.getSelectedRow();
+            if (selectedRow != -1) {
+                String username = (String) tableAM.getValueAt(selectedRow, 0);
+                String physicsNumber = (String) tableAM.getValueAt(selectedRow, 1);
+                String chemistryNumber = (String) tableAM.getValueAt(selectedRow, 2);
+                String biologyNumber = (String) tableAM.getValueAt(selectedRow, 3);
+                String mathsNumber = (String) tableAM.getValueAt(selectedRow, 4);
+                String nepaliNumber = (String) tableAM.getValueAt(selectedRow, 5);
+                String englishNumber = (String) tableAM.getValueAt(selectedRow, 6);
+                usernameFieldM.setText(username);
+                physicsFieldM.setText(physicsNumber);
+                chemistryFieldM.setText(chemistryNumber);
+                biologyFieldM.setText(biologyNumber);
+                mathsFieldM.setText(mathsNumber);
+                nepaliFieldM.setText(nepaliNumber);
+                englishFieldM.setText(englishNumber);
+            } else {
+                JOptionPane.showMessageDialog(frame, "No Content Selected.");
             }
         });
-        //event on clicking the logout of facilitatorSection
-        flogout.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to log out?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    frame.getContentPane().removeAll();
-                    frame.getContentPane().add(login);
-                    frame.getContentPane().revalidate();
-                    frame.getContentPane().repaint();
+
+        //submit button for updating marks in admin
+        updateBtnAM.addActionListener(e -> {
+            try {
+                conn = connect.getConnection();
+                String SQLMarksUpdateTable = "UPDATE marks SET physics=?,chemistry=?,biology=?,maths=?,nepali=?,english=? WHERE username =?";
+                PreparedStatement preparedStatementUpdateMarksTable = conn.prepareStatement(SQLMarksUpdateTable);
+                preparedStatementUpdateMarksTable.setString(1, physicsFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(2, chemistryFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(3, biologyFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(4, mathsFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(5, nepaliFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(6, englishFieldM.getText());
+                preparedStatementUpdateMarksTable.setString(7, usernameFieldM.getText());
+                int rowsAffected = preparedStatementUpdateMarksTable.executeUpdate();
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(frame, "Update Successfully");
+                    tableAM.repaint();
                 }
+                usernameFieldM.setText("");
+                physicsFieldM.setText("");
+                chemistryFieldM.setText("");
+                biologyFieldM.setText("");
+                mathsFieldM.setText("");
+                nepaliFieldM.setText("");
+                englishFieldM.setText("");
+                preparedStatementUpdateMarksTable.close();
+                conn.close();
+
+            } catch (SQLException error) {
+                JOptionPane.showMessageDialog(frame, "Updation error");
             }
-        });
-        //event on clicking the home of student Section
-        shome.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
-                frame.getContentPane().add(studentHome, BorderLayout.CENTER);
-                frame.getContentPane().revalidate();
-                frame.getContentPane().repaint();
-            }
-        });
-        //event on clicking the logout of studentSection
-        slogout.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to log out?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-                    frame.getContentPane().removeAll();
-                    frame.getContentPane().add(login);
-                    frame.getContentPane().revalidate();
-                    frame.getContentPane().repaint();
+            try {
+                while(tableModelAM.getRowCount()>0){
+                    tableModelAM.removeRow(0);
                 }
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM marks";
+                PreparedStatement preparedStatementValidateUserLookMark = conn.prepareStatement(sql);
+                ResultSet rs = preparedStatementValidateUserLookMark.executeQuery();
+                while (rs.next()) {
+                    String username = rs.getString("username");
+                    String physics = rs.getString("physics");
+                    String chemistry = rs.getString("chemistry");
+                    String biology = rs.getString("biology");
+                    String maths = rs.getString("maths");
+                    String nepali = rs.getString("nepali");
+                    String english = rs.getString("english");
+                    String[] vals = {username, physics, chemistry, biology, maths, nepali, english};
+                    tableModelAM.addRow(vals);
+                }
+                rs.next();
+                preparedStatementValidateUserLookMark.close();
+                conn.close();
+            } catch (SQLException e1) {
+                throw new RuntimeException(e1);
             }
         });
-        //event on clicking view facilitator in student section
-        sviewFacilitator.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
-            frame.getContentPane().add(studentViewFacilitator, BorderLayout.CENTER);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
-        });
-        //event on clicking view student in student section
-        sviewStudent.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
-            frame.getContentPane().add(studentViewStudent, BorderLayout.CENTER);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
-        });
-        //event on clicking view marks in student section
-        sviewMarks.addActionListener(e -> {
-            frame.getContentPane().removeAll();
-            frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
-            frame.getContentPane().add(studentViewMarks, BorderLayout.CENTER);
-            frame.getContentPane().revalidate();
-            frame.getContentPane().repaint();
-        });
 
-
-        JButton assubmitbutton = adminAddStudent.getSubmitButton();
-        JTextField asnameField = adminAddStudent.getNameField();
-        JTextField asusernameField = adminAddStudent.getUsernameField();
-        JTextField aspasswordField = adminAddStudent.getPasswordField();
-        JTextField asPhoneField = adminAddStudent.getPhoneField();
-        JTextField asemailField = adminAddStudent.getEmailField();
-        JTextField asparentField = adminAddStudent.getParentField();
+        //admin add student
         assubmitbutton.addActionListener(e -> {
             String name = asnameField.getText();
             String username = asusernameField.getText();
@@ -574,38 +720,6 @@ public class MainRunner extends JFrame{
             }
         });
 
-        //admin view student
-        DefaultTableModel tableModelA = adminViewStudent.getTableModel();
-        JTable tableA = adminViewStudent.getTable();
-        JButton removeBtnS = adminViewStudent.getRemoveBtn();
-        JButton updateBtnS = adminViewStudent.getUpdateBtn();
-        JButton updateBtnAS = adminUpdateStudent.getSubmitBtn();
-        Statement stmt = null;
-        try {
-            conn = connect.getConnection();
-            String sql = "SELECT * FROM student";
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-
-            // Iterate over the result set and add the data to the table model
-            while (rs.next()) {
-                int sid = rs.getInt("SID");
-                String name = rs.getString("Name");
-                String username = rs.getString("Username");
-                String phoneNo = rs.getString("PhoneNo");
-                String email = rs.getString("Email");
-                String parentName = rs.getString("ParentName");
-                String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
-                tableModelA.addRow(vals);
-            }
-            conn.close();
-            rs.close();
-            stmt.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
         //remove button to delete the data
         removeBtnS.addActionListener(e -> {
             int selectedRow = tableA.getSelectedRow();
@@ -644,11 +758,6 @@ public class MainRunner extends JFrame{
                 JOptionPane.showMessageDialog(frame, "No content selected");
             }
         });
-        JTextField nameTextField = adminUpdateStudent.getNameTextField();
-        JTextField emailTextField = adminUpdateStudent.getEmailTextField();
-        JTextField numberTextField = adminUpdateStudent.getPhoneNumberTextField();
-        JTextField parentNameTextField = adminUpdateStudent.getParentNameTextField();
-        JLabel usernameLabel = adminUpdateStudent.getUsernameLabel();
 
         //update button to transfer the data
         updateBtnS.addActionListener(e -> {
@@ -705,99 +814,33 @@ public class MainRunner extends JFrame{
             } catch (SQLException error) {
                 JOptionPane.showMessageDialog(frame, "Updation error");
             }
-        });
 
-
-        //admin view facilitator
-        DefaultTableModel tableModelAF = adminViewFacilitator.getTableModel();
-        JTable tableAF = adminViewFacilitator.getTable();
-        JButton removeBtnF = adminViewFacilitator.getRemoveBtn();
-        JButton updateBtnF = adminViewFacilitator.getUpdateBtn();
-        JButton updateBtnAF = adminUpdateFacilitator.getSubmitBtn();
-
-        try {
-            conn = connect.getConnection();
-            String sql = "SELECT * FROM facilitator";
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-            // Iterate over the result set and add the data to the table model
-            while (rs.next()) {
-                int sid = rs.getInt("FID");
-                String name = rs.getString("Name");
-                String username = rs.getString("username");
-                String phoneNo = rs.getString("PhoneNo");
-                String email = rs.getString("Email");
-                String subName = rs.getString("SubName");
-                String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
-                tableModelAF.addRow(vals);
-            }
-            rs.close();
-            stmt.close();
-            conn.close();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        //delete data from facilitator
-        removeBtnF.addActionListener(e -> {
-            int selectedRow = tableAF.getSelectedRow();
-            if (selectedRow != -1) {
-                String name = (String) tableAF.getValueAt(selectedRow, 1);
-                String username = (String) tableAF.getValueAt(selectedRow, 2);
-                String phoneNumber = (String) tableAF.getValueAt(selectedRow, 3);
-                String email = (String) tableAF.getValueAt(selectedRow, 4);
-                String subName = (String) tableAF.getValueAt(selectedRow, 5);
-                try {
-                    conn = connect.getConnection();
-                    String SQLDeleteUserTable = "DELETE FROM user WHERE username =? ";
-                    String SQLDeleteFacilitatorTable = "DELETE FROM facilitator WHERE username=?";
-                    PreparedStatement preparedStatementUserTable = conn.prepareStatement(SQLDeleteUserTable);
-                    PreparedStatement preparedStatementFacilitatorTable = conn.prepareStatement(SQLDeleteFacilitatorTable);
-                    preparedStatementUserTable.setString(1, username);
-                    preparedStatementFacilitatorTable.setString(1, username);
-                    int rowsAffected1 = preparedStatementUserTable.executeUpdate();
-                    int rowsAffected2 = preparedStatementFacilitatorTable.executeUpdate();
-
-                    if (rowsAffected1 > 0 || rowsAffected2 > 0) {
-                        JOptionPane.showMessageDialog(frame, "Content deleted successfully.");
-                        tableModelAF.removeRow(selectedRow);
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "Content not found for the given ID.");
-                    }
-                    preparedStatementFacilitatorTable.close();
-                    preparedStatementUserTable.close();
-                    conn.close();
-                } catch (SQLException error) {
-                    throw new RuntimeException(error);
+            try {
+                while(tableModelA.getRowCount()>0) {
+                    tableModelA.removeRow(0);
                 }
-            } else {
-                JOptionPane.showMessageDialog(frame, "No content selected");
-            }
-        });
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM student";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
 
-        //transfer data to the facilitator update
-        JTextField nameTextFieldF = adminUpdateFacilitator.getNameTextField();
-        JTextField emailTextFieldF = adminUpdateFacilitator.getEmailTextField();
-        JTextField numberTextFieldF = adminUpdateFacilitator.getPhoneNumberTextField();
-        JComboBox<String> subNameTextFieldF = adminUpdateFacilitator.getSubNameTextField();
-        JLabel usernameLabelF = adminUpdateFacilitator.getUsernameLabel();
-        updateBtnF.addActionListener(e -> {
-            int selectedRow = tableAF.getSelectedRow();
-            if (selectedRow != -1) {
-                String name = (String) tableAF.getValueAt(selectedRow, 1);
-                String username = (String) tableAF.getValueAt(selectedRow, 2);
-                String phoneNumber = (String) tableAF.getValueAt(selectedRow, 3);
-                String email = (String) tableAF.getValueAt(selectedRow, 4);
-                String subName = (String) tableAF.getValueAt(selectedRow, 5);
-                nameTextFieldF.setText(name);
-                usernameLabelF.setText(username);
-                emailTextFieldF.setText(email);
-                numberTextFieldF.setText(phoneNumber);
-                subNameTextFieldF.setSelectedItem(subName);
-            } else {
-                JOptionPane.showMessageDialog(frame, "No content selected");
+
+                // Iterate over the result set and add the data to the table model
+                while (rs.next()) {
+                    int sid = rs.getInt("SID");
+                    String name = rs.getString("Name");
+                    String username = rs.getString("Username");
+                    String phoneNo = rs.getString("PhoneNo");
+                    String email = rs.getString("Email");
+                    String parentName = rs.getString("ParentName");
+                    String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
+                    tableModelA.addRow(vals);
+                }
+                conn.close();
+                rs.close();
+                stmt.close();
+            } catch (SQLException error) {
+                throw new RuntimeException(error);
             }
         });
 
@@ -836,16 +879,37 @@ public class MainRunner extends JFrame{
             } catch (SQLException error) {
                 JOptionPane.showMessageDialog(frame, "Updation error");
             }
+            //view facilitator after updating
+            try {
+                while(tableModelAF.getRowCount()>0){
+                    tableModelAF.removeRow(0);
+                }
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM facilitator";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+
+                // Iterate over the result set and add the data to the table model
+                while (rs.next()) {
+                    int sid = rs.getInt("FID");
+                    String name = rs.getString("Name");
+                    String username = rs.getString("username");
+                    String phoneNo = rs.getString("PhoneNo");
+                    String email = rs.getString("Email");
+                    String subName = rs.getString("SubName");
+                    String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
+                    tableModelAF.addRow(vals);
+                }
+                rs.close();
+                stmt.close();
+                conn.close();
+
+            } catch (SQLException error) {
+                throw new RuntimeException(error);
+            }
         });
 
         //admin add facilitator
-        JButton afsubmitbutton = adminAddFacilitator.getSubmitButton();
-        JTextField afnameField = adminAddFacilitator.getNameField();
-        JTextField afusernameField = adminAddFacilitator.getUsernameField();
-        JTextField afpasswordField = adminAddFacilitator.getPasswordField();
-        JTextField afPhoneField = adminAddFacilitator.getPhoneField();
-        JTextField afemailField = adminAddFacilitator.getEmailField();
-        JComboBox<String> afsubField = adminAddFacilitator.getSubField();
         afsubmitbutton.addActionListener(e -> {
             String name = afnameField.getText();
             String username = afusernameField.getText();
@@ -915,163 +979,153 @@ public class MainRunner extends JFrame{
                 }
             }
         });
-        //view marks in admin section
-        JTable tableAM = adminViewMarks.getTable();
-        DefaultTableModel tableModelAM = adminViewMarks.getTableModel();
-        JButton updateBtnM = adminViewMarks.getEditBtn();
-        JButton updateBtnAM = adminUpdateMarks.getSubmitButton();
-        try {
-            conn = connect.getConnection();
-            String sql = "SELECT * FROM marks";
-            PreparedStatement preparedStatementValidateUserLookMark = conn.prepareStatement(sql);
-            ResultSet rs = preparedStatementValidateUserLookMark.executeQuery();
-            while (rs.next()) {
-                String username = rs.getString("username");
-                String physics = rs.getString("physics");
-                String chemistry = rs.getString("chemistry");
-                String biology = rs.getString("biology");
-                String maths = rs.getString("maths");
-                String nepali = rs.getString("nepali");
-                String english = rs.getString("english");
-                String[] vals = {username, physics, chemistry, biology, maths, nepali, english};
-                tableModelAM.addRow(vals);
-            }
-            rs.next();
-            preparedStatementValidateUserLookMark.close();
-            conn.close();
-        } catch (SQLException e1) {
-            throw new RuntimeException(e1);
-        }
 
-        //transfer data in the marks section of admin
-        JLabel usernameFieldM = adminUpdateMarks.getUsernameField();
-        JTextField physicsFieldM = adminUpdateMarks.getPhysicsField();
-        JTextField chemistryFieldM = adminUpdateMarks.getChemistryField();
-        JTextField biologyFieldM = adminUpdateMarks.getBiologyField();
-        JTextField mathsFieldM = adminUpdateMarks.getMathField();
-        JTextField nepaliFieldM = adminUpdateMarks.getNepaliField();
-        JTextField englishFieldM = adminUpdateMarks.getEnglishField();
-
-        updateBtnM.addActionListener(e -> {
-            int selectedRow = tableAM.getSelectedRow();
+        //delete data from facilitator
+        removeBtnF.addActionListener(e -> {
+            int selectedRow = tableAF.getSelectedRow();
             if (selectedRow != -1) {
-                String username = (String) tableAM.getValueAt(selectedRow, 0);
-                String physicsNumber = (String) tableAM.getValueAt(selectedRow, 1);
-                String chemistryNumber = (String) tableAM.getValueAt(selectedRow, 2);
-                String biologyNumber = (String) tableAM.getValueAt(selectedRow, 3);
-                String mathsNumber = (String) tableAM.getValueAt(selectedRow, 4);
-                String nepaliNumber = (String) tableAM.getValueAt(selectedRow, 5);
-                String englishNumber = (String) tableAM.getValueAt(selectedRow, 6);
-                usernameFieldM.setText(username);
-                physicsFieldM.setText(physicsNumber);
-                chemistryFieldM.setText(chemistryNumber);
-                biologyFieldM.setText(biologyNumber);
-                mathsFieldM.setText(mathsNumber);
-                nepaliFieldM.setText(nepaliNumber);
-                englishFieldM.setText(englishNumber);
+                String name = (String) tableAF.getValueAt(selectedRow, 1);
+                String username = (String) tableAF.getValueAt(selectedRow, 2);
+                String phoneNumber = (String) tableAF.getValueAt(selectedRow, 3);
+                String email = (String) tableAF.getValueAt(selectedRow, 4);
+                String subName = (String) tableAF.getValueAt(selectedRow, 5);
+                try {
+                    conn = connect.getConnection();
+                    String SQLDeleteUserTable = "DELETE FROM user WHERE username =? ";
+                    String SQLDeleteFacilitatorTable = "DELETE FROM facilitator WHERE username=?";
+                    PreparedStatement preparedStatementUserTable = conn.prepareStatement(SQLDeleteUserTable);
+                    PreparedStatement preparedStatementFacilitatorTable = conn.prepareStatement(SQLDeleteFacilitatorTable);
+                    preparedStatementUserTable.setString(1, username);
+                    preparedStatementFacilitatorTable.setString(1, username);
+                    int rowsAffected1 = preparedStatementUserTable.executeUpdate();
+                    int rowsAffected2 = preparedStatementFacilitatorTable.executeUpdate();
+
+                    if (rowsAffected1 > 0 || rowsAffected2 > 0) {
+                        JOptionPane.showMessageDialog(frame, "Content deleted successfully.");
+                        tableModelAF.removeRow(selectedRow);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Content not found for the given ID.");
+                    }
+                    preparedStatementFacilitatorTable.close();
+                    preparedStatementUserTable.close();
+                    conn.close();
+                } catch (SQLException error) {
+                    throw new RuntimeException(error);
+                }
             } else {
-                JOptionPane.showMessageDialog(frame, "No Content Selected.");
+                JOptionPane.showMessageDialog(frame, "No content selected");
             }
         });
 
-        //submit button for updating marks in admin
-        updateBtnAM.addActionListener(e -> {
+        //transfer data to the facilitator update
+        updateBtnF.addActionListener(e -> {
+            int selectedRow = tableAF.getSelectedRow();
+            if (selectedRow != -1) {
+                String name = (String) tableAF.getValueAt(selectedRow, 1);
+                String username = (String) tableAF.getValueAt(selectedRow, 2);
+                String phoneNumber = (String) tableAF.getValueAt(selectedRow, 3);
+                String email = (String) tableAF.getValueAt(selectedRow, 4);
+                String subName = (String) tableAF.getValueAt(selectedRow, 5);
+                nameTextFieldF.setText(name);
+                usernameLabelF.setText(username);
+                emailTextFieldF.setText(email);
+                numberTextFieldF.setText(phoneNumber);
+                subNameTextFieldF.setSelectedItem(subName);
+            } else {
+                JOptionPane.showMessageDialog(frame, "No content selected");
+            }
+        });
+
+        /*------------------------Facilitator Works------------------------------*/
+
+        //event on clicking view facilitator in facilitator section
+        fviewFacilitator.addActionListener(e -> {
+            //view facilitator in facilitator
             try {
+                while(tableModelFF.getRowCount()>0){
+                tableModelFF.removeRow(0);
+            }
                 conn = connect.getConnection();
-                String SQLMarksUpdateTable = "UPDATE marks SET physics=?,chemistry=?,biology=?,maths=?,nepali=?,english=? WHERE username =?";
-                PreparedStatement preparedStatementUpdateMarksTable = conn.prepareStatement(SQLMarksUpdateTable);
-                preparedStatementUpdateMarksTable.setString(1, physicsFieldM.getText());
-                preparedStatementUpdateMarksTable.setString(2, chemistryFieldM.getText());
-                preparedStatementUpdateMarksTable.setString(3, biologyFieldM.getText());
-                preparedStatementUpdateMarksTable.setString(4, mathsFieldM.getText());
-                preparedStatementUpdateMarksTable.setString(5, nepaliFieldM.getText());
-                preparedStatementUpdateMarksTable.setString(6, englishFieldM.getText());
-                preparedStatementUpdateMarksTable.setString(7,usernameFieldM.getText());
-                int rowsAffected = preparedStatementUpdateMarksTable.executeUpdate();
-                if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(frame, "Update Successfully");
-                    tableAM.repaint();
+                String sql = "SELECT * FROM facilitator";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+
+                // Iterate over the result set and add the data to the table model
+                while (rs.next()) {
+                    int sid = rs.getInt("FID");
+                    String name = rs.getString("Name");
+                    String username = rs.getString("Username");
+                    String phoneNo = rs.getString("PhoneNo");
+                    String email = rs.getString("Email");
+                    String subName = rs.getString("SubName");
+                    String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
+                    tableModelFF.addRow(vals);
                 }
-                usernameFieldM.setText("");
-                physicsFieldM.setText("");
-                chemistryFieldM.setText("");
-                biologyFieldM.setText("");
-                mathsFieldM.setText("");
-                nepaliFieldM.setText("");
-                englishFieldM.setText("");
-                preparedStatementUpdateMarksTable.close();
+                rs.close();
+                stmt.close();
                 conn.close();
             } catch (SQLException error) {
-                JOptionPane.showMessageDialog(frame, "Updation error");
+                throw new RuntimeException(error);
             }
+            frame.getContentPane().removeAll();
+            frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
+            frame.getContentPane().add(facilitatorViewFacilitator, BorderLayout.CENTER);
+            frame.getContentPane().revalidate();
+            frame.getContentPane().repaint();
         });
 
+        //event on clicking view student in facilitator section
+        fviewStudent.addActionListener(e -> {
+            //view student in facilitator
 
-        //view student in facilitator
-        DefaultTableModel tableModelF = facilitatorViewStudent.getTableModel();
-        JTable tableF = facilitatorViewStudent.getTable();
 
-        try {
-            conn = connect.getConnection();
-            String sql = "SELECT * FROM student";
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            try {
+                while(tableModelF.getRowCount()>0){
 
-            // Iterate over the result set and add the data to the table model
-            while (rs.next()) {
-                int sid = rs.getInt("SID");
-                String name = rs.getString("Name");
-                String username = rs.getString("Username");
-                String phoneNo = rs.getString("PhoneNo");
-                String email = rs.getString("Email");
-                String parentName = rs.getString("ParentName");
-                String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
-                tableModelF.addRow(vals);
+                    tableModelF.removeRow(0);
+                }
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM student";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+
+                // Iterate over the result set and add the data to the table model
+                while (rs.next()) {
+                    int sid = rs.getInt("SID");
+                    String name = rs.getString("Name");
+                    String username = rs.getString("Username");
+                    String phoneNo = rs.getString("PhoneNo");
+                    String email = rs.getString("Email");
+                    String parentName = rs.getString("ParentName");
+                    String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
+                    tableModelF.addRow(vals);
+                }
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException error) {
+                throw new RuntimeException(error);
             }
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            frame.getContentPane().removeAll();
+            frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
+            frame.getContentPane().add(facilitatorViewStudent, BorderLayout.CENTER);
+            frame.getContentPane().revalidate();
+            frame.getContentPane().repaint();
+        });
 
-        //view facilitator in facilitator
-        DefaultTableModel tableModelFF = facilitatorViewFacilitator.getTableModel();
-        JTable tableFF = facilitatorViewFacilitator.getTable();
-        try {
-            conn = connect.getConnection();
-            String sql = "SELECT * FROM facilitator";
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+        //event on clicking view marks in facilitator section
+        fViewMarks.addActionListener(e -> {
+            //view marks in facilitator section
+            try {
+                while(tableModelFM.getRowCount()>0){
 
-            // Iterate over the result set and add the data to the table model
-            while (rs.next()) {
-                int sid = rs.getInt("FID");
-                String name = rs.getString("Name");
-                String username = rs.getString("Username");
-                String phoneNo = rs.getString("PhoneNo");
-                String email = rs.getString("Email");
-                String subName = rs.getString("SubName");
-                String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
-                tableModelFF.addRow(vals);
+                tableModelFM.removeRow(0);
             }
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        //view marks in facilitator section
-        JTable tableFM = facilitatorViewMarks.getTable();
-        DefaultTableModel tableModelFM = facilitatorViewMarks.getTableModel();
-        JButton updateBtnEM = facilitatorViewMarks.getEditBtn();
-        JButton updateBtnFM = facilitatorUpdateMarks.getSubmitButton();
-        try {
-            conn = connect.getConnection();
-            String sql = "SELECT * FROM marks";
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM marks";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
                     String username = rs.getString("username");
                     String physics = rs.getString("physics");
                     String chemistry = rs.getString("chemistry");
@@ -1081,25 +1135,197 @@ public class MainRunner extends JFrame{
                     String english = rs.getString("english");
                     String[] vals = {username, physics, chemistry, biology, maths, nepali, english};
                     tableModelFM.addRow(vals);
+                }
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException e1) {
+                throw new RuntimeException(e1);
             }
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException e1) {
-            throw new RuntimeException(e1);
-        }
+            frame.getContentPane().removeAll();
+            frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
+            frame.getContentPane().add(facilitatorViewMarks, BorderLayout.CENTER);
+            frame.getContentPane().add(facilitatorUpdateMarks, BorderLayout.EAST);
+            frame.getContentPane().revalidate();
+            frame.getContentPane().repaint();
+        });
 
+        //event on clicking home in the facilitator section
+        fhome.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(facilitatorNavbar, BorderLayout.NORTH);
+                frame.getContentPane().add(facilitatorHome, BorderLayout.CENTER);
+                frame.getContentPane().revalidate();
+                frame.getContentPane().repaint();
+            }
+        });
+        //event on clicking the logout of facilitatorSection
+        flogout.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to log out?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    frame.getContentPane().removeAll();
+                    frame.getContentPane().add(login);
+                    frame.getContentPane().revalidate();
+                    frame.getContentPane().repaint();
+                }
+            }
+        });
+
+        /*---------------------Student Works------------------------------*/
+        //event on clicking the home of student Section
+        shome.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.getContentPane().removeAll();
+                frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
+                frame.getContentPane().add(studentHome, BorderLayout.CENTER);
+                frame.getContentPane().revalidate();
+                frame.getContentPane().repaint();
+            }
+        });
+        //event on clicking the logout of studentSection
+        slogout.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int result = JOptionPane.showConfirmDialog(frame, "Are you sure you want to log out?", "Logout Confirmation", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    frame.getContentPane().removeAll();
+                    frame.getContentPane().add(login);
+                    frame.getContentPane().revalidate();
+                    frame.getContentPane().repaint();
+                }
+            }
+        });
+        //event on clicking view facilitator in student section
+        sviewFacilitator.addActionListener(e -> {
+            //view facilitator in student section
+            try {
+                while(tableModelSF.getRowCount()>0){
+
+                    tableModelSF.removeRow(0);
+                }
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM facilitator";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+
+                // Iterate over the result set and add the data to the table model
+                while (rs.next()) {
+                    int sid = rs.getInt("FID");
+                    String name = rs.getString("Name");
+                    String username = rs.getString("Username");
+                    String phoneNo = rs.getString("PhoneNo");
+                    String email = rs.getString("Email");
+                    String subName = rs.getString("SubName");
+                    String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
+                    tableModelSF.addRow(vals);
+                }
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException error) {
+                throw new RuntimeException(error);
+            }
+            frame.getContentPane().removeAll();
+            frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
+            frame.getContentPane().add(studentViewFacilitator, BorderLayout.CENTER);
+            frame.getContentPane().revalidate();
+            frame.getContentPane().repaint();
+        });
+
+        //event on clicking view student in student section
+        sviewStudent.addActionListener(e -> {
+            //view student in student section
+
+            try {
+                while(tableModelSS.getRowCount()>0){
+                    tableModelSS.removeRow(0);
+                }
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM student";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+
+                // Iterate over the result set and add the data to the table model
+                while (rs.next()) {
+                    int sid = rs.getInt("SID");
+                    String name = rs.getString("Name");
+                    String username = rs.getString("Username");
+                    String phoneNo = rs.getString("PhoneNo");
+                    String email = rs.getString("Email");
+                    String parentName = rs.getString("ParentName");
+                    String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
+                    tableModelSS.addRow(vals);
+                }
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException error) {
+                throw new RuntimeException(error);
+            }
+            frame.getContentPane().removeAll();
+            frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
+            frame.getContentPane().add(studentViewStudent, BorderLayout.CENTER);
+            frame.getContentPane().revalidate();
+            frame.getContentPane().repaint();
+        });
+
+
+        //event on clicking view marks in student section
+        sviewMarks.addActionListener(e -> {
+            //view marks in student section
+            try {
+                while(tableModelSM.getRowCount()>0){
+                    tableModelSM.removeRow(0);
+                }
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM marks";
+                PreparedStatement preparedStatementViewMarksValidated = conn.prepareStatement(sql);
+                ResultSet rs = preparedStatementViewMarksValidated.executeQuery();
+
+                while (rs.next()) {
+                    String username = rs.getString("username");
+                    String physics = rs.getString("physics");
+                    String chemistry = rs.getString("chemistry");
+                    String biology = rs.getString("biology");
+                    String maths = rs.getString("maths");
+                    String nepali = rs.getString("nepali");
+                    String english = rs.getString("english");
+                    String[] vals = {username, physics, chemistry, biology, maths, nepali, english};
+                    tableModelSM.addRow(vals);
+                }
+                rs.close();
+                preparedStatementViewMarksValidated.close();
+                conn.close();
+
+            } catch (SQLException e1) {
+                throw new RuntimeException(e1);
+            }
+            frame.getContentPane().removeAll();
+            frame.getContentPane().add(studentNavbar, BorderLayout.NORTH);
+            frame.getContentPane().add(studentViewMarks, BorderLayout.CENTER);
+            frame.getContentPane().revalidate();
+            frame.getContentPane().repaint();
+        });
+
+
+
+
+
+
+
+
+
+
+        /*----------------------------update marks in facilitator over here-------------------*/
         //transfer data in the marks section in facilitator section
-        JLabel usernameFieldFM = facilitatorUpdateMarks.getUsernameField();
-        JTextField physicsFieldFM = facilitatorUpdateMarks.getPhysicsField();
-        JTextField chemistryFieldFM = facilitatorUpdateMarks.getChemistryField();
-        JTextField biologyFieldFM = facilitatorUpdateMarks.getBiologyField();
-        JTextField mathsFieldFM = facilitatorUpdateMarks.getMathField();
-        JTextField nepaliFieldFM = facilitatorUpdateMarks.getNepaliField();
-        JTextField englishFieldFM = facilitatorUpdateMarks.getEnglishField();
-        updateBtnEM.addActionListener(e->{
+        updateBtnEM.addActionListener(e -> {
             int selectedRow = tableFM.getSelectedRow();
-            if(selectedRow != -1){
+            if (selectedRow != -1) {
                 String username = (String) tableFM.getValueAt(selectedRow, 0);
                 String physicsNumber = (String) tableFM.getValueAt(selectedRow, 1);
                 String chemistryNumber = (String) tableFM.getValueAt(selectedRow, 2);
@@ -1120,8 +1346,8 @@ public class MainRunner extends JFrame{
 
         });
 
-        //submit the udpated data in the facilitator section
-        updateBtnFM.addActionListener(e->{
+        //submit the updated data in the facilitator section
+        updateBtnFM.addActionListener(e -> {
             try {
                 conn = connect.getConnection();
                 String SQLMarksUpdateTable = "UPDATE marks SET physics=?,chemistry=?,biology=?,maths=?,nepali=?,english=? WHERE username =?";
@@ -1132,7 +1358,7 @@ public class MainRunner extends JFrame{
                 preparedStatementUpdateMarksTable.setString(4, mathsFieldFM.getText());
                 preparedStatementUpdateMarksTable.setString(5, nepaliFieldFM.getText());
                 preparedStatementUpdateMarksTable.setString(6, englishFieldFM.getText());
-                preparedStatementUpdateMarksTable.setString(7,usernameFieldFM.getText());
+                preparedStatementUpdateMarksTable.setString(7, usernameFieldFM.getText());
                 int rowsAffected = preparedStatementUpdateMarksTable.executeUpdate();
                 if (rowsAffected > 0) {
                     JOptionPane.showMessageDialog(frame, "Update Successfully");
@@ -1150,74 +1376,16 @@ public class MainRunner extends JFrame{
             } catch (SQLException error) {
                 JOptionPane.showMessageDialog(frame, "Updation error");
             }
-        });
+            try {
+                while(tableModelFM.getRowCount()>0){
 
-
-        //view student in student section
-        DefaultTableModel tableModelSS = studentViewStudent.getTableModel();
-        JTable tableSS = studentViewStudent.getTable();
-        try {
-            conn = connect.getConnection();
-            String sql = "SELECT * FROM student";
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-            // Iterate over the result set and add the data to the table model
-            while (rs.next()) {
-                int sid = rs.getInt("SID");
-                String name = rs.getString("Name");
-                String username = rs.getString("Username");
-                String phoneNo = rs.getString("PhoneNo");
-                String email = rs.getString("Email");
-                String parentName = rs.getString("ParentName");
-                String[] vals = {String.valueOf(sid), name, username, phoneNo, email, parentName};
-                tableModelSS.addRow(vals);
-            }
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        //view facilitator in student section
-        DefaultTableModel tableModelSF = studentViewFacilitator.getTableModel();
-        JTable tableSF = adminViewFacilitator.getTable();
-        try {
-            conn = connect.getConnection();
-            String sql = "SELECT * FROM facilitator";
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-
-            // Iterate over the result set and add the data to the table model
-            while (rs.next()) {
-                int sid = rs.getInt("FID");
-                String name = rs.getString("Name");
-                String username = rs.getString("Username");
-                String phoneNo = rs.getString("PhoneNo");
-                String email = rs.getString("Email");
-                String subName = rs.getString("SubName");
-                String[] vals = {String.valueOf(sid), name, username, phoneNo, email, subName};
-                tableModelSF.addRow(vals);
-            }
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        //view marks in student section
-        DefaultTableModel tableModelSM = studentViewMarks.getTableModel();
-        JTable tableSM = adminViewMarks.getTable();
-        try {
-            conn = connect.getConnection();
-            String sql = "SELECT * FROM marks";
-            PreparedStatement preparedStatementViewMarksValidated = conn.prepareStatement(sql);
-            ResultSet rs = preparedStatementViewMarksValidated.executeQuery();
-
-            while (rs.next()) {
+                    tableModelFM.removeRow(0);
+                }
+                conn = connect.getConnection();
+                String sql = "SELECT * FROM marks";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
                     String username = rs.getString("username");
                     String physics = rs.getString("physics");
                     String chemistry = rs.getString("chemistry");
@@ -1226,27 +1394,16 @@ public class MainRunner extends JFrame{
                     String nepali = rs.getString("nepali");
                     String english = rs.getString("english");
                     String[] vals = {username, physics, chemistry, biology, maths, nepali, english};
-                    tableModelSM.addRow(vals);
+                    tableModelFM.addRow(vals);
+                }
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch (SQLException e1) {
+                throw new RuntimeException(e1);
             }
-            rs.close();
-            preparedStatementViewMarksValidated.close();
-            conn.close();
+        });
 
-        } catch (SQLException e1) {
-            throw new RuntimeException(e1);
-        }
-
-        //refresh button clicking to refresh all table
-addKeyListener(new KeyAdapter(){
-    public void keyPressed(KeyEvent e) {
-        // Check if Control key and R key are pressed simultaneously
-        if (e.isControlDown() && e.getKeyChar() == 'r') {
-            // Call the main method again to restart the application
-            restartApplication();
-            // Add your code here to handle the Ctrl + R key combination
-        }
-    }
-});
 
         frame.setVisible(true);
     }
@@ -1259,21 +1416,4 @@ addKeyListener(new KeyAdapter(){
     }
 
 
-    private static void restartApplication() {
-        // Get the Java Virtual Machine command to restart the application
-        String javaCmd = System.getProperty("java.home") + "/bin/java";
-        String className = MainRunner.class.getName();
-        String classpath = System.getProperty("java.class.path");
-        String cmd = javaCmd + " -cp " + classpath + " " + className;
-
-        try {
-            // Start a new JVM process to run the main method again
-            Runtime.getRuntime().exec(cmd);
-
-            // Close the current instance of the application
-            System.exit(0);
-        } catch ( IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
